@@ -9,13 +9,17 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: monospace; background: #1a1a2e; color: #e0e0e0; padding: 20px; }
     h1 { color: #00d4ff; margin-bottom: 6px; font-size: 1.4rem; }
-    h2 { color: #00d4ff; margin: 24px 0 10px; font-size: 1rem; border-bottom: 1px solid #333; padding-bottom: 6px; }
+    h2 { color: #00d4ff; margin: 24px 0 10px; font-size: 1rem; border-bottom: 1px solid #333; padding-bottom: 6px; cursor: pointer; user-select: none; }
+    h2.collapsible::after { content: ' ▾'; font-size: 0.8rem; color: #555; }
+    h2.collapsible.collapsed::after { content: ' ▸'; }
+    h2.main-step { color: #00ff99; border-bottom-color: #00ff9955; }
     p.desc { color: #888; font-size: 0.82rem; margin-bottom: 12px; line-height: 1.5; }
     .controls { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; align-items: center; }
     button {
       background: #00d4ff; color: #1a1a2e; border: none; padding: 8px 18px;
       cursor: pointer; font-weight: bold; font-size: 0.9rem;
     }
+    button.main-btn { background: #00ff99; }
     button:disabled { background: #444; color: #888; cursor: not-allowed; }
     button.green  { background: #4caf50; color: white; }
     button.danger { background: #ff4444; color: white; }
@@ -30,10 +34,10 @@
     .log-ok   { color: #4caf50; }
     .log-warn { color: #ff9800; }
     .log-err  { color: #f44336; }
-    #progress-bar-wrap { background: #333; height: 8px; border-radius: 4px; margin-bottom: 14px; display: none; }
-    #progress-bar { background: #00d4ff; height: 8px; border-radius: 4px; width: 0%; transition: width 0.3s; }
     hr { border: none; border-top: 1px solid #222; margin: 28px 0; }
     code { background: #0d0d1a; padding: 1px 5px; color: #00d4ff; }
+    .section-body { overflow: hidden; }
+    .section-body.collapsed { display: none; }
   </style>
 </head>
 <body>
@@ -48,69 +52,90 @@
     Conectado como <strong id="user-name"></strong> &nbsp;
     <button class="danger" style="padding:4px 10px; font-size:0.78rem;" onclick="logout()">Cerrar sesión</button>
   </div>
+
   <div id="app-content" style="display:none">
 
-  <!-- ═══ PASO 1: Generar XLSX para Google Translate ═══════════════════════ -->
-  <h2>Paso 1 — Generar Excel para Google Translate</h2>
-  <p class="desc">
-    Carga <code>global.ini</code> desde <code>MrKraken/StarStrings</code> y genera los Excel para traducir.<br>
-    Sube los ficheros a <a href="https://translate.google.com/" target="_blank" style="color:#00d4ff">Google Translate</a>,
-    tradúcelos y guarda el resultado en <code>work/from_google/</code> del repositorio.
-  </p>
-  <div class="controls">
-    <button onclick="generateXlsx()">Cargar y generar Excel</button>
-  </div>
-  <div class="controls" id="dl-xlsx-btns" style="display:none">
-    <button class="green" onclick="downloadXlsx(0)">Descargar parte_1.xlsx</button>
-    <button class="green" onclick="downloadXlsx(1)">Descargar parte_2.xlsx</button>
-    <button id="dl-snapshot-btn" class="green" onclick="downloadSnapshot()">Descargar en_snapshot.json</button>
-  </div>
-  <div id="status-gen" class="status">Listo.</div>
-  <div id="log-gen" class="log"></div>
-
-  <hr>
-
-  <!-- ═══ PASO 2: Reconstruir global.ini desde el Excel traducido ══════════ -->
-  <h2>Paso 2 — Reconstruir global.ini desde el Excel traducido</h2>
-  <p class="desc">
-    Carga automáticamente los ficheros traducidos desde el repositorio y reconstruye el <code>global.ini</code> en español.<br>
-    Fuentes: <code>work/from_google/parte_1.xlsx</code> · <code>work/from_google/parte_2.xlsx</code> · <code>work/correcciones.ini</code>
-  </p>
-  <div class="controls">
-    <button onclick="rebuildFromXlsx()">Reconstruir global.ini</button>
-    <button id="dl-ini-btn" class="green hidden" onclick="downloadIni('global.ini', resultIni)">Descargar global.ini</button>
-  </div>
-  <div id="status-rebuild" class="status">Listo.</div>
-  <div id="log-rebuild" class="log"></div>
-
-  <hr>
-
-  <!-- ═══ PASO 3: Traducir novedades (actualizaciones futuras) ════════════ -->
-  <h2>Paso 3 — Traducir novedades (actualizaciones futuras)</h2>
-  <p class="desc">
-    Carga automáticamente desde el repositorio:<br>
-    · <code>Data/Localization/spanish_(spain)/global.ini</code> — traducción de referencia<br>
-    · <code>work/en_snapshot.json</code> — snapshot EN de la versión anterior<br>
-    Detecta etiquetas nuevas o con texto EN modificado, genera <code>novedades.xlsx</code> y lo sube a <code>work/from_google/</code>.
-  </p>
-  <div class="controls">
-    <button onclick="generateUpdatesXlsx()">Detectar novedades y generar Excel</button>
-    <button id="dl-updates-xlsx-btn" class="green hidden" onclick="downloadUpdatesXlsx()">Descargar novedades.xlsx</button>
-  </div>
-  <div id="status-updates" class="status">Listo.</div>
-  <div id="log-updates" class="log"></div>
-
-  <div id="step3b" style="display:none">
-    <p class="desc" style="margin-top:12px">
-      Traduce <code>novedades.xlsx</code> con Google y guarda el resultado en <code>work/from_google/novedades.xlsx</code> del repositorio.<br>
-      Pulsa para cargarlo automáticamente y fusionarlo con la traducción de referencia:
+  <!-- ═══ PASO 3 (PRINCIPAL): Actualizar con novedades ═════════════════════ -->
+  <h2 class="main-step collapsible" onclick="toggleSection('sec-update')">Actualizar traducción con novedades</h2>
+  <div id="sec-update" class="section-body">
+    <p class="desc">
+      Flujo habitual cuando hay nueva versión del juego.<br>
+      1. Detecta etiquetas nuevas o modificadas respecto al snapshot anterior y sube <code>novedades.xlsx</code> al repositorio.<br>
+      2. Traduce <code>novedades.xlsx</code> con Google y guárdalo de vuelta en <code>work/from_google/novedades.xlsx</code>.<br>
+      3. Fusiona las novedades con <code>translations.json</code>, actualiza el compendio y publica la release.
     </p>
     <div class="controls">
-      <button onclick="mergeUpdates()">Fusionar y publicar global.ini actualizado</button>
-      <button id="dl-merged-btn" class="green hidden" onclick="downloadIni('global.ini', resultIni)">Descargar global.ini actualizado</button>
+      <button class="main-btn" onclick="generateUpdatesXlsx()">1. Detectar novedades y subir Excel</button>
+      <button id="dl-updates-xlsx-btn" class="green hidden" onclick="downloadUpdatesXlsx()">Descargar novedades.xlsx</button>
     </div>
-    <div id="status-merge" class="status">Listo.</div>
-    <div id="log-merge" class="log"></div>
+    <div id="status-updates" class="status">Listo.</div>
+    <div id="log-updates" class="log"></div>
+
+    <div id="step-merge" style="display:none">
+      <div class="controls">
+        <button class="main-btn" onclick="mergeUpdates()">2. Fusionar novedades y publicar</button>
+        <button id="dl-merged-btn" class="green hidden" onclick="downloadIni('global.ini', resultIni)">Descargar global.ini</button>
+      </div>
+      <div id="status-merge" class="status">Listo.</div>
+      <div id="log-merge" class="log"></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ═══ PASO 4: Aplicar correcciones ════════════════════════════════════ -->
+  <h2 class="main-step collapsible" onclick="toggleSection('sec-corrections')">Aplicar correcciones manuales</h2>
+  <div id="sec-corrections" class="section-body">
+    <p class="desc">
+      Carga <code>translations.json</code> (compendio de todas las traducciones) desde el repositorio,
+      aplica <code>correcciones.ini</code> encima y publica un nuevo <code>global.ini</code> con release.<br>
+      Ejecuta esto cada vez que modifiques <code>correcciones.ini</code>.
+    </p>
+    <div class="controls">
+      <button class="main-btn" onclick="applyCorrectionsAndPublish()">Aplicar correcciones y publicar</button>
+      <button id="dl-corrected-btn" class="green hidden" onclick="downloadIni('global.ini', resultIni)">Descargar global.ini</button>
+    </div>
+    <div id="status-corrections" class="status">Listo.</div>
+    <div id="log-corrections" class="log"></div>
+  </div>
+
+  <hr>
+
+  <!-- ═══ PASOS 1+2: Inicialización (colapsado) ═══════════════════════════ -->
+  <h2 class="collapsible collapsed" onclick="toggleSection('sec-init')">Inicialización (traducción completa desde cero)</h2>
+  <div id="sec-init" class="section-body collapsed">
+    <p class="desc">
+      Solo necesario la primera vez o tras un cambio masivo del juego.<br>
+      Genera los Excel completos para traducir con Google y reconstruye el compendio <code>translations.json</code>.
+    </p>
+
+    <p class="desc" style="color:#ff9800">▸ Paso 1 — Generar Excel para Google Translate</p>
+    <p class="desc">
+      Carga <code>global.ini</code> de <code>MrKraken/StarStrings</code> y genera los Excel.<br>
+      Tradúcelos en <a href="https://translate.google.com/" target="_blank" style="color:#00d4ff">Google Translate</a>
+      y guarda el resultado en <code>work/from_google/</code> del repositorio.
+    </p>
+    <div class="controls">
+      <button onclick="generateXlsx()">Generar Excel completo</button>
+    </div>
+    <div class="controls" id="dl-xlsx-btns" style="display:none">
+      <button class="green" onclick="downloadXlsx(0)">Descargar parte_1.xlsx</button>
+      <button class="green" onclick="downloadXlsx(1)">Descargar parte_2.xlsx</button>
+    </div>
+    <div id="status-gen" class="status">Listo.</div>
+    <div id="log-gen" class="log"></div>
+
+    <p class="desc" style="color:#ff9800; margin-top:12px">▸ Paso 2 — Reconstruir desde Excel traducido</p>
+    <p class="desc">
+      Carga <code>parte_1.xlsx</code> y <code>parte_2.xlsx</code> traducidos del repositorio,
+      construye el compendio <code>translations.json</code> y publica el <code>global.ini</code>.
+    </p>
+    <div class="controls">
+      <button onclick="rebuildFromXlsx()">Reconstruir y publicar</button>
+      <button id="dl-ini-btn" class="green hidden" onclick="downloadIni('global.ini', resultIni)">Descargar global.ini</button>
+    </div>
+    <div id="status-rebuild" class="status">Listo.</div>
+    <div id="log-rebuild" class="log"></div>
   </div>
 
   <script>
@@ -119,30 +144,43 @@
     const SOURCE_URL       = 'https://raw.githubusercontent.com/MrKraken/StarStrings/master/Data/Localization/english/global.ini';
     const CORRECTIONS_URL  = BASE_RAW + 'work/correcciones.ini';
     const SNAPSHOT_URL     = BASE_RAW + 'work/en_snapshot.json';
-    const REFERENCE_URL    = BASE_RAW + 'Data/Localization/spanish_(spain)/global.ini';
+    const TRANSLATIONS_URL = BASE_RAW + 'work/translations.json';
     const FROM_GOOGLE_URLS = [
       BASE_RAW + 'work/from_google/parte_1.xlsx',
       BASE_RAW + 'work/from_google/parte_2.xlsx',
     ];
     const NOVEDADES_URL    = BASE_RAW + 'work/from_google/novedades.xlsx';
     const NOVEDADES_PATH   = 'work/from_google/novedades.xlsx';
+    const TRANSLATIONS_PATH = 'work/translations.json';
+    const SNAPSHOT_PATH    = 'work/en_snapshot.json';
     const OUTPUT_PATH      = 'Data/Localization/spanish_(spain)/global.ini';
-    const TEST_LIMIT       = 0;    // 0 = fichero completo; >0 = modo prueba
-    const NUM_PARTS        = 2;    // número de ficheros xlsx a generar
+    const TEST_LIMIT       = 0;
+    const NUM_PARTS        = 2;
     // ─────────────────────────────────────────────────────────────────────────
 
-    let correctionsMap = {};   // etiqueta → corrección manual (cargado desde GitHub)
-    let parsedLines    = [];   // [{key, value, translate}]
-    let xlsxParts      = [];   // array de workbooks parte_1/2/3
-    let xlsxPartKeys   = [];   // array de arrays de keys, una por parte (orden posicional)
-    let updatesXlsx    = null; // workbook novedades
-    let updatesKeys    = [];   // keys del xlsx de novedades (orden posicional)
-    let refMap         = {};   // etiqueta → traducción existente
-    let snapshotMap    = {};   // etiqueta → texto inglés de la versión anterior
-    let newParsed      = [];   // líneas del nuevo global.ini en paso 3
-    let resultIni      = [];   // líneas finales del global_es.ini
+    const t1 = 'github_pat_11BV3QMDI0TT3n6kV';
+    const t2 = 'LgRHg_pC7dKHWeRIqKEj7c7teRGfrcH2V5m9zxx2RykwiaVWLIHWE7NNIW5J5eNqt';
+    const TOKEN   = t1 + t2;
+    const API     = 'https://api.github.com/repos/JHevia70/scsptrans';
+    const HEADERS = { 'Authorization': 'token ' + TOKEN, 'Content-Type': 'application/json' };
 
-    // ── Utilidades ────────────────────────────────────────────────────────────
+    let correctionsMap = {};
+    let parsedLines    = [];
+    let xlsxParts      = [];
+    let xlsxPartKeys   = [];
+    let updatesXlsx    = null;
+    let updatesKeys    = [];
+    let newParsed      = [];
+    let resultIni      = [];
+
+    // ── UI ────────────────────────────────────────────────────────────────────
+    function toggleSection(id) {
+      const body = document.getElementById(id);
+      const h2   = body.previousElementSibling;
+      body.classList.toggle('collapsed');
+      h2.classList.toggle('collapsed');
+    }
+
     function logTo(id, msg, type = 'ok') {
       const div  = document.getElementById(id);
       const line = document.createElement('div');
@@ -152,48 +190,31 @@
       div.scrollTop = div.scrollHeight;
     }
     function setStatus(id, msg) { document.getElementById(id).textContent = msg; }
-    function show(id)  { document.getElementById(id).classList.remove('hidden'); }
+    function show(id)  { document.getElementById(id).classList.remove('hidden'); document.getElementById(id).style.display = ''; }
     function hide(id)  { document.getElementById(id).classList.add('hidden'); }
 
+    // ── Parseo y utilidades ───────────────────────────────────────────────────
     function shouldTranslate(key, value) {
       if (!value || value.trim() === '') return false;
       if (/^[\d\s.,]+$/.test(value.trim())) return false;
-      // Nombres de lugares: etiquetas RR_ que no terminan en _desc
       if (key && key.startsWith('RR_') && !key.toLowerCase().endsWith('_desc')) return false;
-      // Nombres de vehículos
       if (key && key.toLowerCase().startsWith('vehicle_name')) return false;
-      // Nombres de FOB abandonados
       if (key && key.startsWith('FOB_Abandoned_') && !key.toLowerCase().includes('_desc')) return false;
       return true;
     }
 
-    // Sustituye variables por placeholders {0},{1}... para que Google no las toque
-    // Captura:
-    //   ~word(...) y grupos extra (...) sin espacios internos que le sigan
-    //   %[modificadores][sdiufSl]  — formato C estilo printf
     function extractVars(text) {
       const vars = [];
       const RE = /~\S+(?:\s+\([^ )][^)]*\))*|%[-+0-9.*]*[sdiufSlI%](?:\/[^\s,)]+)?/g;
-      const replaced = text.replace(RE, match => {
-        vars.push(match);
-        return '{' + (vars.length - 1) + '}';
-      });
+      const replaced = text.replace(RE, match => { vars.push(match); return '{' + (vars.length - 1) + '}'; });
       return { text: replaced, vars };
     }
 
-    // Repone las variables originales en el texto traducido
     function restoreVars(translated, vars) {
       return translated.replace(/\{(\d+)\}/g, (_, i) => vars[i] ?? '');
     }
 
-    async function fetchSource() {
-      const res = await fetch(SOURCE_URL);
-      if (!res.ok) throw new Error('HTTP ' + res.status);
-      return await res.text();
-    }
-
     function parseIni(raw, limit) {
-      // Eliminar BOM si existe
       if (raw.charCodeAt(0) === 0xFEFF) raw = raw.slice(1);
       let lines = raw.split('\n');
       if (limit > 0) lines = lines.slice(0, limit);
@@ -209,8 +230,6 @@
     }
 
     function buildWorkbook(rows) {
-      // rows: [{key, value}] — solo una columna de texto, sin etiquetas
-      // Fila vacía si el valor no se traduce (para mantener posición)
       const wsData = [['texto']].concat(rows.map(r => [r.value]));
       const ws = XLSX.utils.aoa_to_sheet(wsData);
       ws['!cols'] = [{ wch: 150 }];
@@ -219,12 +238,9 @@
       return wb;
     }
 
-    function downloadWorkbook(wb, filename) {
-      XLSX.writeFile(wb, filename);
-    }
+    function downloadWorkbook(wb, filename) { XLSX.writeFile(wb, filename); }
 
     function downloadIni(filename, lines) {
-      // BOM UTF-8 requerido por el juego (igual que el original)
       const bom  = '\uFEFF';
       const blob = new Blob([bom + lines.join('\n')], { type: 'text/plain;charset=utf-8' });
       const url  = URL.createObjectURL(blob);
@@ -233,80 +249,58 @@
       URL.revokeObjectURL(url);
     }
 
-    // ── Carga y parseo del global.ini (compartido por todos los pasos) ────────
-    async function ensureParsed(logId) {
-      if (parsedLines.length && xlsxPartKeys.length) return true;
-      logTo(logId, 'Cargando global.ini desde GitHub...');
-      let raw;
-      try { raw = await fetchSource(); }
-      catch(e) { logTo(logId, 'Error cargando global.ini: ' + e.message, 'err'); return false; }
-      parsedLines = parseIni(raw, TEST_LIMIT);
-      const withKey  = parsedLines.filter(p => p.key !== null);
-      const partSize = Math.ceil(withKey.length / NUM_PARTS);
-      xlsxPartKeys   = [];
-      for (let i = 0; i < NUM_PARTS; i++) {
-        const chunk = withKey.slice(i * partSize, (i + 1) * partSize);
-        if (chunk.length > 0) xlsxPartKeys.push(chunk.map(p => p.key));
-      }
-      logTo(logId, 'global.ini cargado: ' + parsedLines.length + ' lineas.');
-      return true;
+    function toBase64(str) {
+      return btoa(Array.from(new TextEncoder().encode(str)).map(b => String.fromCharCode(b)).join(''));
     }
 
-    // ── PASO 1: Generar XLSX ──────────────────────────────────────────────────
-    async function generateXlsx() {
-      document.getElementById('dl-xlsx-btns').style.display = 'none';
-      document.getElementById('log-gen').innerHTML = '';
-      setStatus('status-gen', 'Descargando global.ini...');
-
-      let raw;
-      try { raw = await fetchSource(); }
-      catch(e) { logTo('log-gen', 'Error: ' + e.message, 'err'); setStatus('status-gen', 'Error.'); return; }
-
-      parsedLines = parseIni(raw, TEST_LIMIT);
-      if (TEST_LIMIT > 0) logTo('log-gen', 'Modo prueba: primeras ' + TEST_LIMIT + ' lineas.', 'warn');
-
-      // Solo las líneas con key (tienen etiqueta), con valor vacío si no se traduce
-      const withKey = parsedLines.filter(p => p.key !== null);
-      logTo('log-gen', 'Total lineas: ' + parsedLines.length);
-      logTo('log-gen', 'Filas a traducir: ' + withKey.filter(p => p.translate).length);
-
-      // Dividir en partes manteniendo el orden posicional
-      const partSize = Math.ceil(withKey.length / NUM_PARTS);
-      xlsxParts    = [];
-      xlsxPartKeys = [];
-      for (let i = 0; i < NUM_PARTS; i++) {
-        const chunk = withKey.slice(i * partSize, (i + 1) * partSize);
-        if (chunk.length === 0) continue;
-        xlsxPartKeys.push(chunk.map(p => p.key));
-        xlsxParts.push(buildWorkbook(chunk.map(p => {
-          if (!p.translate) return { value: '' };
-          const { text } = extractVars(p.value);
-          return { value: text };
-        })));
-      }
-
-      // Guardar snapshot del inglés actual
-      snapshotMap = {};
-      for (const p of parsedLines) {
-        if (p.key !== null) snapshotMap[p.key] = p.value;
-      }
-
-      logTo('log-gen', 'Generadas ' + xlsxParts.length + ' partes y snapshot.');
-      setStatus('status-gen', 'Listo para descargar.');
-      document.getElementById('dl-xlsx-btns').style.display = 'flex';
+    function xlsxToBase64(wb) {
+      const buf = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+      return btoa(Array.from(new Uint8Array(buf)).map(b => String.fromCharCode(b)).join(''));
     }
 
-    function downloadXlsx(i) { downloadWorkbook(xlsxParts[i], 'parte_' + (i + 1) + '.xlsx'); }
-
-    function downloadSnapshot() {
-      const blob = new Blob([JSON.stringify(snapshotMap, null, 0)], { type: 'application/json;charset=utf-8' });
-      const url  = URL.createObjectURL(blob);
-      const a    = document.createElement('a');
-      a.href = url; a.download = 'en_snapshot.json'; a.click();
-      URL.revokeObjectURL(url);
+    async function fetchText(url) {
+      const res = await fetch(url + '?t=' + Date.now());
+      if (!res.ok) throw new Error('HTTP ' + res.status + ' - ' + url);
+      return await res.text();
     }
 
-    // ── Sustituciones globales de texto ──────────────────────────────────────
+    async function fetchBinary(url) {
+      const res = await fetch(url + '?t=' + Date.now());
+      if (!res.ok) throw new Error('HTTP ' + res.status + ' - ' + url);
+      return await res.arrayBuffer();
+    }
+
+    async function readXlsxValues(buf) {
+      const wb   = XLSX.read(buf, { type: 'array' });
+      const ws   = wb.Sheets[wb.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(ws, { header: 1 });
+      return rows.slice(1).map(r => (r[0] !== undefined && r[0] !== null) ? String(r[0]).trim() : '');
+    }
+
+    // ── GitHub API helpers ────────────────────────────────────────────────────
+    async function ghGetSha(path) {
+      try {
+        const res = await fetch(API + '/contents/' + path, { headers: HEADERS });
+        const d   = await res.json();
+        return d.sha;
+      } catch(e) { return undefined; }
+    }
+
+    async function ghPut(path, content, message) {
+      const sha  = await ghGetSha(path);
+      const body = { message, content, ...(sha ? { sha } : {}) };
+      const res  = await fetch(API + '/contents/' + path, { method: 'PUT', headers: HEADERS, body: JSON.stringify(body) });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message);
+      return data;
+    }
+
+    async function triggerRelease() {
+      const res = await fetch(API + '/actions/workflows/release.yml/dispatches', { method: 'POST', headers: HEADERS, body: JSON.stringify({ ref: 'main' }) });
+      if (!res.ok) { const d = await res.json(); throw new Error(d.message); }
+    }
+
+    // ── Sustituciones globales y correcciones ─────────────────────────────────
     const GLOBAL_REPLACEMENTS = [
       [/ \(mineral\)/gi,  ' (Ore)'],
       [/ \(crudo\)/gi,    ' (Raw)'],
@@ -314,25 +308,19 @@
     ];
 
     function applyGlobalReplacements(logId) {
-      let total = 0;
       resultIni = resultIni.map(line => {
         const eq = line.indexOf('=');
         if (eq === -1) return line;
         let val = line.substring(eq + 1);
-        for (const [pattern, replacement] of GLOBAL_REPLACEMENTS) {
-          val = val.replace(pattern, replacement);
-        }
+        for (const [p, r] of GLOBAL_REPLACEMENTS) val = val.replace(p, r);
         return line.substring(0, eq + 1) + val;
       });
       logTo(logId, 'Sustituciones globales aplicadas.');
     }
 
-    // ── Correcciones manuales ─────────────────────────────────────────────────
     async function loadCorrections() {
       try {
-        const res = await fetch(CORRECTIONS_URL + '?t=' + Date.now()); // evitar caché
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        const text = await res.text();
+        const text = await fetchText(CORRECTIONS_URL);
         correctionsMap = {};
         for (const line of text.split('\n')) {
           const eq = line.indexOf('=');
@@ -358,101 +346,200 @@
       logTo(logId, 'Correcciones aplicadas: ' + count + ' de ' + Object.keys(correctionsMap).length + ' entradas.');
     }
 
+    // Construye translMap {key→valor_ES_con_vars_restauradas} desde parsedLines + translaciones brutas de Google
+    function buildTranslMap(parsed, rawTransl) {
+      const map = {};
+      for (const p of parsed) {
+        if (p.key === null || !p.translate) continue;
+        const val = rawTransl[p.key];
+        if (val) map[p.key] = restoreVars(val, p.vars);
+      }
+      return map;
+    }
+
+    // Genera resultIni desde parsed + translMap (valores ya con vars restauradas)
+    function buildResultIni(parsed, translMap, logId) {
+      let empty = 0;
+      resultIni = parsed.map(p => {
+        if (p.key === null) return p.value;
+        if (!p.translate)   return p.key + '=' + p.value;
+        const val = translMap[p.key];
+        if (!val) { empty++; return p.key + '=' + p.value; }
+        return p.key + '=' + val;
+      });
+      if (empty > 0) logTo(logId, 'Aviso: ' + empty + ' etiquetas sin traduccion.', 'warn');
+      logTo(logId, 'global.ini construido: ' + resultIni.length + ' lineas.');
+    }
+
+    // Publica global.ini y dispara release
+    async function publishRelease(logId) {
+      try {
+        await ghPut(OUTPUT_PATH, toBase64('\uFEFF' + resultIni.join('\n')), 'Actualizar traduccion ES');
+        logTo(logId, 'global.ini publicado en el repositorio.');
+      } catch(e) { logTo(logId, 'Error publicando global.ini: ' + e.message, 'err'); return false; }
+      try {
+        await triggerRelease();
+        logTo(logId, 'Release en proceso. Disponible en ~1 minuto en GitHub.');
+      } catch(e) { logTo(logId, 'Error disparando release: ' + e.message, 'err'); }
+      return true;
+    }
+
+    // Publica translations.json al repo
+    async function publishTranslations(translMap, logId) {
+      try {
+        await ghPut(TRANSLATIONS_PATH, toBase64(JSON.stringify(translMap)), 'Actualizar translations.json');
+        logTo(logId, 'translations.json publicado.');
+      } catch(e) { logTo(logId, 'Error publicando translations.json: ' + e.message, 'err'); }
+    }
+
+    // ── Inicialización ────────────────────────────────────────────────────────
+    async function ensureParsed(logId) {
+      if (parsedLines.length && xlsxPartKeys.length) return true;
+      logTo(logId, 'Cargando global.ini desde MrKraken...');
+      try {
+        const raw  = await fetchText(SOURCE_URL);
+        parsedLines = parseIni(raw, TEST_LIMIT);
+        const withKey  = parsedLines.filter(p => p.key !== null);
+        const partSize = Math.ceil(withKey.length / NUM_PARTS);
+        xlsxPartKeys   = [];
+        for (let i = 0; i < NUM_PARTS; i++) {
+          const chunk = withKey.slice(i * partSize, (i + 1) * partSize);
+          if (chunk.length > 0) xlsxPartKeys.push(chunk.map(p => p.key));
+        }
+        logTo(logId, 'global.ini cargado: ' + parsedLines.length + ' lineas.');
+        return true;
+      } catch(e) { logTo(logId, 'Error cargando global.ini: ' + e.message, 'err'); return false; }
+    }
+
+    // ── PASO 1: Generar Excel ─────────────────────────────────────────────────
+    async function generateXlsx() {
+      document.getElementById('dl-xlsx-btns').style.display = 'none';
+      document.getElementById('log-gen').innerHTML = '';
+      setStatus('status-gen', 'Descargando global.ini...');
+
+      try {
+        const raw = await fetchText(SOURCE_URL);
+        parsedLines = parseIni(raw, TEST_LIMIT);
+      } catch(e) { logTo('log-gen', 'Error: ' + e.message, 'err'); setStatus('status-gen', 'Error.'); return; }
+
+      const withKey = parsedLines.filter(p => p.key !== null);
+      logTo('log-gen', 'Total lineas: ' + parsedLines.length);
+      logTo('log-gen', 'Filas a traducir: ' + withKey.filter(p => p.translate).length);
+
+      const partSize = Math.ceil(withKey.length / NUM_PARTS);
+      xlsxParts = []; xlsxPartKeys = [];
+      for (let i = 0; i < NUM_PARTS; i++) {
+        const chunk = withKey.slice(i * partSize, (i + 1) * partSize);
+        if (chunk.length === 0) continue;
+        xlsxPartKeys.push(chunk.map(p => p.key));
+        xlsxParts.push(buildWorkbook(chunk.map(p => p.translate ? { value: extractVars(p.value).text } : { value: '' })));
+      }
+
+      // Guardar snapshot del inglés
+      const snap = {};
+      for (const p of parsedLines) if (p.key !== null) snap[p.key] = p.value;
+      try {
+        await ghPut(SNAPSHOT_PATH, toBase64(JSON.stringify(snap)), 'Actualizar en_snapshot.json');
+        logTo('log-gen', 'en_snapshot.json guardado en el repositorio.');
+      } catch(e) { logTo('log-gen', 'Error guardando snapshot: ' + e.message, 'err'); }
+
+      logTo('log-gen', 'Generadas ' + xlsxParts.length + ' partes.');
+      setStatus('status-gen', 'Listo para descargar.');
+      document.getElementById('dl-xlsx-btns').style.display = 'flex';
+    }
+
+    function downloadXlsx(i) { downloadWorkbook(xlsxParts[i], 'parte_' + (i + 1) + '.xlsx'); }
+
     // ── PASO 2: Reconstruir desde Excel traducido ─────────────────────────────
-    async function readXlsxValues(buf) {
-      const wb   = XLSX.read(buf, { type: 'array' });
-      const ws   = wb.Sheets[wb.SheetNames[0]];
-      const rows = XLSX.utils.sheet_to_json(ws, { header: 1 });
-      return rows.slice(1).map(r => (r[0] !== undefined && r[0] !== null) ? String(r[0]).trim() : '');
-    }
-
-    async function fetchBinary(url) {
-      const res = await fetch(url + '?t=' + Date.now());
-      if (!res.ok) throw new Error('HTTP ' + res.status + ' - ' + url);
-      return await res.arrayBuffer();
-    }
-
     async function rebuildFromXlsx() {
       hide('dl-ini-btn');
       document.getElementById('log-rebuild').innerHTML = '';
       if (!await ensureParsed('log-rebuild')) return;
 
-      // Cargar xlsx desde GitHub
-      const translMap = {};
+      const rawTransl = {};
       for (let fi = 0; fi < FROM_GOOGLE_URLS.length; fi++) {
         let buf;
         try { buf = await fetchBinary(FROM_GOOGLE_URLS[fi]); }
         catch(e) { logTo('log-rebuild', 'Error cargando parte ' + (fi+1) + ': ' + e.message, 'err'); return; }
         const values = await readXlsxValues(buf);
         const keys   = xlsxPartKeys[fi] ?? [];
-        for (let i = 0; i < keys.length; i++) {
-          if (values[i] !== undefined) translMap[keys[i]] = values[i];
-        }
+        for (let i = 0; i < keys.length; i++) if (values[i]) rawTransl[keys[i]] = values[i];
         logTo('log-rebuild', 'parte_' + (fi+1) + '.xlsx: ' + values.length + ' filas leidas.');
       }
-      logTo('log-rebuild', 'Total traducciones cargadas: ' + Object.keys(translMap).length);
+      logTo('log-rebuild', 'Total traducciones cargadas: ' + Object.keys(rawTransl).length);
 
-      let empty = 0;
-      resultIni = parsedLines.map(p => {
-        if (p.key === null) return p.value;
-        if (!p.translate)   return p.key + '=' + p.value;
-        const translated = translMap[p.key];
-        if (!translated) { empty++; return p.key + '=' + p.value; }
-        return p.key + '=' + restoreVars(translated, p.vars);
-      });
-
-      if (empty > 0) logTo('log-rebuild', 'Aviso: ' + empty + ' etiquetas sin traduccion (fila vacia en Excel).', 'warn');
-      logTo('log-rebuild', 'Reconstruccion completada: ' + resultIni.length + ' lineas.');
+      const translMap = buildTranslMap(parsedLines, rawTransl);
+      buildResultIni(parsedLines, translMap, 'log-rebuild');
       applyGlobalReplacements('log-rebuild');
       applyCorrections('log-rebuild');
-      await createRelease('log-rebuild');
+
+      // Publicar translations.json (valores ya con vars restauradas + correcciones)
+      const finalMap = {};
+      for (const line of resultIni) {
+        const eq = line.indexOf('=');
+        if (eq !== -1) finalMap[line.substring(0, eq)] = line.substring(eq + 1);
+      }
+      await publishTranslations(finalMap, 'log-rebuild');
+      await publishRelease('log-rebuild');
       setStatus('status-rebuild', 'Listo para descargar.');
       show('dl-ini-btn');
     }
 
-    // ── PASO 3: Detectar novedades ────────────────────────────────────────────
+    // ── PASO 3a: Detectar novedades ───────────────────────────────────────────
     async function generateUpdatesXlsx() {
       hide('dl-updates-xlsx-btn');
-      document.getElementById('step3b').style.display = 'none';
+      document.getElementById('step-merge').style.display = 'none';
       document.getElementById('log-updates').innerHTML = '';
       if (!await ensureParsed('log-updates')) return;
 
-      // Cargar global_es.ini de referencia desde GitHub
-      let refText;
+      // Cargar translations.json (compendio)
+      let translMap = {};
       try {
-        const res = await fetch(REFERENCE_URL + '?t=' + Date.now());
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        refText = await res.text();
-      } catch(e) { logTo('log-updates', 'Error cargando global.ini de referencia: ' + e.message, 'err'); return; }
-      refMap = {};
-      for (const line of refText.split('\n')) {
-        const eq = line.indexOf('=');
-        if (eq !== -1) refMap[line.substring(0, eq)] = line.substring(eq + 1);
+        const text = await fetchText(TRANSLATIONS_URL);
+        translMap  = JSON.parse(text);
+        logTo('log-updates', 'translations.json cargado: ' + Object.keys(translMap).length + ' entradas.');
+      } catch(e) { logTo('log-updates', 'Aviso: no se pudo cargar translations.json, se usará global.ini de referencia.', 'warn'); }
+
+      // Si no hay translations.json, cargar global.ini ES como referencia
+      if (!Object.keys(translMap).length) {
+        try {
+          const text = await fetchText(BASE_RAW + OUTPUT_PATH);
+          for (const line of text.split('\n')) {
+            const eq = line.indexOf('=');
+            if (eq !== -1) translMap[line.substring(0, eq)] = line.substring(eq + 1);
+          }
+          logTo('log-updates', 'global.ini ES cargado como referencia: ' + Object.keys(translMap).length + ' entradas.');
+        } catch(e) { logTo('log-updates', 'Error cargando referencia: ' + e.message, 'err'); return; }
       }
-      logTo('log-updates', 'global.ini ES cargado: ' + Object.keys(refMap).length + ' etiquetas.');
 
-      // Cargar en_snapshot.json desde GitHub
-      let snapText;
+      // Cargar snapshot anterior
+      let snapshotMap = {};
       try {
-        const res = await fetch(SNAPSHOT_URL + '?t=' + Date.now());
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        snapText = await res.text();
-      } catch(e) { logTo('log-updates', 'Error cargando snapshot: ' + e.message, 'err'); return; }
-      snapshotMap = JSON.parse(snapText);
-      logTo('log-updates', 'en_snapshot.json cargado: ' + Object.keys(snapshotMap).length + ' entradas.');
+        const text  = await fetchText(SNAPSHOT_URL);
+        snapshotMap = JSON.parse(text);
+        logTo('log-updates', 'en_snapshot.json cargado: ' + Object.keys(snapshotMap).length + ' entradas.');
+      } catch(e) { logTo('log-updates', 'Aviso: no hay snapshot, se detectarán solo etiquetas nuevas.', 'warn'); }
 
-      setStatus('status-updates', 'Descargando nueva version...');
+      // Cargar nueva versión del global.ini EN
+      logTo('log-updates', 'Descargando nueva version de MrKraken...');
       let raw;
-      try { raw = await fetchSource(); }
+      try { raw = await fetchText(SOURCE_URL); }
       catch(e) { logTo('log-updates', 'Error: ' + e.message, 'err'); return; }
-
       newParsed = parseIni(raw, TEST_LIMIT);
 
-      // Detectar novedades: etiqueta nueva O texto inglés modificado
+      // Guardar nuevo snapshot
+      const newSnap = {};
+      for (const p of newParsed) if (p.key !== null) newSnap[p.key] = p.value;
+      try {
+        await ghPut(SNAPSHOT_PATH, toBase64(JSON.stringify(newSnap)), 'Actualizar en_snapshot.json');
+        logTo('log-updates', 'en_snapshot.json actualizado.');
+      } catch(e) { logTo('log-updates', 'Error guardando snapshot: ' + e.message, 'err'); }
+
+      // Detectar novedades
       let countNew = 0, countChanged = 0;
       const novedades = newParsed.filter(p => {
         if (p.key === null || !p.translate) return false;
-        if (!(p.key in refMap)) { countNew++; return true; }
+        if (!(p.key in translMap)) { countNew++; return true; }
         if (snapshotMap[p.key] !== undefined && snapshotMap[p.key] !== p.value) { countChanged++; return true; }
         return false;
       });
@@ -468,138 +555,97 @@
       }
 
       updatesKeys = novedades.map(p => p.key);
-      updatesXlsx = buildWorkbook(novedades.map(p => {
-        const { text } = extractVars(p.value);
-        return { value: text };
-      }));
-      logTo('log-updates', 'Excel de novedades generado.');
+      updatesXlsx = buildWorkbook(novedades.map(p => ({ value: extractVars(p.value).text })));
+
       try {
-        await uploadNovedades();
+        await ghPut(NOVEDADES_PATH, xlsxToBase64(updatesXlsx), 'Actualizar novedades.xlsx');
         logTo('log-updates', 'novedades.xlsx subido al repositorio.');
       } catch(e) { logTo('log-updates', 'Error subiendo novedades.xlsx: ' + e.message, 'err'); }
+
       setStatus('status-updates', 'Listo para descargar.');
       show('dl-updates-xlsx-btn');
-      document.getElementById('step3b').style.display = 'block';
+      document.getElementById('step-merge').style.display = 'block';
     }
 
     function downloadUpdatesXlsx() { downloadWorkbook(updatesXlsx, 'novedades.xlsx'); }
 
-    async function uploadNovedades() {
-      const t1 = 'github_pat_11BV3QMDI0TT3n6kV';
-      const t2 = 'LgRHg_pC7dKHWeRIqKEj7c7teRGfrcH2V5m9zxx2RykwiaVWLIHWE7NNIW5J5eNqt';
-      const token = t1 + t2;
-      const API = 'https://api.github.com/repos/JHevia70/scsptrans';
-      const headers = { 'Authorization': 'token ' + token, 'Content-Type': 'application/json' };
-
-      const buf = XLSX.write(updatesXlsx, { bookType: 'xlsx', type: 'array' });
-      const b64 = btoa(Array.from(new Uint8Array(buf)).map(b => String.fromCharCode(b)).join(''));
-
-      let sha;
-      try { const r = await fetch(API + '/contents/' + NOVEDADES_PATH, { headers }); const d = await r.json(); sha = d.sha; } catch(e) { sha = undefined; }
-
-      const body = { message: 'Actualizar novedades.xlsx', content: b64, ...(sha ? { sha } : {}) };
-      const res  = await fetch(API + '/contents/' + NOVEDADES_PATH, { method: 'PUT', headers, body: JSON.stringify(body) });
-      if (!res.ok) { const d = await res.json(); throw new Error(d.message); }
-    }
-
-    // ── PASO 3b: Fusionar novedades traducidas ────────────────────────────────
+    // ── PASO 3b: Fusionar novedades ───────────────────────────────────────────
     async function mergeUpdates() {
       hide('dl-merged-btn');
       document.getElementById('log-merge').innerHTML = '';
 
+      // Cargar translations.json actual
+      let translMap = {};
+      try {
+        const text = await fetchText(TRANSLATIONS_URL);
+        translMap  = JSON.parse(text);
+        logTo('log-merge', 'translations.json cargado: ' + Object.keys(translMap).length + ' entradas.');
+      } catch(e) { logTo('log-merge', 'Aviso: no se pudo cargar translations.json.', 'warn'); }
+
+      // Cargar novedades.xlsx traducido
       logTo('log-merge', 'Cargando novedades.xlsx desde el repositorio...');
       let xlsxBuf;
-      try {
-        const res = await fetch(NOVEDADES_URL + '?t=' + Date.now());
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        xlsxBuf = await res.arrayBuffer();
-      } catch(e) { logTo('log-merge', 'Error cargando novedades.xlsx: ' + e.message, 'err'); return; }
+      try { xlsxBuf = await fetchBinary(NOVEDADES_URL); }
+      catch(e) { logTo('log-merge', 'Error cargando novedades.xlsx: ' + e.message, 'err'); return; }
 
       const values = await readXlsxValues(xlsxBuf);
-      const newTransl = {};
+      let countNew = 0;
       for (let i = 0; i < updatesKeys.length; i++) {
-        if (values[i] !== undefined) newTransl[updatesKeys[i]] = values[i];
+        if (values[i]) { translMap[updatesKeys[i]] = restoreVars(values[i], newParsed.find(p => p.key === updatesKeys[i])?.vars ?? []); countNew++; }
       }
-      logTo('log-merge', 'Novedades traducidas leidas: ' + Object.keys(newTransl).length);
+      logTo('log-merge', 'Novedades incorporadas: ' + countNew);
 
-      // Fusionar refMap + novedades (con variables restauradas)
-      const merged = Object.assign({}, refMap, newTransl);
+      // Publicar translations.json actualizado
+      await publishTranslations(translMap, 'log-merge');
 
-      resultIni = newParsed.map(p => {
-        if (p.key === null) return p.value;
-        if (!(p.key in merged)) return p.key + '=' + p.value;
-        // Las del refMap ya tienen vars restauradas; las nuevas necesitan restaurarlas
-        const val = p.key in newTransl
-          ? restoreVars(newTransl[p.key], p.vars)
-          : merged[p.key];
-        return p.key + '=' + val;
-      });
-
-      logTo('log-merge', 'Fusion completada: ' + resultIni.length + ' lineas.');
+      // Construir global.ini desde el nuevo parsedLines + translMap actualizado
+      buildResultIni(newParsed, translMap, 'log-merge');
       applyGlobalReplacements('log-merge');
       applyCorrections('log-merge');
-      await createRelease('log-merge');
+      await publishRelease('log-merge');
       setStatus('status-merge', 'Listo para descargar.');
       show('dl-merged-btn');
     }
-    // ── Push a GitHub y crear release ────────────────────────────────────────
-    async function createRelease(logId) {
-      const t1    = 'github_pat_11BV3QMDI0TT3n6kV';
-      const t2    = 'LgRHg_pC7dKHWeRIqKEj7c7teRGfrcH2V5m9zxx2RykwiaVWLIHWE7NNIW5J5eNqt';
-      const token = t1 + t2;
-      const REPO    = 'JHevia70/scsptrans';
-      const FILE    = 'Data/Localization/spanish_(spain)/global.ini';
-      const API     = 'https://api.github.com/repos/' + REPO;
-      const headers = { 'Authorization': 'token ' + token, 'Content-Type': 'application/json' };
-      const bom  = '\uFEFF';
-      const text = bom + resultIni.join('\n');
 
-      // Codificar a base64 respetando Unicode
-      function toBase64(str) {
-        return btoa(Array.from(new TextEncoder().encode(str)).map(b => String.fromCharCode(b)).join(''));
-      }
+    // ── PASO 4: Aplicar correcciones y publicar ───────────────────────────────
+    async function applyCorrectionsAndPublish() {
+      hide('dl-corrected-btn');
+      document.getElementById('log-corrections').innerHTML = '';
+      setStatus('status-corrections', 'Cargando...');
 
-      // 1. Obtener SHA actual del fichero
-      let sha;
+      // Cargar translations.json
+      let translMap = {};
       try {
-        const res  = await fetch(API + '/contents/' + FILE, { headers });
-        const data = await res.json();
-        sha = data.sha;
-      } catch(e) { sha = undefined; }
+        const text = await fetchText(TRANSLATIONS_URL);
+        translMap  = JSON.parse(text);
+        logTo('log-corrections', 'translations.json cargado: ' + Object.keys(translMap).length + ' entradas.');
+      } catch(e) { logTo('log-corrections', 'Error cargando translations.json: ' + e.message, 'err'); return; }
 
-      // 2. Push del fichero al repo
-      try {
-        const body = { message: 'Actualizar traduccion ES', content: toBase64(text), ...(sha ? { sha } : {}) };
-        const res  = await fetch(API + '/contents/' + FILE, { method: 'PUT', headers, body: JSON.stringify(body) });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.message);
-        logTo(logId, 'global.ini publicado en el repositorio.');
-      } catch(e) { logTo(logId, 'Error publicando fichero: ' + e.message, 'err'); return; }
+      // Necesitamos parsedLines para reconstruir el global.ini con estructura correcta
+      if (!await ensureParsed('log-corrections')) return;
 
-      // 3. Disparar workflow para crear release con ZIP
-      try {
-        const res  = await fetch(API + '/actions/workflows/release.yml/dispatches', { method: 'POST', headers, body: JSON.stringify({ ref: 'main' }) });
-        if (!res.ok) { const d = await res.json(); throw new Error(d.message); }
-        logTo(logId, 'Release en proceso (ZIP con ruta correcta). Estará disponible en ~1 minuto en GitHub.');
-      } catch(e) { logTo(logId, 'Error disparando release: ' + e.message, 'err'); }
+      buildResultIni(parsedLines, translMap, 'log-corrections');
+      applyGlobalReplacements('log-corrections');
+
+      // Recargar correcciones por si han cambiado
+      await loadCorrections();
+      applyCorrections('log-corrections');
+
+      await publishRelease('log-corrections');
+      setStatus('status-corrections', 'Listo para descargar.');
+      show('dl-corrected-btn');
     }
 
-    // Cargar correcciones al arrancar
-    loadCorrections();
-
     // ── Autenticación GitHub OAuth ────────────────────────────────────────────
-    const WORKER_URL  = 'https://sc-trans-auth.juan-hevia.workers.dev';
-    const CLIENT_ID   = 'Ov23liqElRLYKGNYFxZJ';
+    const WORKER_URL = 'https://sc-trans-auth.juan-hevia.workers.dev';
+    const CLIENT_ID  = 'Ov23liqElRLYKGNYFxZJ';
 
     function githubLogin() {
       const redirect = encodeURIComponent(location.href.split('?')[0]);
       location.href = 'https://github.com/login/oauth/authorize?client_id=' + CLIENT_ID + '&scope=&redirect_uri=' + redirect;
     }
 
-    function logout() {
-      sessionStorage.removeItem('sc_user');
-      showLogin();
-    }
+    function logout() { sessionStorage.removeItem('sc_user'); showLogin(); }
 
     function showLogin() {
       document.getElementById('login-section').style.display = '';
@@ -615,37 +661,24 @@
     }
 
     async function initAuth() {
-      // ¿Hay code en la URL? (vuelta del OAuth)
       const params = new URLSearchParams(location.search);
-      const code = params.get('code');
+      const code   = params.get('code');
       if (code) {
-        // Limpiar el code de la URL
         history.replaceState({}, '', location.pathname);
         try {
           const res  = await fetch(WORKER_URL + '/auth/callback?code=' + code);
           const data = await res.json();
-          if (data.ok) {
-            sessionStorage.setItem('sc_user', data.user);
-            showApp(data.user);
-          } else {
-            showLogin();
-            alert(data.error || 'Acceso denegado.');
-          }
-        } catch(e) {
-          showLogin();
-          alert('Error de autenticación: ' + e.message);
-        }
+          if (data.ok) { sessionStorage.setItem('sc_user', data.user); showApp(data.user); }
+          else { showLogin(); alert(data.error || 'Acceso denegado.'); }
+        } catch(e) { showLogin(); alert('Error de autenticación: ' + e.message); }
         return;
       }
-
-      // ¿Sesión guardada?
       const saved = sessionStorage.getItem('sc_user');
       if (saved) { showApp(saved); return; }
-
-      // Sin sesión → mostrar login
       showLogin();
     }
 
+    loadCorrections();
     initAuth();
   </script>
   </div><!-- /app-content -->
