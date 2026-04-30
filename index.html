@@ -38,6 +38,30 @@
     code { background: #0d0d1a; padding: 1px 5px; color: #00d4ff; }
     .section-body { overflow: hidden; }
     .section-body.collapsed { display: none; }
+    /* Panel RSI */
+    #rsi-panel { background: #0d0d1a; border: 1px solid #333; padding: 14px; margin-bottom: 20px; font-size: 0.82rem; }
+    #rsi-panel .rsi-header { display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 12px; align-items: flex-start; }
+    #rsi-panel .rsi-ver { font-size: 1.1rem; font-weight: bold; }
+    #rsi-panel .rsi-live { color: #00ff99; }
+    #rsi-panel .rsi-ptu  { color: #ff9800; }
+    #rsi-panel .rsi-roundup { color: #888; font-size: 0.78rem; margin-top: 4px; }
+    #rsi-panel .rsi-roundup a { color: #00d4ff; text-decoration: none; }
+    #rsi-releases { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+    .rsi-release { border: 1px solid #333; padding: 8px 10px; min-width: 130px; }
+    .rsi-release .rver { color: #00d4ff; font-weight: bold; font-size: 0.9rem; }
+    .rsi-release .rdate { color: #666; font-size: 0.72rem; }
+    .rsi-release .rprog { margin-top: 4px; font-size: 0.72rem; color: #aaa; }
+    .rsi-release .rbar { background: #222; height: 4px; margin-top: 3px; border-radius: 2px; }
+    .rsi-release .rbar-fill { background: #00d4ff; height: 4px; border-radius: 2px; }
+    .rsi-release.is-live { border-color: #00ff9966; background: #00ff990a; }
+    .rsi-release.is-ptu  { border-color: #ff980066; background: #ff98000a; }
+    .rsi-cards { margin-top: 8px; }
+    .rsi-card { padding: 3px 0; border-top: 1px solid #1a1a2e; display: flex; gap: 6px; }
+    .rsi-card .cstatus { font-size: 0.7rem; padding: 1px 4px; border-radius: 2px; white-space: nowrap; align-self: center; }
+    .cstatus.Released  { background: #1a3a1a; color: #4caf50; }
+    .cstatus.Committed { background: #1a2a3a; color: #00d4ff; }
+    .cstatus.Tentative { background: #2a2a1a; color: #ff9800; }
+    .rsi-card .cname { color: #ccc; font-size: 0.78rem; }
   </style>
 </head>
 <body>
@@ -51,6 +75,21 @@
   <div id="user-bar" style="display:none; margin-bottom:16px; color:#4caf50; font-size:0.85rem;">
     Conectado como <strong id="user-name"></strong> &nbsp;
     <button class="danger" style="padding:4px 10px; font-size:0.78rem;" onclick="logout()">Cerrar sesión</button>
+  </div>
+
+  <!-- ═══ PANEL RSI ROADMAP ════════════════════════════════════════════════ -->
+  <div id="rsi-panel" style="display:none">
+    <div class="rsi-header">
+      <div>
+        <div class="rsi-ver rsi-live" id="rsi-live-ver">Live: —</div>
+        <div class="rsi-ver rsi-ptu"  id="rsi-ptu-ver">PTU: —</div>
+      </div>
+      <div class="rsi-roundup" id="rsi-roundup"></div>
+    </div>
+    <h2 class="collapsible collapsed" style="margin-top:0; font-size:0.85rem;" onclick="toggleSection('rsi-releases-wrap')">Roadmap — próximas versiones</h2>
+    <div id="rsi-releases-wrap" class="section-body collapsed">
+      <div id="rsi-releases"></div>
+    </div>
   </div>
 
   <div id="app-content" style="display:none">
@@ -678,7 +717,77 @@
       showLogin();
     }
 
+    // ── Panel RSI Roadmap ─────────────────────────────────────────────────────
+    async function loadRsiPanel() {
+      try {
+        const res  = await fetch('https://robertsspaceindustries.com/api/roadmap/v1/boards/1');
+        const json = await res.json();
+        const data = json.data;
+
+        // Extraer versiones y roundup de la descripción
+        const desc     = data.description || '';
+        const liveMatch = desc.match(/Live Version:\s*([\d.]+)/);
+        const ptuMatch  = desc.match(/PTU Version:\s*\[([^\]]+)\]/);
+        const roundupMatch = desc.match(/Latest Roadmap Roundup:\s*([\d/]+)\s*\(\[more info\]\(([^)]+)\)\)/);
+
+        document.getElementById('rsi-live-ver').textContent = 'Live: ' + (liveMatch ? liveMatch[1] : '—');
+        document.getElementById('rsi-ptu-ver').textContent  = 'PTU: '  + (ptuMatch  ? ptuMatch[1]  : '—');
+
+        if (roundupMatch) {
+          const el = document.getElementById('rsi-roundup');
+          el.innerHTML = 'Último Roadmap Roundup: ' + roundupMatch[1] + ' — <a href="' + roundupMatch[2] + '" target="_blank">leer</a>';
+        }
+
+        // Renderizar releases próximas (no released, excluyendo 1.0)
+        const liveVer   = liveMatch ? liveMatch[1] : '';
+        const ptuVerRaw = ptuMatch  ? ptuMatch[1]  : '';
+        const upcoming  = data.releases.filter(r => r.name !== 'Star Citizen 1.0').slice(-6);
+
+        const container = document.getElementById('rsi-releases');
+        container.innerHTML = '';
+        for (const r of upcoming) {
+          const cards   = r.cards || [];
+          const released = cards.filter(c => c.status === 'Released').length;
+          const pct     = cards.length ? Math.round(released / cards.length * 100) : 0;
+          const isLive  = liveVer.startsWith(r.name);
+          const isPtu   = ptuVerRaw.includes(r.name);
+
+          const div = document.createElement('div');
+          div.className = 'rsi-release' + (isLive ? ' is-live' : isPtu ? ' is-ptu' : '');
+          div.innerHTML = `
+            <div class="rver">${isLive ? '● ' : isPtu ? '◐ ' : ''}${r.name}</div>
+            <div class="rdate">${r.description || ''}</div>
+            <div class="rprog">${released}/${cards.length} features ${isLive ? '(LIVE)' : isPtu ? '(PTU)' : ''}</div>
+            <div class="rbar"><div class="rbar-fill" style="width:${pct}%"></div></div>
+          `;
+          // Cards expandibles al hacer clic
+          if (cards.length) {
+            div.style.cursor = 'pointer';
+            const cardList = document.createElement('div');
+            cardList.className = 'rsi-cards';
+            cardList.style.display = 'none';
+            for (const c of cards) {
+              const cd = document.createElement('div');
+              cd.className = 'rsi-card';
+              cd.innerHTML = `<span class="cstatus ${c.status}">${c.status}</span><span class="cname" title="${c.description || ''}">${c.name}</span>`;
+              cardList.appendChild(cd);
+            }
+            div.appendChild(cardList);
+            div.addEventListener('click', () => {
+              cardList.style.display = cardList.style.display === 'none' ? 'block' : 'none';
+            });
+          }
+          container.appendChild(div);
+        }
+
+        document.getElementById('rsi-panel').style.display = '';
+      } catch(e) {
+        console.warn('No se pudo cargar el panel RSI:', e.message);
+      }
+    }
+
     loadCorrections();
+    loadRsiPanel();
     initAuth();
   </script>
   </div><!-- /app-content -->
