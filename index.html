@@ -514,12 +514,12 @@
       setStatus('status-merge', 'Listo para descargar.');
       show('dl-merged-btn');
     }
-    // ── GitHub Release ────────────────────────────────────────────────────────
+    // ── Push a GitHub (la release la crea el workflow automáticamente) ────────
     // Cargar token guardado
     const savedToken = localStorage.getItem('gh_token');
     if (savedToken) {
       document.getElementById('gh-token').value = savedToken;
-      document.getElementById('token-status').textContent = 'Token cargado — se crearán releases al descargar.';
+      document.getElementById('token-status').textContent = 'Token cargado — se publicará al descargar.';
       document.getElementById('token-status').style.color = '#4caf50';
     }
 
@@ -528,49 +528,42 @@
       const val = this.value.trim();
       if (val) {
         localStorage.setItem('gh_token', val);
-        status.textContent = 'Token guardado — se crearán releases al descargar.';
+        status.textContent = 'Token guardado — se publicará al descargar.';
         status.style.color = '#4caf50';
       } else {
         localStorage.removeItem('gh_token');
-        status.textContent = 'Sin token — no se crearán releases';
+        status.textContent = 'Sin token — no se publicará en GitHub.';
         status.style.color = '#888';
       }
     });
 
     async function createRelease(logId) {
       const token = document.getElementById('gh-token').value.trim();
-      if (!token) { logTo(logId, 'Sin token GitHub — release omitida.', 'warn'); return; }
+      if (!token) { logTo(logId, 'Sin token GitHub — publicacion omitida.', 'warn'); return; }
 
-      const now     = new Date();
-      const tag     = 'v' + now.toISOString().replace(/[-:T]/g, '').slice(0, 14);
-      const name    = 'Traducción ES ' + now.toLocaleDateString('es-ES') + ' ' + now.toLocaleTimeString('es-ES');
       const REPO    = 'JHevia70/scsptrans';
-      const API     = 'https://api.github.com/repos/' + REPO;
+      const FILE    = 'Data/Localization/spanish_(spain)/global.ini';
+      const API     = 'https://api.github.com/repos/' + REPO + '/contents/' + FILE;
       const headers = { 'Authorization': 'token ' + token, 'Content-Type': 'application/json' };
 
-      logTo(logId, 'Creando release ' + tag + '...');
-
-      // 1. Crear la release
-      let releaseId;
+      // 1. Obtener SHA actual del fichero
+      let sha;
       try {
-        const res  = await fetch(API + '/releases', { method: 'POST', headers, body: JSON.stringify({ tag_name: tag, name, draft: false, prerelease: false }) });
+        const res  = await fetch(API, { headers });
+        const data = await res.json();
+        sha = data.sha;
+      } catch(e) { sha = undefined; }
+
+      // 2. Push del fichero — el workflow creará la release automáticamente
+      const bom     = '\uFEFF';
+      const content = btoa(unescape(encodeURIComponent(bom + resultIni.join('\n'))));
+      const body    = { message: 'Actualizar traduccion ES', content, ...(sha ? { sha } : {}) };
+      try {
+        const res  = await fetch(API, { method: 'PUT', headers, body: JSON.stringify(body) });
         const data = await res.json();
         if (!res.ok) throw new Error(data.message);
-        releaseId = data.id;
-        logTo(logId, 'Release creada: ' + name);
-      } catch(e) { logTo(logId, 'Error creando release: ' + e.message, 'err'); return; }
-
-      // 2. Subir el global.ini como asset
-      const bom      = '\uFEFF';
-      const content  = bom + resultIni.join('\n');
-      const blob     = new Blob([content], { type: 'text/plain' });
-      const assetUrl = 'https://uploads.github.com/repos/' + REPO + '/releases/' + releaseId + '/assets?name=global.ini';
-      try {
-        const res = await fetch(assetUrl, { method: 'POST', headers: { 'Authorization': 'token ' + token, 'Content-Type': 'text/plain' }, body: blob });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.message);
-        logTo(logId, 'Asset subido: Data/Localization/spanish_(spain)/global.ini');
-      } catch(e) { logTo(logId, 'Error subiendo asset: ' + e.message, 'err'); }
+        logTo(logId, 'global.ini publicado en GitHub — release en proceso.');
+      } catch(e) { logTo(logId, 'Error publicando en GitHub: ' + e.message, 'err'); }
     }
 
     // Cargar correcciones al arrancar

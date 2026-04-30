@@ -1,0 +1,28 @@
+name: Create Release
+
+on:
+  push:
+    paths:
+      - 'Data/Localization/spanish_(spain)/global.ini'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get date and short SHA
+        id: meta
+        run: |
+          echo "tag=v$(date +'%Y%m%d%H%M%S')" >> $GITHUB_OUTPUT
+          echo "name=Traducción ES $(date +'%d/%m/%Y %H:%M')" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.meta.outputs.tag }}
+          name: ${{ steps.meta.outputs.name }}
+          files: Data/Localization/spanish_(spain)/global.ini
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
