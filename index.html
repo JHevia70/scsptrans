@@ -73,9 +73,6 @@
     </label>
   </div>
   <div class="controls">
-    <label>correcciones.ini (opcional): <input type="file" id="corrections-file-2" accept=".txt,.ini"></label>
-  </div>
-  <div class="controls">
     <button onclick="rebuildFromXlsx()">Reconstruir global_es.ini</button>
     <button id="dl-ini-btn" class="green hidden" onclick="downloadIni('global_es.ini', resultIni)">Descargar global_es.ini</button>
   </div>
@@ -112,9 +109,6 @@
       <label>novedades.xlsx traducido: <input type="file" id="updates-translated-file" accept=".xlsx"></label>
     </div>
     <div class="controls">
-      <label>correcciones.ini (opcional): <input type="file" id="corrections-file-3" accept=".txt,.ini"></label>
-    </div>
-    <div class="controls">
       <button onclick="mergeUpdates()">Fusionar y descargar global_es.ini actualizado</button>
       <button id="dl-merged-btn" class="green hidden" onclick="downloadIni('global_es.ini', resultIni)">Descargar global_es.ini actualizado</button>
     </div>
@@ -124,11 +118,13 @@
 
   <script>
     // ─── Configuración ───────────────────────────────────────────────────────
-    const SOURCE_URL  = 'https://raw.githubusercontent.com/MrKraken/StarStrings/master/Data/Localization/english/global.ini';
-    const TEST_LIMIT  = 0;    // 0 = fichero completo; >0 = modo prueba
-    const NUM_PARTS   = 2;    // número de ficheros xlsx a generar
+    const SOURCE_URL       = 'https://raw.githubusercontent.com/MrKraken/StarStrings/master/Data/Localization/english/global.ini';
+    const CORRECTIONS_URL  = 'https://raw.githubusercontent.com/JHevia70/scsptrans/main/correcciones.ini';
+    const TEST_LIMIT       = 0;    // 0 = fichero completo; >0 = modo prueba
+    const NUM_PARTS        = 2;    // número de ficheros xlsx a generar
     // ─────────────────────────────────────────────────────────────────────────
 
+    let correctionsMap = {};   // etiqueta → corrección manual (cargado desde GitHub)
     let parsedLines    = [];   // [{key, value, translate}]
     let xlsxParts      = [];   // array de workbooks parte_1/2/3
     let xlsxPartKeys   = [];   // array de arrays de keys, una por parte (orden posicional)
@@ -306,25 +302,34 @@
     }
 
     // ── Correcciones manuales ─────────────────────────────────────────────────
-    async function applyCorrections(inputId, logId) {
-      const input = document.getElementById(inputId);
-      if (!input.files.length) return 0;
-      const text = await input.files[0].text();
-      const corrections = {};
-      for (const line of text.split('\n')) {
-        const eq = line.indexOf('=');
-        if (eq !== -1) corrections[line.substring(0, eq).trim()] = line.substring(eq + 1);
+    async function loadCorrections() {
+      try {
+        const res = await fetch(CORRECTIONS_URL + '?t=' + Date.now()); // evitar caché
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const text = await res.text();
+        correctionsMap = {};
+        for (const line of text.split('\n')) {
+          const eq = line.indexOf('=');
+          if (eq !== -1) correctionsMap[line.substring(0, eq).trim()] = line.substring(eq + 1);
+        }
+        console.log('Correcciones cargadas: ' + Object.keys(correctionsMap).length);
+      } catch(e) {
+        console.warn('No se pudo cargar correcciones.ini: ' + e.message);
+        correctionsMap = {};
       }
+    }
+
+    function applyCorrections(logId) {
+      if (!Object.keys(correctionsMap).length) return;
       let count = 0;
       resultIni = resultIni.map(line => {
         const eq = line.indexOf('=');
         if (eq === -1) return line;
         const key = line.substring(0, eq);
-        if (key in corrections) { count++; return key + '=' + corrections[key]; }
+        if (key in correctionsMap) { count++; return key + '=' + correctionsMap[key]; }
         return line;
       });
-      logTo(logId, 'Correcciones aplicadas: ' + count + ' de ' + Object.keys(corrections).length + ' entradas.');
-      return count;
+      logTo(logId, 'Correcciones aplicadas: ' + count + ' de ' + Object.keys(correctionsMap).length + ' entradas.');
     }
 
     // ── PASO 2: Reconstruir desde Excel traducido ─────────────────────────────
@@ -374,7 +379,7 @@
       if (empty > 0) logTo('log-rebuild', 'Aviso: ' + empty + ' etiquetas sin traduccion (fila vacia en Excel).', 'warn');
       logTo('log-rebuild', 'Reconstruccion completada: ' + resultIni.length + ' lineas.');
       applyGlobalReplacements('log-rebuild');
-      await applyCorrections('corrections-file-2', 'log-rebuild');
+      applyCorrections('log-rebuild');
       setStatus('status-rebuild', 'Listo para descargar.');
       show('dl-ini-btn');
     }
@@ -479,10 +484,12 @@
 
       logTo('log-merge', 'Fusion completada: ' + resultIni.length + ' lineas.');
       applyGlobalReplacements('log-merge');
-      await applyCorrections('corrections-file-3', 'log-merge');
+      applyCorrections('log-merge');
       setStatus('status-merge', 'Listo para descargar.');
       show('dl-merged-btn');
     }
+    // Cargar correcciones al arrancar
+    loadCorrections();
   </script>
 </body>
 </html>
