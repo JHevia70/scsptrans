@@ -21,17 +21,12 @@ jobs:
           TAG=$(TZ='Europe/Madrid' date +'%Y%m%d%H%M%S')
           echo "tag=v${TAG}" >> $GITHUB_OUTPUT
           echo "name=Traduccion SC ${DATE}" >> $GITHUB_OUTPUT
-          FILENAME="Traduccion_SC_$(TZ='Europe/Madrid' date +'%Y%m%d_%H%M').ini"
-          echo "filename=${FILENAME}" >> $GITHUB_OUTPUT
-
-      - name: Copy with descriptive name
-        run: cp "Data/Localization/spanish_(spain)/global.ini" "${{ steps.meta.outputs.filename }}"
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.meta.outputs.tag }}
           name: ${{ steps.meta.outputs.name }}
-          files: ${{ steps.meta.outputs.filename }}
+          files: Data/Localization/spanish_(spain)/global.ini
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
