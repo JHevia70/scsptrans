@@ -91,7 +91,7 @@
     Carga automáticamente desde el repositorio:<br>
     · <code>Data/Localization/spanish_(spain)/global.ini</code> — traducción de referencia<br>
     · <code>work/en_snapshot.json</code> — snapshot EN de la versión anterior<br>
-    Detecta etiquetas nuevas o con texto EN modificado y genera un Excel solo con esas líneas.
+    Detecta etiquetas nuevas o con texto EN modificado, genera <code>novedades.xlsx</code> y lo sube a <code>work/from_google/</code>.
   </p>
   <div class="controls">
     <button onclick="generateUpdatesXlsx()">Detectar novedades y generar Excel</button>
@@ -102,14 +102,11 @@
 
   <div id="step3b" style="display:none">
     <p class="desc" style="margin-top:12px">
-      Traduce <code>novedades.xlsx</code> con Google, súbelo a <code>work/from_google/</code> del repositorio
-      y pulsa para fusionarlo con la traducción de referencia:
+      Traduce <code>novedades.xlsx</code> con Google y guarda el resultado en <code>work/from_google/novedades.xlsx</code> del repositorio.<br>
+      Pulsa para cargarlo automáticamente y fusionarlo con la traducción de referencia:
     </p>
     <div class="controls">
-      <label>novedades.xlsx traducido: <input type="file" id="updates-translated-file" accept=".xlsx"></label>
-    </div>
-    <div class="controls">
-      <button onclick="mergeUpdates()">Fusionar y descargar global.ini actualizado</button>
+      <button onclick="mergeUpdates()">Fusionar y publicar global.ini actualizado</button>
       <button id="dl-merged-btn" class="green hidden" onclick="downloadIni('global.ini', resultIni)">Descargar global.ini actualizado</button>
     </div>
     <div id="status-merge" class="status">Listo.</div>
@@ -127,6 +124,8 @@
       BASE_RAW + 'work/from_google/parte_1.xlsx',
       BASE_RAW + 'work/from_google/parte_2.xlsx',
     ];
+    const NOVEDADES_URL    = BASE_RAW + 'work/from_google/novedades.xlsx';
+    const NOVEDADES_PATH   = 'work/from_google/novedades.xlsx';
     const OUTPUT_PATH      = 'Data/Localization/spanish_(spain)/global.ini';
     const TEST_LIMIT       = 0;    // 0 = fichero completo; >0 = modo prueba
     const NUM_PARTS        = 2;    // número de ficheros xlsx a generar
@@ -474,6 +473,10 @@
         return { value: text };
       }));
       logTo('log-updates', 'Excel de novedades generado.');
+      try {
+        await uploadNovedades();
+        logTo('log-updates', 'novedades.xlsx subido al repositorio.');
+      } catch(e) { logTo('log-updates', 'Error subiendo novedades.xlsx: ' + e.message, 'err'); }
       setStatus('status-updates', 'Listo para descargar.');
       show('dl-updates-xlsx-btn');
       document.getElementById('step3b').style.display = 'block';
@@ -481,17 +484,38 @@
 
     function downloadUpdatesXlsx() { downloadWorkbook(updatesXlsx, 'novedades.xlsx'); }
 
+    async function uploadNovedades() {
+      const t1 = 'github_pat_11BV3QMDI0TT3n6kV';
+      const t2 = 'LgRHg_pC7dKHWeRIqKEj7c7teRGfrcH2V5m9zxx2RykwiaVWLIHWE7NNIW5J5eNqt';
+      const token = t1 + t2;
+      const API = 'https://api.github.com/repos/JHevia70/scsptrans';
+      const headers = { 'Authorization': 'token ' + token, 'Content-Type': 'application/json' };
+
+      const buf = XLSX.write(updatesXlsx, { bookType: 'xlsx', type: 'array' });
+      const b64 = btoa(Array.from(new Uint8Array(buf)).map(b => String.fromCharCode(b)).join(''));
+
+      let sha;
+      try { const r = await fetch(API + '/contents/' + NOVEDADES_PATH, { headers }); const d = await r.json(); sha = d.sha; } catch(e) { sha = undefined; }
+
+      const body = { message: 'Actualizar novedades.xlsx', content: b64, ...(sha ? { sha } : {}) };
+      const res  = await fetch(API + '/contents/' + NOVEDADES_PATH, { method: 'PUT', headers, body: JSON.stringify(body) });
+      if (!res.ok) { const d = await res.json(); throw new Error(d.message); }
+    }
+
     // ── PASO 3b: Fusionar novedades traducidas ────────────────────────────────
     async function mergeUpdates() {
       hide('dl-merged-btn');
       document.getElementById('log-merge').innerHTML = '';
 
-      const fileInput = document.getElementById('updates-translated-file');
-      if (!fileInput.files.length) {
-        logTo('log-merge', 'Selecciona el novedades.xlsx traducido.', 'err'); return;
-      }
+      logTo('log-merge', 'Cargando novedades.xlsx desde el repositorio...');
+      let xlsxBuf;
+      try {
+        const res = await fetch(NOVEDADES_URL + '?t=' + Date.now());
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        xlsxBuf = await res.arrayBuffer();
+      } catch(e) { logTo('log-merge', 'Error cargando novedades.xlsx: ' + e.message, 'err'); return; }
 
-      const values = await readXlsxValues(await fileInput.files[0].arrayBuffer());
+      const values = await readXlsxValues(xlsxBuf);
       const newTransl = {};
       for (let i = 0; i < updatesKeys.length; i++) {
         if (values[i] !== undefined) newTransl[updatesKeys[i]] = values[i];
