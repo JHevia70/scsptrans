@@ -39,6 +39,16 @@
 <body>
   <h1>SC Translator — global.ini EN → ES</h1>
 
+  <!-- ═══ LOGIN ════════════════════════════════════════════════════════════ -->
+  <div id="login-section" style="display:none; margin-bottom:24px;">
+    <p class="desc">Acceso restringido. Inicia sesión con tu cuenta de GitHub para continuar.</p>
+    <button onclick="githubLogin()">Iniciar sesión con GitHub</button>
+  </div>
+  <div id="user-bar" style="display:none; margin-bottom:16px; color:#4caf50; font-size:0.85rem;">
+    Conectado como <strong id="user-name"></strong> &nbsp;
+    <button class="danger" style="padding:4px 10px; font-size:0.78rem;" onclick="logout()">Cerrar sesión</button>
+  </div>
+  <div id="app-content" style="display:none">
 
   <!-- ═══ PASO 1: Generar XLSX para Google Translate ═══════════════════════ -->
   <h2>Paso 1 — Generar Excel para Google Translate</h2>
@@ -552,6 +562,68 @@
 
     // Cargar correcciones al arrancar
     loadCorrections();
+
+    // ── Autenticación GitHub OAuth ────────────────────────────────────────────
+    const WORKER_URL  = 'https://sc-trans-auth.jhevia70.workers.dev';
+    const CLIENT_ID   = 'Ov23liqElRLYKGNYFxZJ';
+
+    function githubLogin() {
+      const redirect = encodeURIComponent(location.href.split('?')[0]);
+      location.href = 'https://github.com/login/oauth/authorize?client_id=' + CLIENT_ID + '&scope=&redirect_uri=' + redirect;
+    }
+
+    function logout() {
+      sessionStorage.removeItem('sc_user');
+      showLogin();
+    }
+
+    function showLogin() {
+      document.getElementById('login-section').style.display = '';
+      document.getElementById('user-bar').style.display = 'none';
+      document.getElementById('app-content').style.display = 'none';
+    }
+
+    function showApp(user) {
+      document.getElementById('login-section').style.display = 'none';
+      document.getElementById('user-bar').style.display = '';
+      document.getElementById('user-name').textContent = user;
+      document.getElementById('app-content').style.display = '';
+    }
+
+    async function initAuth() {
+      // ¿Hay code en la URL? (vuelta del OAuth)
+      const params = new URLSearchParams(location.search);
+      const code = params.get('code');
+      if (code) {
+        // Limpiar el code de la URL
+        history.replaceState({}, '', location.pathname);
+        try {
+          const res  = await fetch(WORKER_URL + '/auth/callback?code=' + code);
+          const data = await res.json();
+          if (data.ok) {
+            sessionStorage.setItem('sc_user', data.user);
+            showApp(data.user);
+          } else {
+            showLogin();
+            alert(data.error || 'Acceso denegado.');
+          }
+        } catch(e) {
+          showLogin();
+          alert('Error de autenticación: ' + e.message);
+        }
+        return;
+      }
+
+      // ¿Sesión guardada?
+      const saved = sessionStorage.getItem('sc_user');
+      if (saved) { showApp(saved); return; }
+
+      // Sin sesión → mostrar login
+      showLogin();
+    }
+
+    initAuth();
   </script>
+  </div><!-- /app-content -->
 </body>
 </html>
