@@ -42,10 +42,9 @@
   <!-- ═══ PASO 1: Generar XLSX para Google Translate ═══════════════════════ -->
   <h2>Paso 1 — Generar Excel para Google Translate</h2>
   <p class="desc">
-    Descarga el <code>global.ini</code> desde GitHub y genera un <code>.xlsx</code>
-    con dos columnas: <strong>etiqueta</strong> y <strong>texto en inglés</strong>.<br>
-    Sube ese fichero a <a href="https://translate.google.com/" target="_blank" style="color:#00d4ff">Google Translate</a>,
-    tradúcelo al español y descarga el resultado.
+    Carga <code>global.ini</code> desde <code>MrKraken/StarStrings</code> y genera los Excel para traducir.<br>
+    Sube los ficheros a <a href="https://translate.google.com/" target="_blank" style="color:#00d4ff">Google Translate</a>,
+    tradúcelos y guarda el resultado en <code>work/from_google/</code> del repositorio.
   </p>
   <div class="controls">
     <button onclick="generateXlsx()">Cargar y generar Excel</button>
@@ -60,21 +59,15 @@
 
   <hr>
 
-  <!-- ═══ PASO 2: Reconstruir global_es.ini desde el Excel traducido ═══════ -->
-  <h2>Paso 2 — Reconstruir global_es.ini desde el Excel traducido</h2>
+  <!-- ═══ PASO 2: Reconstruir global.ini desde el Excel traducido ══════════ -->
+  <h2>Paso 2 — Reconstruir global.ini desde el Excel traducido</h2>
   <p class="desc">
-    Sube aquí el <code>.xlsx</code> que descargaste de Google Translate.
-    El programa reconstruirá el <code>global_es.ini</code> con las etiquetas originales
-    y los textos traducidos.
+    Carga automáticamente los ficheros traducidos desde el repositorio y reconstruye el <code>global.ini</code> en español.<br>
+    Fuentes: <code>work/from_google/parte_1.xlsx</code> · <code>work/from_google/parte_2.xlsx</code> · <code>work/correcciones.ini</code>
   </p>
   <div class="controls">
-    <label>Partes traducidas por Google (selecciona los 2 ficheros a la vez):
-      <input type="file" id="translated-file" accept=".xlsx" multiple>
-    </label>
-  </div>
-  <div class="controls">
-    <button onclick="rebuildFromXlsx()">Reconstruir global_es.ini</button>
-    <button id="dl-ini-btn" class="green hidden" onclick="downloadIni('global.ini', resultIni)">Descargar global_es.ini</button>
+    <button onclick="rebuildFromXlsx()">Reconstruir global.ini</button>
+    <button id="dl-ini-btn" class="green hidden" onclick="downloadIni('global.ini', resultIni)">Descargar global.ini</button>
   </div>
   <div id="status-rebuild" class="status">Listo.</div>
   <div id="log-rebuild" class="log"></div>
@@ -84,8 +77,10 @@
   <!-- ═══ PASO 3: Traducir novedades (actualizaciones futuras) ════════════ -->
   <h2>Paso 3 — Traducir novedades (actualizaciones futuras)</h2>
   <p class="desc">
-    Carga automáticamente el <code>global.ini</code> traducido y el <code>en_snapshot.json</code>
-    desde el repositorio, detecta etiquetas nuevas o modificadas y genera un Excel para Google.
+    Carga automáticamente desde el repositorio:<br>
+    · <code>Data/Localization/spanish_(spain)/global.ini</code> — traducción de referencia<br>
+    · <code>work/en_snapshot.json</code> — snapshot EN de la versión anterior<br>
+    Detecta etiquetas nuevas o con texto EN modificado y genera un Excel solo con esas líneas.
   </p>
   <div class="controls">
     <button onclick="generateUpdatesXlsx()">Detectar novedades y generar Excel</button>
@@ -96,14 +91,15 @@
 
   <div id="step3b" style="display:none">
     <p class="desc" style="margin-top:12px">
-      Traduce el <code>novedades.xlsx</code> con Google y súbelo aquí para fusionarlo con tu referencia:
+      Traduce <code>novedades.xlsx</code> con Google, súbelo a <code>work/from_google/</code> del repositorio
+      y pulsa para fusionarlo con la traducción de referencia:
     </p>
     <div class="controls">
       <label>novedades.xlsx traducido: <input type="file" id="updates-translated-file" accept=".xlsx"></label>
     </div>
     <div class="controls">
-      <button onclick="mergeUpdates()">Fusionar y descargar global_es.ini actualizado</button>
-      <button id="dl-merged-btn" class="green hidden" onclick="downloadIni('global.ini', resultIni)">Descargar global_es.ini actualizado</button>
+      <button onclick="mergeUpdates()">Fusionar y descargar global.ini actualizado</button>
+      <button id="dl-merged-btn" class="green hidden" onclick="downloadIni('global.ini', resultIni)">Descargar global.ini actualizado</button>
     </div>
     <div id="status-merge" class="status">Listo.</div>
     <div id="log-merge" class="log"></div>
