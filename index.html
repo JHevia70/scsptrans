@@ -223,6 +223,25 @@
       URL.revokeObjectURL(url);
     }
 
+    // ── Carga y parseo del global.ini (compartido por todos los pasos) ────────
+    async function ensureParsed(logId) {
+      if (parsedLines.length && xlsxPartKeys.length) return true;
+      logTo(logId, 'Cargando global.ini desde GitHub...');
+      let raw;
+      try { raw = await fetchSource(); }
+      catch(e) { logTo(logId, 'Error cargando global.ini: ' + e.message, 'err'); return false; }
+      parsedLines = parseIni(raw, TEST_LIMIT);
+      const withKey  = parsedLines.filter(p => p.key !== null);
+      const partSize = Math.ceil(withKey.length / NUM_PARTS);
+      xlsxPartKeys   = [];
+      for (let i = 0; i < NUM_PARTS; i++) {
+        const chunk = withKey.slice(i * partSize, (i + 1) * partSize);
+        if (chunk.length > 0) xlsxPartKeys.push(chunk.map(p => p.key));
+      }
+      logTo(logId, 'global.ini cargado: ' + parsedLines.length + ' lineas.');
+      return true;
+    }
+
     // ── PASO 1: Generar XLSX ──────────────────────────────────────────────────
     async function generateXlsx() {
       document.getElementById('dl-xlsx-btns').style.display = 'none';
@@ -346,10 +365,7 @@
     async function rebuildFromXlsx() {
       hide('dl-ini-btn');
       document.getElementById('log-rebuild').innerHTML = '';
-
-      if (!parsedLines.length || !xlsxPartKeys.length) {
-        logTo('log-rebuild', 'Primero ejecuta el Paso 1 para cargar el global.ini.', 'err'); return;
-      }
+      if (!await ensureParsed('log-rebuild')) return;
 
       // Cargar xlsx desde GitHub
       const translMap = {};
@@ -388,6 +404,7 @@
       hide('dl-updates-xlsx-btn');
       document.getElementById('step3b').style.display = 'none';
       document.getElementById('log-updates').innerHTML = '';
+      if (!await ensureParsed('log-updates')) return;
 
       // Cargar global_es.ini de referencia desde GitHub
       let refText;
