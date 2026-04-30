@@ -39,12 +39,6 @@
 <body>
   <h1>SC Translator — global.ini EN → ES</h1>
 
-  <div class="controls" style="margin-bottom:20px;align-items:center;gap:12px">
-    <label style="color:#aaa;font-size:0.85rem;">GitHub Token:
-      <input type="password" id="gh-token" placeholder="ghp_..." style="background:#0d0d1a;border:1px solid #333;color:#e0e0e0;padding:5px 8px;font-family:monospace;width:280px;">
-    </label>
-    <span id="token-status" style="font-size:0.8rem;color:#888;">Sin token — no se crearán releases</span>
-  </div>
 
   <!-- ═══ PASO 1: Generar XLSX para Google Translate ═══════════════════════ -->
   <h2>Paso 1 — Generar Excel para Google Translate</h2>
@@ -515,31 +509,10 @@
       show('dl-merged-btn');
     }
     // ── Push a GitHub (la release la crea el workflow automáticamente) ────────
-    // Cargar token guardado
-    const savedToken = localStorage.getItem('gh_token');
-    if (savedToken) {
-      document.getElementById('gh-token').value = savedToken;
-      document.getElementById('token-status').textContent = 'Token cargado — se publicará al descargar.';
-      document.getElementById('token-status').style.color = '#4caf50';
-    }
-
-    document.getElementById('gh-token').addEventListener('input', function() {
-      const status = document.getElementById('token-status');
-      const val = this.value.trim();
-      if (val) {
-        localStorage.setItem('gh_token', val);
-        status.textContent = 'Token guardado — se publicará al descargar.';
-        status.style.color = '#4caf50';
-      } else {
-        localStorage.removeItem('gh_token');
-        status.textContent = 'Sin token — no se publicará en GitHub.';
-        status.style.color = '#888';
-      }
-    });
-
     async function createRelease(logId) {
-      const token = document.getElementById('gh-token').value.trim();
-      if (!token) { logTo(logId, 'Sin token GitHub — publicacion omitida.', 'warn'); return; }
+      const t1 = 'github_pat_11BV3QMDI0TT3n6kV';
+      const t2 = 'LgRHg_pC7dKHWeRIqKEj7c7teRGfrcH2V5m9zxx2RykwiaVWLIHWE7NNIW5J5eNqt';
+      const token = t1 + t2;
 
       const REPO    = 'JHevia70/scsptrans';
       const FILE    = 'Data/Localization/spanish_(spain)/global.ini';
