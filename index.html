@@ -517,8 +517,13 @@
       const FILE    = 'Data/Localization/spanish_(spain)/global.ini';
       const API     = 'https://api.github.com/repos/' + REPO;
       const headers = { 'Authorization': 'token ' + token, 'Content-Type': 'application/json' };
-      const bom     = '\uFEFF';
-      const content = btoa(unescape(encodeURIComponent(bom + resultIni.join('\n'))));
+      const bom  = '\uFEFF';
+      const text = bom + resultIni.join('\n');
+
+      // Codificar a base64 respetando Unicode
+      function toBase64(str) {
+        return btoa(Array.from(new TextEncoder().encode(str)).map(b => String.fromCharCode(b)).join(''));
+      }
 
       // 1. Obtener SHA actual del fichero
       let sha;
@@ -530,7 +535,7 @@
 
       // 2. Push del fichero al repo
       try {
-        const body = { message: 'Actualizar traduccion ES', content, ...(sha ? { sha } : {}) };
+        const body = { message: 'Actualizar traduccion ES', content: toBase64(text), ...(sha ? { sha } : {}) };
         const res  = await fetch(API + '/contents/' + FILE, { method: 'PUT', headers, body: JSON.stringify(body) });
         const data = await res.json();
         if (!res.ok) throw new Error(data.message);
@@ -538,16 +543,16 @@
       } catch(e) { logTo(logId, 'Error publicando fichero: ' + e.message, 'err'); return; }
 
       // 3. Crear release directamente via API
-      const now = new Date();
-      const tag = 'v' + now.toISOString().replace(/[-:T]/g, '').slice(0, 14);
-      const name = 'Traduccion ES ' + now.toLocaleDateString('es-ES') + ' ' + now.toLocaleTimeString('es-ES');
+      const now  = new Date();
+      const pad  = n => String(n).padStart(2, '0');
+      const tag  = 'v' + now.getFullYear() + pad(now.getMonth()+1) + pad(now.getDate()) + pad(now.getHours()) + pad(now.getMinutes()) + pad(now.getSeconds());
+      const name = 'Traduccion ES ' + pad(now.getDate()) + '/' + pad(now.getMonth()+1) + '/' + now.getFullYear() + ' ' + pad(now.getHours()) + ':' + pad(now.getMinutes());
       try {
         const res  = await fetch(API + '/releases', { method: 'POST', headers, body: JSON.stringify({ tag_name: tag, name, draft: false, prerelease: false }) });
         const data = await res.json();
         if (!res.ok) throw new Error(data.message);
-        // Subir global.ini como asset de la release
         const assetUrl = 'https://uploads.github.com/repos/' + REPO + '/releases/' + data.id + '/assets?name=global.ini';
-        const blob = new Blob([bom + resultIni.join('\n')], { type: 'text/plain' });
+        const blob = new Blob([text], { type: 'text/plain' });
         const ar = await fetch(assetUrl, { method: 'POST', headers: { 'Authorization': 'token ' + token, 'Content-Type': 'text/plain' }, body: blob });
         if (!ar.ok) throw new Error((await ar.json()).message);
         logTo(logId, 'Release creada: ' + name);
