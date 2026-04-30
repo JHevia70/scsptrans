@@ -14,8 +14,8 @@ MrKraken mejora y corrige el fichero original en inglés (contratos, descripcion
 - Terminología minera corregida: `(Ore)`, `(Raw)` en lugar de traducciones literales incorrectas
 
 # Instalación
-1. Descarga la última release en el panel derecho de este repositorio
-2. Copia la carpeta `Data` en la carpeta raíz de tu instalación de Star Citizen (LIVE o PTU)
+1. Descarga el fichero `traduccion_sc.zip` de la última release en el panel derecho de este repositorio
+2. Descomprime el ZIP en la carpeta raíz de tu instalación de Star Citizen (LIVE o PTU) — la carpeta `Data` se colocará automáticamente en la ruta correcta
 3. Si no tienes un fichero `user.cfg`, créalo en la carpeta raíz con el siguiente contenido:
    ```
    g_language = spanish_(spain)
