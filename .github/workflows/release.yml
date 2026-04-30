@@ -17,7 +17,7 @@ jobs:
         run: |
           DATE=$(TZ='Europe/Madrid' date +'%d/%m/%Y %H:%M')
           TAG=$(TZ='Europe/Madrid' date +'%Y%m%d%H%M%S')
-          SC_VER=$(curl -s "https://robertsspaceindustries.com/roadmap/progress-tracker/teams" \
+          SC_VER=$(curl -s "https://robertsspaceindustries.com/api/roadmap/v1/boards/1" \
             -H "User-Agent: Mozilla/5.0" \
             | grep -oP 'Live Version:\s*\K[\d.]+' | head -1)
           if [ -z "$SC_VER" ]; then SC_VER="live"; fi
