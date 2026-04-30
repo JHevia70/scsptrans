@@ -12,25 +12,30 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Get date
+      - name: Get version and date
         id: meta
         run: |
           DATE=$(TZ='Europe/Madrid' date +'%d/%m/%Y %H:%M')
           TAG=$(TZ='Europe/Madrid' date +'%Y%m%d%H%M%S')
+          SC_VER=$(curl -s "https://robertsspaceindustries.com/roadmap/progress-tracker/teams" \
+            -H "User-Agent: Mozilla/5.0" \
+            | grep -oP 'Live Version:\s*\K[\d.]+' | head -1)
+          if [ -z "$SC_VER" ]; then SC_VER="unknown"; fi
           echo "tag=v${TAG}" >> $GITHUB_OUTPUT
-          echo "name=Traduccion SC ${DATE}" >> $GITHUB_OUTPUT
+          echo "name=Traduccion SC ${SC_VER} - ${DATE}" >> $GITHUB_OUTPUT
+          echo "sc_ver=${SC_VER}" >> $GITHUB_OUTPUT
 
       - name: Create ZIP
         run: |
           mkdir -p zip_build/Data/Localization/spanish_\(spain\)
           cp Data/Localization/spanish_\(spain\)/global.ini zip_build/Data/Localization/spanish_\(spain\)/global.ini
-          cd zip_build && zip -r ../traduccion_sc.zip Data
+          cd zip_build && zip -r "../traduccion_sc_${{ steps.meta.outputs.sc_ver }}.zip" Data
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.meta.outputs.tag }}
           name: ${{ steps.meta.outputs.name }}
-          files: traduccion_sc.zip
+          files: traduccion_sc_${{ steps.meta.outputs.sc_ver }}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
