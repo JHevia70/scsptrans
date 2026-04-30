@@ -12,6 +12,17 @@ export default {
 
     const url = new URL(request.url);
 
+    if (url.pathname === '/rsi') {
+      const res  = await fetch('https://robertsspaceindustries.com/api/roadmap/v1/boards/1', {
+        headers: { 'User-Agent': 'Mozilla/5.0' },
+      });
+      const data = await res.text();
+      return new Response(data, {
+        status: res.status,
+        headers: { 'Content-Type': 'application/json', ...corsHeaders() },
+      });
+    }
+
     if (url.pathname === '/auth/callback') {
       const code = url.searchParams.get('code');
       if (!code) return jsonError('Missing code', 400);

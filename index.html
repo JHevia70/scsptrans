@@ -720,7 +720,7 @@
     // ── Panel RSI Roadmap ─────────────────────────────────────────────────────
     async function loadRsiPanel() {
       try {
-        const res  = await fetch('https://robertsspaceindustries.com/api/roadmap/v1/boards/1');
+        const res  = await fetch('https://sc-trans-auth.juan-hevia.workers.dev/rsi');
         const json = await res.json();
         const data = json.data;
 
