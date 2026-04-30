@@ -508,35 +508,50 @@
       setStatus('status-merge', 'Listo para descargar.');
       show('dl-merged-btn');
     }
-    // ── Push a GitHub (la release la crea el workflow automáticamente) ────────
+    // ── Push a GitHub y crear release ────────────────────────────────────────
     async function createRelease(logId) {
-      const t1 = 'github_pat_11BV3QMDI0TT3n6kV';
-      const t2 = 'LgRHg_pC7dKHWeRIqKEj7c7teRGfrcH2V5m9zxx2RykwiaVWLIHWE7NNIW5J5eNqt';
+      const t1    = 'github_pat_11BV3QMDI0TT3n6kV';
+      const t2    = 'LgRHg_pC7dKHWeRIqKEj7c7teRGfrcH2V5m9zxx2RykwiaVWLIHWE7NNIW5J5eNqt';
       const token = t1 + t2;
-
       const REPO    = 'JHevia70/scsptrans';
       const FILE    = 'Data/Localization/spanish_(spain)/global.ini';
-      const API     = 'https://api.github.com/repos/' + REPO + '/contents/' + FILE;
+      const API     = 'https://api.github.com/repos/' + REPO;
       const headers = { 'Authorization': 'token ' + token, 'Content-Type': 'application/json' };
+      const bom     = '\uFEFF';
+      const content = btoa(unescape(encodeURIComponent(bom + resultIni.join('\n'))));
 
       // 1. Obtener SHA actual del fichero
       let sha;
       try {
-        const res  = await fetch(API, { headers });
+        const res  = await fetch(API + '/contents/' + FILE, { headers });
         const data = await res.json();
         sha = data.sha;
       } catch(e) { sha = undefined; }
 
-      // 2. Push del fichero — el workflow creará la release automáticamente
-      const bom     = '\uFEFF';
-      const content = btoa(unescape(encodeURIComponent(bom + resultIni.join('\n'))));
-      const body    = { message: 'Actualizar traduccion ES', content, ...(sha ? { sha } : {}) };
+      // 2. Push del fichero al repo
       try {
-        const res  = await fetch(API, { method: 'PUT', headers, body: JSON.stringify(body) });
+        const body = { message: 'Actualizar traduccion ES', content, ...(sha ? { sha } : {}) };
+        const res  = await fetch(API + '/contents/' + FILE, { method: 'PUT', headers, body: JSON.stringify(body) });
         const data = await res.json();
         if (!res.ok) throw new Error(data.message);
-        logTo(logId, 'global.ini publicado en GitHub — release en proceso.');
-      } catch(e) { logTo(logId, 'Error publicando en GitHub: ' + e.message, 'err'); }
+        logTo(logId, 'global.ini publicado en el repositorio.');
+      } catch(e) { logTo(logId, 'Error publicando fichero: ' + e.message, 'err'); return; }
+
+      // 3. Crear release directamente via API
+      const now = new Date();
+      const tag = 'v' + now.toISOString().replace(/[-:T]/g, '').slice(0, 14);
+      const name = 'Traduccion ES ' + now.toLocaleDateString('es-ES') + ' ' + now.toLocaleTimeString('es-ES');
+      try {
+        const res  = await fetch(API + '/releases', { method: 'POST', headers, body: JSON.stringify({ tag_name: tag, name, draft: false, prerelease: false }) });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message);
+        // Subir global.ini como asset de la release
+        const assetUrl = 'https://uploads.github.com/repos/' + REPO + '/releases/' + data.id + '/assets?name=global.ini';
+        const blob = new Blob([bom + resultIni.join('\n')], { type: 'text/plain' });
+        const ar = await fetch(assetUrl, { method: 'POST', headers: { 'Authorization': 'token ' + token, 'Content-Type': 'text/plain' }, body: blob });
+        if (!ar.ok) throw new Error((await ar.json()).message);
+        logTo(logId, 'Release creada: ' + name);
+      } catch(e) { logTo(logId, 'Error creando release: ' + e.message, 'err'); }
     }
 
     // Cargar correcciones al arrancar
