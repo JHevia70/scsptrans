@@ -39,6 +39,13 @@
 <body>
   <h1>SC Translator — global.ini EN → ES</h1>
 
+  <div class="controls" style="margin-bottom:20px;align-items:center;gap:12px">
+    <label style="color:#aaa;font-size:0.85rem;">GitHub Token:
+      <input type="password" id="gh-token" placeholder="ghp_..." style="background:#0d0d1a;border:1px solid #333;color:#e0e0e0;padding:5px 8px;font-family:monospace;width:280px;">
+    </label>
+    <span id="token-status" style="font-size:0.8rem;color:#888;">Sin token — no se crearán releases</span>
+  </div>
+
   <!-- ═══ PASO 1: Generar XLSX para Google Translate ═══════════════════════ -->
   <h2>Paso 1 — Generar Excel para Google Translate</h2>
   <p class="desc">
@@ -395,6 +402,7 @@
       logTo('log-rebuild', 'Reconstruccion completada: ' + resultIni.length + ' lineas.');
       applyGlobalReplacements('log-rebuild');
       applyCorrections('log-rebuild');
+      await createRelease('log-rebuild');
       setStatus('status-rebuild', 'Listo para descargar.');
       show('dl-ini-btn');
     }
@@ -502,9 +510,69 @@
       logTo('log-merge', 'Fusion completada: ' + resultIni.length + ' lineas.');
       applyGlobalReplacements('log-merge');
       applyCorrections('log-merge');
+      await createRelease('log-merge');
       setStatus('status-merge', 'Listo para descargar.');
       show('dl-merged-btn');
     }
+    // ── GitHub Release ────────────────────────────────────────────────────────
+    // Cargar token guardado
+    const savedToken = localStorage.getItem('gh_token');
+    if (savedToken) {
+      document.getElementById('gh-token').value = savedToken;
+      document.getElementById('token-status').textContent = 'Token cargado — se crearán releases al descargar.';
+      document.getElementById('token-status').style.color = '#4caf50';
+    }
+
+    document.getElementById('gh-token').addEventListener('input', function() {
+      const status = document.getElementById('token-status');
+      const val = this.value.trim();
+      if (val) {
+        localStorage.setItem('gh_token', val);
+        status.textContent = 'Token guardado — se crearán releases al descargar.';
+        status.style.color = '#4caf50';
+      } else {
+        localStorage.removeItem('gh_token');
+        status.textContent = 'Sin token — no se crearán releases';
+        status.style.color = '#888';
+      }
+    });
+
+    async function createRelease(logId) {
+      const token = document.getElementById('gh-token').value.trim();
+      if (!token) { logTo(logId, 'Sin token GitHub — release omitida.', 'warn'); return; }
+
+      const now     = new Date();
+      const tag     = 'v' + now.toISOString().replace(/[-:T]/g, '').slice(0, 14);
+      const name    = 'Traducción ES ' + now.toLocaleDateString('es-ES') + ' ' + now.toLocaleTimeString('es-ES');
+      const REPO    = 'JHevia70/scsptrans';
+      const API     = 'https://api.github.com/repos/' + REPO;
+      const headers = { 'Authorization': 'token ' + token, 'Content-Type': 'application/json' };
+
+      logTo(logId, 'Creando release ' + tag + '...');
+
+      // 1. Crear la release
+      let releaseId;
+      try {
+        const res  = await fetch(API + '/releases', { method: 'POST', headers, body: JSON.stringify({ tag_name: tag, name, draft: false, prerelease: false }) });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message);
+        releaseId = data.id;
+        logTo(logId, 'Release creada: ' + name);
+      } catch(e) { logTo(logId, 'Error creando release: ' + e.message, 'err'); return; }
+
+      // 2. Subir el global.ini como asset
+      const bom      = '\uFEFF';
+      const content  = bom + resultIni.join('\n');
+      const blob     = new Blob([content], { type: 'text/plain' });
+      const assetUrl = 'https://uploads.github.com/repos/' + REPO + '/releases/' + releaseId + '/assets?name=global.ini';
+      try {
+        const res = await fetch(assetUrl, { method: 'POST', headers: { 'Authorization': 'token ' + token, 'Content-Type': 'text/plain' }, body: blob });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message);
+        logTo(logId, 'Asset subido: Data/Localization/spanish_(spain)/global.ini');
+      } catch(e) { logTo(logId, 'Error subiendo asset: ' + e.message, 'err'); }
+    }
+
     // Cargar correcciones al arrancar
     loadCorrections();
   </script>
