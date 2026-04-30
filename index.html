@@ -542,7 +542,29 @@
         logTo(logId, 'global.ini publicado en el repositorio.');
       } catch(e) { logTo(logId, 'Error publicando fichero: ' + e.message, 'err'); return; }
 
-      logTo(logId, 'Release en proceso via GitHub Actions...');
+      // 3. Crear release directamente via API
+      const now  = new Date();
+      const pad  = n => String(n).padStart(2, '0');
+      const tag  = 'v' + now.getFullYear() + pad(now.getMonth()+1) + pad(now.getDate()) + pad(now.getHours()) + pad(now.getMinutes()) + pad(now.getSeconds());
+      const name = 'Traduccion SC ' + pad(now.getDate()) + '/' + pad(now.getMonth()+1) + '/' + now.getFullYear() + ' ' + pad(now.getHours()) + ':' + pad(now.getMinutes());
+      let releaseId;
+      try {
+        const res  = await fetch(API + '/releases', { method: 'POST', headers, body: JSON.stringify({ tag_name: tag, name, draft: false, prerelease: false }) });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message);
+        releaseId = data.id;
+        logTo(logId, 'Release creada: ' + name);
+      } catch(e) { logTo(logId, 'Error creando release: ' + e.message, 'err'); return; }
+
+      // 4. Subir global.ini como asset
+      try {
+        const assetUrl = 'https://uploads.github.com/repos/' + REPO + '/releases/' + releaseId + '/assets?name=global.ini';
+        const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+        const res  = await fetch(assetUrl, { method: 'POST', headers: { 'Authorization': 'token ' + token, 'Content-Type': 'text/plain' }, body: blob });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message);
+        logTo(logId, 'Asset global.ini adjuntado a la release.');
+      } catch(e) { logTo(logId, 'Error adjuntando asset: ' + e.message, 'err'); }
     }
 
     // Cargar correcciones al arrancar
