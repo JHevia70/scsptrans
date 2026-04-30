@@ -74,7 +74,7 @@
   </div>
   <div class="controls">
     <button onclick="rebuildFromXlsx()">Reconstruir global_es.ini</button>
-    <button id="dl-ini-btn" class="green hidden" onclick="downloadIni('global_es.ini', resultIni)">Descargar global_es.ini</button>
+    <button id="dl-ini-btn" class="green hidden" onclick="downloadIni('global.ini', resultIni)">Descargar global_es.ini</button>
   </div>
   <div id="status-rebuild" class="status">Listo.</div>
   <div id="log-rebuild" class="log"></div>
@@ -84,16 +84,9 @@
   <!-- ═══ PASO 3: Traducir novedades (actualizaciones futuras) ════════════ -->
   <h2>Paso 3 — Traducir novedades (actualizaciones futuras)</h2>
   <p class="desc">
-    Sube el <code>global_es.ini</code> y el <code>en_snapshot.json</code> de la versión anterior.
-    El programa descargará el nuevo <code>global.ini</code>, detectará etiquetas nuevas
-    y etiquetas cuyo texto en inglés haya cambiado, y generará un Excel solo con esas líneas.
+    Carga automáticamente el <code>global.ini</code> traducido y el <code>en_snapshot.json</code>
+    desde el repositorio, detecta etiquetas nuevas o modificadas y genera un Excel para Google.
   </p>
-  <div class="controls">
-    <label>global_es.ini de referencia: <input type="file" id="reference-file" accept=".txt,.ini"></label>
-  </div>
-  <div class="controls">
-    <label>en_snapshot.json de referencia: <input type="file" id="snapshot-file" accept=".json"></label>
-  </div>
   <div class="controls">
     <button onclick="generateUpdatesXlsx()">Detectar novedades y generar Excel</button>
     <button id="dl-updates-xlsx-btn" class="green hidden" onclick="downloadUpdatesXlsx()">Descargar novedades.xlsx</button>
@@ -110,7 +103,7 @@
     </div>
     <div class="controls">
       <button onclick="mergeUpdates()">Fusionar y descargar global_es.ini actualizado</button>
-      <button id="dl-merged-btn" class="green hidden" onclick="downloadIni('global_es.ini', resultIni)">Descargar global_es.ini actualizado</button>
+      <button id="dl-merged-btn" class="green hidden" onclick="downloadIni('global.ini', resultIni)">Descargar global_es.ini actualizado</button>
     </div>
     <div id="status-merge" class="status">Listo.</div>
     <div id="log-merge" class="log"></div>
@@ -118,8 +111,16 @@
 
   <script>
     // ─── Configuración ───────────────────────────────────────────────────────
+    const BASE_RAW         = 'https://raw.githubusercontent.com/JHevia70/scsptrans/main/';
     const SOURCE_URL       = 'https://raw.githubusercontent.com/MrKraken/StarStrings/master/Data/Localization/english/global.ini';
-    const CORRECTIONS_URL  = 'https://raw.githubusercontent.com/JHevia70/scsptrans/main/correcciones.ini';
+    const CORRECTIONS_URL  = BASE_RAW + 'work/correcciones.ini';
+    const SNAPSHOT_URL     = BASE_RAW + 'work/en_snapshot.json';
+    const REFERENCE_URL    = BASE_RAW + 'Data/Localization/spanish_(spain)/global.ini';
+    const FROM_GOOGLE_URLS = [
+      BASE_RAW + 'work/from_google/parte_1.xlsx',
+      BASE_RAW + 'work/from_google/parte_2.xlsx',
+    ];
+    const OUTPUT_PATH      = 'Data/Localization/spanish_(spain)/global.ini';
     const TEST_LIMIT       = 0;    // 0 = fichero completo; >0 = modo prueba
     const NUM_PARTS        = 2;    // número de ficheros xlsx a generar
     // ─────────────────────────────────────────────────────────────────────────
@@ -333,13 +334,17 @@
     }
 
     // ── PASO 2: Reconstruir desde Excel traducido ─────────────────────────────
-    async function readXlsxValues(file) {
-      const buf  = await file.arrayBuffer();
+    async function readXlsxValues(buf) {
       const wb   = XLSX.read(buf, { type: 'array' });
       const ws   = wb.Sheets[wb.SheetNames[0]];
       const rows = XLSX.utils.sheet_to_json(ws, { header: 1 });
-      // fila 0 es cabecera, devolver solo los valores de la columna A desde fila 1
       return rows.slice(1).map(r => (r[0] !== undefined && r[0] !== null) ? String(r[0]).trim() : '');
+    }
+
+    async function fetchBinary(url) {
+      const res = await fetch(url + '?t=' + Date.now());
+      if (!res.ok) throw new Error('HTTP ' + res.status + ' - ' + url);
+      return await res.arrayBuffer();
     }
 
     async function rebuildFromXlsx() {
@@ -349,21 +354,19 @@
       if (!parsedLines.length || !xlsxPartKeys.length) {
         logTo('log-rebuild', 'Primero ejecuta el Paso 1 para cargar el global.ini.', 'err'); return;
       }
-      const fileInput = document.getElementById('translated-file');
-      if (!fileInput.files.length) {
-        logTo('log-rebuild', 'Selecciona los ficheros .xlsx traducidos por Google.', 'err'); return;
-      }
 
-      // Leer cada fichero en orden y construir mapa etiqueta → traducción por posición
+      // Cargar xlsx desde GitHub
       const translMap = {};
-      const files = Array.from(fileInput.files).sort((a, b) => a.name.localeCompare(b.name));
-      for (let fi = 0; fi < files.length; fi++) {
-        const values = await readXlsxValues(files[fi]);
+      for (let fi = 0; fi < FROM_GOOGLE_URLS.length; fi++) {
+        let buf;
+        try { buf = await fetchBinary(FROM_GOOGLE_URLS[fi]); }
+        catch(e) { logTo('log-rebuild', 'Error cargando parte ' + (fi+1) + ': ' + e.message, 'err'); return; }
+        const values = await readXlsxValues(buf);
         const keys   = xlsxPartKeys[fi] ?? [];
         for (let i = 0; i < keys.length; i++) {
           if (values[i] !== undefined) translMap[keys[i]] = values[i];
         }
-        logTo('log-rebuild', files[fi].name + ': ' + values.length + ' filas leidas.');
+        logTo('log-rebuild', 'parte_' + (fi+1) + '.xlsx: ' + values.length + ' filas leidas.');
       }
       logTo('log-rebuild', 'Total traducciones cargadas: ' + Object.keys(translMap).length);
 
@@ -390,26 +393,27 @@
       document.getElementById('step3b').style.display = 'none';
       document.getElementById('log-updates').innerHTML = '';
 
-      const refInput      = document.getElementById('reference-file');
-      const snapshotInput = document.getElementById('snapshot-file');
-      if (!refInput.files.length) {
-        logTo('log-updates', 'Selecciona el global_es.ini de referencia.', 'err'); return;
-      }
-      if (!snapshotInput.files.length) {
-        logTo('log-updates', 'Selecciona el en_snapshot.json de referencia.', 'err'); return;
-      }
-
-      // Cargar global_es.ini
-      const refText = await refInput.files[0].text();
+      // Cargar global_es.ini de referencia desde GitHub
+      let refText;
+      try {
+        const res = await fetch(REFERENCE_URL + '?t=' + Date.now());
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        refText = await res.text();
+      } catch(e) { logTo('log-updates', 'Error cargando global.ini de referencia: ' + e.message, 'err'); return; }
       refMap = {};
       for (const line of refText.split('\n')) {
         const eq = line.indexOf('=');
         if (eq !== -1) refMap[line.substring(0, eq)] = line.substring(eq + 1);
       }
-      logTo('log-updates', 'global_es.ini cargado: ' + Object.keys(refMap).length + ' etiquetas.');
+      logTo('log-updates', 'global.ini ES cargado: ' + Object.keys(refMap).length + ' etiquetas.');
 
-      // Cargar en_snapshot.json
-      const snapText = await snapshotInput.files[0].text();
+      // Cargar en_snapshot.json desde GitHub
+      let snapText;
+      try {
+        const res = await fetch(SNAPSHOT_URL + '?t=' + Date.now());
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        snapText = await res.text();
+      } catch(e) { logTo('log-updates', 'Error cargando snapshot: ' + e.message, 'err'); return; }
       snapshotMap = JSON.parse(snapText);
       logTo('log-updates', 'en_snapshot.json cargado: ' + Object.keys(snapshotMap).length + ' entradas.');
 
@@ -462,7 +466,7 @@
         logTo('log-merge', 'Selecciona el novedades.xlsx traducido.', 'err'); return;
       }
 
-      const values = await readXlsxValues(fileInput.files[0]);
+      const values = await readXlsxValues(await fileInput.files[0].arrayBuffer());
       const newTransl = {};
       for (let i = 0; i < updatesKeys.length; i++) {
         if (values[i] !== undefined) newTransl[updatesKeys[i]] = values[i];
