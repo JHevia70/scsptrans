@@ -20,7 +20,7 @@ jobs:
           SC_VER=$(curl -s "https://robertsspaceindustries.com/roadmap/progress-tracker/teams" \
             -H "User-Agent: Mozilla/5.0" \
             | grep -oP 'Live Version:\s*\K[\d.]+' | head -1)
-          if [ -z "$SC_VER" ]; then SC_VER="unknown"; fi
+          if [ -z "$SC_VER" ]; then SC_VER="live"; fi
           echo "tag=v${TAG}" >> $GITHUB_OUTPUT
           echo "name=Traduccion SC ${SC_VER} - ${DATE}" >> $GITHUB_OUTPUT
           echo "sc_ver=${SC_VER}" >> $GITHUB_OUTPUT
