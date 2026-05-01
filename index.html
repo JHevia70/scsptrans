@@ -245,6 +245,8 @@
       if (key && key.toLowerCase().startsWith('manufacturer_name')) return false;
       if (key && key.toLowerCase().startsWith('mission_client_')) return false;
       if (key && key.toLowerCase().startsWith('mission_contractor_')) return false;
+      if (key && key.toLowerCase().startsWith('mission_location_')) return false;
+      if (key && key.toLowerCase().startsWith('mission_ship')) return false;
       return true;
     }
 
