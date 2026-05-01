@@ -242,6 +242,7 @@
       if (key && key.toLowerCase().endsWith('_jpstation')) return false;
       if (key && key.toLowerCase().endsWith('_name')) return false;
       if (key && key.toLowerCase().endsWith('system')) return false;
+      if (key && key.toLowerCase().startsWith('manufacturer_name')) return false;
       return true;
     }
 
