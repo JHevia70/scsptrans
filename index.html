@@ -241,6 +241,7 @@
       if (key && key.startsWith('FOB_Abandoned_') && !key.toLowerCase().includes('_desc')) return false;
       if (key && key.toLowerCase().endsWith('_jpstation')) return false;
       if (key && key.toLowerCase().endsWith('_name')) return false;
+      if (key && key.toLowerCase().endsWith('system')) return false;
       return true;
     }
 
