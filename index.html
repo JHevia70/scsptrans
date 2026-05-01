@@ -239,6 +239,7 @@
       if (key && key.startsWith('RR_') && !key.toLowerCase().endsWith('_desc')) return false;
       if (key && key.toLowerCase().startsWith('vehicle_name')) return false;
       if (key && key.startsWith('FOB_Abandoned_') && !key.toLowerCase().includes('_desc')) return false;
+      if (key && key.toLowerCase().endsWith('_jpstation')) return false;
       return true;
     }
 
