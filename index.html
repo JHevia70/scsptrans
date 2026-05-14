@@ -137,6 +137,13 @@
       aplica <code>correcciones.ini</code> encima y publica un nuevo <code>global.ini</code> con release.<br>
       Ejecuta esto cada vez que modifiques <code>correcciones.ini</code>.
     </p>
+    <div class="controls" style="align-items:center; gap:8px;">
+      <label for="source-select-corr" style="color:#aaa; font-size:0.82rem;">Versión SC:</label>
+      <select id="source-select-corr" style="background:#0d0d1a; color:#e0e0e0; border:1px solid #333; padding:4px 8px; font-family:monospace; font-size:0.82rem;">
+        <option value="master">master (Live)</option>
+        <option value="ptu/4.8">ptu/4.8 (PTU)</option>
+      </select>
+    </div>
     <div class="controls">
       <button class="main-btn" onclick="applyCorrectionsAndPublish()">Aplicar correcciones y publicar</button>
       <button id="dl-corrected-btn" class="green hidden" onclick="downloadIni('global.ini', resultIni)">Descargar global.ini</button>
@@ -727,7 +734,7 @@
       await loadCorrections();
       applyCorrections('log-corrections');
 
-      await publishRelease('log-corrections', SOURCE_VERSIONS[document.getElementById('source-select').value] || '');
+      await publishRelease('log-corrections', SOURCE_VERSIONS[document.getElementById('source-select-corr').value] || '');
       setStatus('status-corrections', 'Listo para descargar.');
       show('dl-corrected-btn');
     }
