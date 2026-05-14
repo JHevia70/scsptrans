@@ -174,13 +174,14 @@
     <div class="controls" id="dl-xlsx-btns" style="display:none">
       <button class="green" onclick="downloadXlsx(0)">Descargar parte_1.xlsx</button>
       <button class="green" onclick="downloadXlsx(1)">Descargar parte_2.xlsx</button>
+      <button class="green" onclick="downloadXlsx(2)">Descargar parte_3.xlsx</button>
     </div>
     <div id="status-gen" class="status">Listo.</div>
     <div id="log-gen" class="log"></div>
 
     <p class="desc" style="color:#ff9800; margin-top:12px">▸ Paso 2 — Reconstruir desde Excel traducido</p>
     <p class="desc">
-      Carga <code>parte_1.xlsx</code> y <code>parte_2.xlsx</code> traducidos del repositorio,
+      Carga <code>parte_1.xlsx</code>, <code>parte_2.xlsx</code> y <code>parte_3.xlsx</code> traducidos del repositorio,
       construye el compendio <code>translations.json</code> y publica el <code>global.ini</code>.
     </p>
     <div class="controls">
@@ -209,6 +210,7 @@
     const FROM_GOOGLE_URLS = [
       BASE_RAW + 'work/from_google/parte_1.xlsx',
       BASE_RAW + 'work/from_google/parte_2.xlsx',
+      BASE_RAW + 'work/from_google/parte_3.xlsx',
     ];
     const NOVEDADES_URL    = BASE_RAW + 'work/from_google/novedades.xlsx';
     const NOVEDADES_PATH   = 'work/from_google/novedades.xlsx';
@@ -216,7 +218,7 @@
     const SNAPSHOT_PATH    = 'work/en_snapshot.json';
     const OUTPUT_PATH      = 'Data/Localization/spanish_(spain)/global.ini';
     const TEST_LIMIT       = 0;
-    const NUM_PARTS        = 2;
+    const NUM_PARTS        = 3;
     // ─────────────────────────────────────────────────────────────────────────
 
     const t1 = 'github_pat_11BV3QMDI0TT3n6kV';
