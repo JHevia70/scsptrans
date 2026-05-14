@@ -503,13 +503,14 @@
       logTo('log-gen', 'Total lineas: ' + parsedLines.length);
       logTo('log-gen', 'Filas a traducir: ' + withKey.filter(p => p.translate).length);
 
-      const partSize = Math.ceil(withKey.length / NUM_PARTS);
+      const translatableOnly = withKey.filter(p => p.translate);
+      const partSize = Math.ceil(translatableOnly.length / NUM_PARTS);
       xlsxParts = []; xlsxPartKeys = [];
       for (let i = 0; i < NUM_PARTS; i++) {
-        const chunk = withKey.slice(i * partSize, (i + 1) * partSize);
+        const chunk = translatableOnly.slice(i * partSize, (i + 1) * partSize);
         if (chunk.length === 0) continue;
         xlsxPartKeys.push(chunk.map(p => p.key));
-        xlsxParts.push(buildWorkbook(chunk.map(p => ({ value: p.translate ? extractVars(p.value).text : '' }))));
+        xlsxParts.push(buildWorkbook(chunk.map(p => ({ value: extractVars(p.value).text }))));
       }
 
       // Guardar snapshot del inglés
