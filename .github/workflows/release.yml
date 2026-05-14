@@ -2,6 +2,11 @@ name: Create Release
 
 on:
   workflow_dispatch:
+    inputs:
+      sc_ver:
+        description: 'Versión de SC (ej: 4.8.0). Si vacío, se detecta desde RSI Live.'
+        required: false
+        default: ''
 
 jobs:
   release:
@@ -17,10 +22,15 @@ jobs:
         run: |
           DATE=$(TZ='Europe/Madrid' date +'%d/%m/%Y %H:%M')
           TAG=$(TZ='Europe/Madrid' date +'%Y%m%d%H%M%S')
-          SC_VER=$(curl -s "https://robertsspaceindustries.com/api/roadmap/v1/boards/1" \
-            -H "User-Agent: Mozilla/5.0" \
-            | grep -oP 'Live Version:\s*\K[\d.]+' | head -1)
-          if [ -z "$SC_VER" ]; then SC_VER="live"; fi
+          INPUT_VER="${{ github.event.inputs.sc_ver }}"
+          if [ -n "$INPUT_VER" ]; then
+            SC_VER="$INPUT_VER"
+          else
+            SC_VER=$(curl -s "https://robertsspaceindustries.com/api/roadmap/v1/boards/1" \
+              -H "User-Agent: Mozilla/5.0" \
+              | grep -oP 'Live Version:\s*\K[\d.]+' | head -1)
+            if [ -z "$SC_VER" ]; then SC_VER="live"; fi
+          fi
           echo "tag=v${TAG}" >> $GITHUB_OUTPUT
           echo "name=Traduccion SC ${SC_VER} - ${DATE}" >> $GITHUB_OUTPUT
           echo "sc_ver=${SC_VER}" >> $GITHUB_OUTPUT

@@ -188,8 +188,12 @@
     // ─── Configuración ───────────────────────────────────────────────────────
     const BASE_RAW         = 'https://raw.githubusercontent.com/JHevia70/scsptrans/main/';
     const SOURCE_URLS = {
-      master:  'https://raw.githubusercontent.com/MrKraken/StarStrings/master/Data/Localization/english/global.ini',
+      master:    'https://raw.githubusercontent.com/MrKraken/StarStrings/master/Data/Localization/english/global.ini',
       'ptu/4.8': 'https://raw.githubusercontent.com/MrKraken/StarStrings/ptu/4.8/Data/Localization/english/global.ini',
+    };
+    const SOURCE_VERSIONS = {
+      master:    '',       // detectar automáticamente desde RSI Live
+      'ptu/4.8': '4.8.0',
     };
     const SOURCE_URL       = SOURCE_URLS.master;
     const CORRECTIONS_URL  = BASE_RAW + 'work/correcciones.ini';
@@ -362,8 +366,9 @@
       return data;
     }
 
-    async function triggerRelease() {
-      const res = await fetch(API + '/actions/workflows/release.yml/dispatches', { method: 'POST', headers: HEADERS, body: JSON.stringify({ ref: 'main' }) });
+    async function triggerRelease(scVer) {
+      const inputs = scVer ? { sc_ver: scVer } : {};
+      const res = await fetch(API + '/actions/workflows/release.yml/dispatches', { method: 'POST', headers: HEADERS, body: JSON.stringify({ ref: 'main', inputs }) });
       if (!res.ok) { const d = await res.json(); throw new Error(d.message); }
     }
 
@@ -439,14 +444,15 @@
     }
 
     // Publica global.ini y dispara release
-    async function publishRelease(logId) {
+    async function publishRelease(logId, scVer) {
       try {
         await ghPut(OUTPUT_PATH, toBase64('\uFEFF' + resultIni.join('\n')), 'Actualizar traduccion ES');
         logTo(logId, 'global.ini publicado en el repositorio.');
       } catch(e) { logTo(logId, 'Error publicando global.ini: ' + e.message, 'err'); return false; }
       try {
-        await triggerRelease();
-        logTo(logId, 'Release en proceso. Disponible en ~1 minuto en GitHub.');
+        await triggerRelease(scVer);
+        const verStr = scVer ? ' (' + scVer + ')' : '';
+        logTo(logId, 'Release en proceso' + verStr + '. Disponible en ~1 minuto en GitHub.');
       } catch(e) { logTo(logId, 'Error disparando release: ' + e.message, 'err'); }
       return true;
     }
@@ -692,7 +698,7 @@
       buildResultIni(newParsed, translMap, 'log-merge');
       applyGlobalReplacements('log-merge');
       applyCorrections('log-merge');
-      await publishRelease('log-merge');
+      await publishRelease('log-merge', SOURCE_VERSIONS[document.getElementById('source-select').value] || '');
       setStatus('status-merge', 'Listo para descargar.');
       show('dl-merged-btn');
     }
@@ -721,7 +727,7 @@
       await loadCorrections();
       applyCorrections('log-corrections');
 
-      await publishRelease('log-corrections');
+      await publishRelease('log-corrections', SOURCE_VERSIONS[document.getElementById('source-select').value] || '');
       setStatus('status-corrections', 'Listo para descargar.');
       show('dl-corrected-btn');
     }
