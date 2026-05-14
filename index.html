@@ -216,6 +216,8 @@
     const NOVEDADES_PATH   = 'work/from_google/novedades.xlsx';
     const TRANSLATIONS_PATH = 'work/translations.json';
     const SNAPSHOT_PATH    = 'work/en_snapshot.json';
+    const PART_KEYS_URL    = BASE_RAW + 'work/from_google/part_keys.json';
+    const PART_KEYS_PATH   = 'work/from_google/part_keys.json';
     const OUTPUT_PATH      = 'Data/Localization/spanish_(spain)/global.ini';
     const TEST_LIMIT       = 0;
     const NUM_PARTS        = 3;
@@ -310,9 +312,9 @@
     }
 
     function buildWorkbook(rows) {
-      const wsData = [['etiqueta', 'texto']].concat(rows.map(r => [r.key, r.value]));
+      const wsData = [['texto']].concat(rows.map(r => [r.value]));
       const ws = XLSX.utils.aoa_to_sheet(wsData);
-      ws['!cols'] = [{ wch: 60 }, { wch: 150 }];
+      ws['!cols'] = [{ wch: 150 }];
       const wb = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, 'Traduccion');
       return wb;
@@ -354,13 +356,7 @@
       const wb   = XLSX.read(buf, { type: 'array' });
       const ws   = wb.Sheets[wb.SheetNames[0]];
       const rows = XLSX.utils.sheet_to_json(ws, { header: 1 });
-      const map  = {};
-      for (const r of rows.slice(1)) {
-        const key = r[0] !== undefined && r[0] !== null ? String(r[0]).trim() : '';
-        const val = r[1] !== undefined && r[1] !== null ? String(r[1]).trim() : '';
-        if (key) map[key] = val;
-      }
-      return map;
+      return rows.slice(1).map(r => (r[0] !== undefined && r[0] !== null) ? String(r[0]).trim() : '');
     }
 
     // ── GitHub API helpers ────────────────────────────────────────────────────
@@ -513,7 +509,7 @@
         const chunk = withKey.slice(i * partSize, (i + 1) * partSize);
         if (chunk.length === 0) continue;
         xlsxPartKeys.push(chunk.map(p => p.key));
-        xlsxParts.push(buildWorkbook(chunk.map(p => ({ key: p.key, value: p.translate ? extractVars(p.value).text : '' }))));
+        xlsxParts.push(buildWorkbook(chunk.map(p => ({ value: p.translate ? extractVars(p.value).text : '' }))));
       }
 
       // Guardar snapshot del inglés
@@ -523,6 +519,11 @@
         await ghPut(SNAPSHOT_PATH, toBase64(JSON.stringify(snap)), 'Actualizar en_snapshot.json');
         logTo('log-gen', 'en_snapshot.json guardado en el repositorio.');
       } catch(e) { logTo('log-gen', 'Error guardando snapshot: ' + e.message, 'err'); }
+
+      try {
+        await ghPut(PART_KEYS_PATH, toBase64(JSON.stringify(xlsxPartKeys)), 'Actualizar part_keys.json');
+        logTo('log-gen', 'part_keys.json guardado en el repositorio.');
+      } catch(e) { logTo('log-gen', 'Error guardando part_keys.json: ' + e.message, 'err'); }
 
       logTo('log-gen', 'Generadas ' + xlsxParts.length + ' partes.');
       setStatus('status-gen', 'Listo para descargar.');
@@ -537,14 +538,22 @@
       document.getElementById('log-rebuild').innerHTML = '';
       if (!await ensureParsed('log-rebuild')) return;
 
+      let partKeys;
+      try {
+        const text = await fetchText(PART_KEYS_URL);
+        partKeys = JSON.parse(text);
+        logTo('log-rebuild', 'part_keys.json cargado: ' + partKeys.length + ' partes.');
+      } catch(e) { logTo('log-rebuild', 'Error cargando part_keys.json: ' + e.message, 'err'); return; }
+
       const rawTransl = {};
-      for (let fi = 0; fi < FROM_GOOGLE_URLS.length; fi++) {
+      for (let fi = 0; fi < partKeys.length; fi++) {
         let buf;
         try { buf = await fetchBinary(FROM_GOOGLE_URLS[fi]); }
         catch(e) { logTo('log-rebuild', 'Error cargando parte ' + (fi+1) + ': ' + e.message, 'err'); return; }
-        const map = await readXlsxValues(buf);
-        for (const [k, v] of Object.entries(map)) if (v) rawTransl[k] = v;
-        logTo('log-rebuild', 'parte_' + (fi+1) + '.xlsx: ' + Object.keys(map).length + ' entradas leidas.');
+        const values = await readXlsxValues(buf);
+        const keys   = partKeys[fi];
+        for (let i = 0; i < keys.length; i++) if (values[i]) rawTransl[keys[i]] = values[i];
+        logTo('log-rebuild', 'parte_' + (fi+1) + '.xlsx: ' + values.length + ' filas leidas.');
       }
       logTo('log-rebuild', 'Total traducciones cargadas: ' + Object.keys(rawTransl).length);
 
@@ -651,7 +660,7 @@
       }
 
       updatesKeys = novedades.map(p => p.key);
-      updatesXlsx = buildWorkbook(novedades.map(p => ({ key: p.key, value: extractVars(p.value).text })));
+      updatesXlsx = buildWorkbook(novedades.map(p => ({ value: extractVars(p.value).text })));
 
       try {
         await ghPut(NOVEDADES_PATH, xlsxToBase64(updatesXlsx), 'Actualizar novedades.xlsx');
@@ -684,10 +693,10 @@
       try { xlsxBuf = await fetchBinary(NOVEDADES_URL); }
       catch(e) { logTo('log-merge', 'Error cargando novedades.xlsx: ' + e.message, 'err'); return; }
 
-      const map = await readXlsxValues(xlsxBuf);
+      const values = await readXlsxValues(xlsxBuf);
       let countNew = 0;
-      for (const [k, v] of Object.entries(map)) {
-        if (v) { translMap[k] = restoreVars(v, newParsed.find(p => p.key === k)?.vars ?? []); countNew++; }
+      for (let i = 0; i < updatesKeys.length; i++) {
+        if (values[i]) { translMap[updatesKeys[i]] = restoreVars(values[i], newParsed.find(p => p.key === updatesKeys[i])?.vars ?? []); countNew++; }
       }
       logTo('log-merge', 'Novedades incorporadas: ' + countNew);
 
