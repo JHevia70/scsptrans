@@ -103,6 +103,13 @@
       2. Traduce <code>novedades.xlsx</code> con Google y guárdalo de vuelta en <code>work/from_google/novedades.xlsx</code>.<br>
       3. Fusiona las novedades con <code>translations.json</code>, actualiza el compendio y publica la release.
     </p>
+    <div class="controls" style="align-items:center; gap:8px;">
+      <label for="source-select" style="color:#aaa; font-size:0.82rem;">Fuente EN:</label>
+      <select id="source-select" style="background:#0d0d1a; color:#e0e0e0; border:1px solid #333; padding:4px 8px; font-family:monospace; font-size:0.82rem;">
+        <option value="master">master (Live)</option>
+        <option value="ptu/4.8">ptu/4.8 (PTU)</option>
+      </select>
+    </div>
     <div class="controls">
       <button class="main-btn" onclick="generateUpdatesXlsx()">1. Detectar novedades y subir Excel</button>
       <button id="dl-updates-xlsx-btn" class="green hidden" onclick="downloadUpdatesXlsx()">Descargar novedades.xlsx</button>
@@ -180,7 +187,11 @@
   <script>
     // ─── Configuración ───────────────────────────────────────────────────────
     const BASE_RAW         = 'https://raw.githubusercontent.com/JHevia70/scsptrans/main/';
-    const SOURCE_URL       = 'https://raw.githubusercontent.com/MrKraken/StarStrings/master/Data/Localization/english/global.ini';
+    const SOURCE_URLS = {
+      master:  'https://raw.githubusercontent.com/MrKraken/StarStrings/master/Data/Localization/english/global.ini',
+      'ptu/4.8': 'https://raw.githubusercontent.com/MrKraken/StarStrings/ptu/4.8/Data/Localization/english/global.ini',
+    };
+    const SOURCE_URL       = SOURCE_URLS.master;
     const CORRECTIONS_URL  = BASE_RAW + 'work/correcciones.ini';
     const SNAPSHOT_URL     = BASE_RAW + 'work/en_snapshot.json';
     const TRANSLATIONS_URL = BASE_RAW + 'work/translations.json';
@@ -203,10 +214,11 @@
     const API     = 'https://api.github.com/repos/JHevia70/scsptrans';
     const HEADERS = { 'Authorization': 'token ' + TOKEN, 'Content-Type': 'application/json' };
 
-    let correctionsMap = {};
-    let parsedLines    = [];
-    let xlsxParts      = [];
-    let xlsxPartKeys   = [];
+    let correctionsMap   = {};
+    let parsedLines      = [];
+    let xlsxParts        = [];
+    let xlsxPartKeys     = [];
+    let currentSourceKey = null;
     let updatesXlsx    = null;
     let updatesKeys    = [];
     let newParsed      = [];
@@ -545,7 +557,34 @@
       hide('dl-updates-xlsx-btn');
       document.getElementById('step-merge').style.display = 'none';
       document.getElementById('log-updates').innerHTML = '';
-      if (!await ensureParsed('log-updates')) return;
+
+      const selectedKey = document.getElementById('source-select').value;
+      const selectedUrl = SOURCE_URLS[selectedKey];
+
+      // Si la fuente cambió, forzar recarga del global.ini
+      if (currentSourceKey !== selectedKey) {
+        parsedLines = []; xlsxPartKeys = []; currentSourceKey = null;
+      }
+
+      logTo('log-updates', 'Fuente: ' + selectedKey + ' — ' + selectedUrl);
+
+      // Cargar global.ini de la fuente seleccionada
+      if (!parsedLines.length) {
+        logTo('log-updates', 'Cargando global.ini desde MrKraken (' + selectedKey + ')...');
+        try {
+          const raw  = await fetchText(selectedUrl);
+          parsedLines = parseIni(raw, TEST_LIMIT);
+          const withKey  = parsedLines.filter(p => p.key !== null);
+          const partSize = Math.ceil(withKey.length / NUM_PARTS);
+          xlsxPartKeys   = [];
+          for (let i = 0; i < NUM_PARTS; i++) {
+            const chunk = withKey.slice(i * partSize, (i + 1) * partSize);
+            if (chunk.length > 0) xlsxPartKeys.push(chunk.map(p => p.key));
+          }
+          currentSourceKey = selectedKey;
+          logTo('log-updates', 'global.ini cargado: ' + parsedLines.length + ' lineas.');
+        } catch(e) { logTo('log-updates', 'Error cargando global.ini: ' + e.message, 'err'); return; }
+      }
 
       // Cargar translations.json (compendio)
       let translMap = {};
@@ -575,18 +614,14 @@
         logTo('log-updates', 'en_snapshot.json cargado: ' + Object.keys(snapshotMap).length + ' entradas.');
       } catch(e) { logTo('log-updates', 'Aviso: no hay snapshot, se detectarán solo etiquetas nuevas.', 'warn'); }
 
-      // Cargar nueva versión del global.ini EN
-      logTo('log-updates', 'Descargando nueva version de MrKraken...');
-      let raw;
-      try { raw = await fetchText(SOURCE_URL); }
-      catch(e) { logTo('log-updates', 'Error: ' + e.message, 'err'); return; }
-      newParsed = parseIni(raw, TEST_LIMIT);
+      // Usar el global.ini EN ya cargado (selectedUrl)
+      newParsed = parsedLines;
 
       // Guardar nuevo snapshot
       const newSnap = {};
       for (const p of newParsed) if (p.key !== null) newSnap[p.key] = p.value;
       try {
-        await ghPut(SNAPSHOT_PATH, toBase64(JSON.stringify(newSnap)), 'Actualizar en_snapshot.json');
+        await ghPut(SNAPSHOT_PATH, toBase64(JSON.stringify(newSnap)), 'Actualizar en_snapshot.json (' + selectedKey + ')');
         logTo('log-updates', 'en_snapshot.json actualizado.');
       } catch(e) { logTo('log-updates', 'Error guardando snapshot: ' + e.message, 'err'); }
 
