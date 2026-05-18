@@ -389,8 +389,14 @@
       [/ \(mineral\)/gi,  ' (Ore)'],
       [/ \(crudo\)/gi,    ' (Raw)'],
       [/ \(en bruto\)/gi, ' (Raw)'],
-      [/embarcaci[oó]n/gi, 'nave'],
-      [/barco/gi,          'nave'],
+      [/embarcaci[oó]n/gi,  'nave'],
+      [/el barco/gi,        'la nave'],
+      [/del barco/gi,       'de la nave'],
+      [/un barco/gi,        'una nave'],
+      [/los barcos/gi,      'las naves'],
+      [/unos barcos/gi,     'unas naves'],
+      [/barcos/gi,          'naves'],
+      [/barco/gi,           'nave'],
     ];
 
     function applyGlobalReplacements(logId) {
