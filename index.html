@@ -106,11 +106,7 @@
       3. Fusiona las novedades con <code>translations.json</code>, actualiza el compendio y publica la release.
     </p>
     <div class="controls" style="align-items:center; gap:8px;">
-      <label for="source-select" style="color:#aaa; font-size:0.82rem;">Fuente EN:</label>
-      <select id="source-select" style="background:#0d0d1a; color:#e0e0e0; border:1px solid #333; padding:4px 8px; font-family:monospace; font-size:0.82rem;">
-        <option value="master">master (Live)</option>
-        <option value="ptu/4.8">ptu/4.8 (PTU)</option>
-      </select>
+      <label style="color:#aaa; font-size:0.82rem;">Fuente EN: <span style="color:#e0e0e0; font-family:monospace;">work/source/global.ini</span></label>
     </div>
     <div class="controls">
       <button class="main-btn" onclick="generateUpdatesXlsx()">1. Detectar novedades y subir Excel</button>
@@ -139,13 +135,6 @@
       aplica <code>correcciones.ini</code> encima y publica un nuevo <code>global.ini</code> con release.<br>
       Ejecuta esto cada vez que modifiques <code>correcciones.ini</code>.
     </p>
-    <div class="controls" style="align-items:center; gap:8px;">
-      <label for="source-select-corr" style="color:#aaa; font-size:0.82rem;">Versión SC:</label>
-      <select id="source-select-corr" style="background:#0d0d1a; color:#e0e0e0; border:1px solid #333; padding:4px 8px; font-family:monospace; font-size:0.82rem;">
-        <option value="master">master (Live)</option>
-        <option value="ptu/4.8">ptu/4.8 (PTU)</option>
-      </select>
-    </div>
     <div class="controls">
       <button class="main-btn" onclick="applyCorrectionsAndPublish()">Aplicar correcciones y publicar</button>
       <button id="dl-corrected-btn" class="green hidden" onclick="downloadIni('global.ini', resultIni)">Descargar global.ini</button>
@@ -215,7 +204,7 @@
 
     <p class="desc" style="color:#ff9800">▸ Paso 1 — Generar Excel para Google Translate</p>
     <p class="desc">
-      Carga <code>global.ini</code> de <code>MrKraken/StarStrings</code> y genera los Excel.<br>
+      Carga <code>global.ini</code> del repositorio propio y genera los Excel.<br>
       Tradúcelos en <a href="https://translate.google.com/" target="_blank" style="color:#00d4ff">Google Translate</a>
       y guarda el resultado en <code>work/from_google/</code> del repositorio.
     </p>
@@ -247,22 +236,14 @@
     // ─── Configuración ───────────────────────────────────────────────────────
     const BASE_RAW         = 'https://raw.githubusercontent.com/JHevia70/scsptrans/main/';
     const SOURCE_URLS = {
-      master:    'https://raw.githubusercontent.com/MrKraken/StarStrings/master/Data/Localization/english/global.ini',
-      'ptu/4.8': 'https://raw.githubusercontent.com/MrKraken/StarStrings/ptu/4.8/Data/Localization/english/global.ini',
+      master:    BASE_RAW + 'work/source/global.ini',
     };
     const SOURCE_VERSIONS = {
-      master:    '4.8.0', // RSI aún reporta 4.7.2; forzar manualmente hasta que actualicen
-      'ptu/4.8': '4.8.0',
+      master:    '4.8.0',
     };
     const SOURCE_URL       = SOURCE_URLS.master;
     const CORRECTIONS_URL  = BASE_RAW + 'work/correcciones.ini';
-    const MRKRAKEN_BASE    = 'https://raw.githubusercontent.com/MrKraken/StarStrings/master/';
-    const MRKRAKEN_URLS    = [
-      MRKRAKEN_BASE + 'components.ini',
-      MRKRAKEN_BASE + 'mining.ini',
-      MRKRAKEN_BASE + 'ordnance.ini',
-      BASE_RAW + 'work/source/components_generated.ini',  // Generado desde HOTFIX data.p4k (override)
-    ];
+    const COMPONENTS_URL   = BASE_RAW + 'work/source/components_generated.ini';
     const SNAPSHOT_URL     = BASE_RAW + 'work/en_snapshot.json';
     const TRANSLATIONS_URL = BASE_RAW + 'work/translations.json';
     const FROM_GOOGLE_URLS = [
@@ -296,7 +277,7 @@
     const HEADERS = { 'Authorization': 'token ' + TOKEN, 'Content-Type': 'application/json' };
 
     let correctionsMap   = {};
-    let mrKrakenMap      = {};
+    let componentsMap    = {};
     let parsedLines      = [];
     let xlsxParts        = [];
     let xlsxPartKeys     = [];
@@ -495,49 +476,46 @@
       logTo(logId, 'Sustituciones globales aplicadas.');
     }
 
-    async function loadMrKrakenStrings() {
-      mrKrakenMap = {};
+    async function loadComponents() {
+      componentsMap = {};
       let total = 0;
-      for (const url of MRKRAKEN_URLS) {
-        try {
-          const text = await fetchText(url);
-          for (const line of text.split('\n')) {
-            const eq = line.indexOf('=');
-            if (eq === -1) continue;
-            const key = line.substring(0, eq).trim();
-            if (!key) continue;
-            const val = line.substring(eq + 1);
-            mrKrakenMap[key] = val;
-            total++;
-            // Registrar también la variante alternativa de clave (con/sin guión bajo tras item_Name)
-            // para cubrir ambas formas que puede tener el global.ini
-            const kl = key.toLowerCase();
-            if (kl.startsWith('item_name_')) {
-              const alt = 'item_Name' + key.substring(10);
-              if (!(alt in mrKrakenMap)) mrKrakenMap[alt] = val;
-            } else if (kl.startsWith('item_name')) {
-              const alt = 'item_Name_' + key.substring(9);
-              if (!(alt in mrKrakenMap)) mrKrakenMap[alt] = val;
-            }
+      try {
+        const text = await fetchText(COMPONENTS_URL);
+        for (const line of text.split('\n')) {
+          const eq = line.indexOf('=');
+          if (eq === -1) continue;
+          const key = line.substring(0, eq).trim();
+          if (!key || key.startsWith('#') || key.startsWith(';')) continue;
+          const val = line.substring(eq + 1);
+          componentsMap[key] = val;
+          total++;
+          // Registrar variante alternativa de clave (con/sin guión bajo tras item_Name)
+          const kl = key.toLowerCase();
+          if (kl.startsWith('item_name_')) {
+            const alt = 'item_Name' + key.substring(10);
+            if (!(alt in componentsMap)) componentsMap[alt] = val;
+          } else if (kl.startsWith('item_name')) {
+            const alt = 'item_Name_' + key.substring(9);
+            if (!(alt in componentsMap)) componentsMap[alt] = val;
           }
-        } catch(e) {
-          console.warn('No se pudo cargar ' + url + ': ' + e.message);
         }
+      } catch(e) {
+        console.warn('No se pudo cargar components_generated.ini: ' + e.message);
       }
-      console.log('MrKraken strings cargadas: ' + total);
+      console.log('Componentes cargados: ' + total);
     }
 
-    function applyMrKrakenStrings(logId) {
-      if (!Object.keys(mrKrakenMap).length) return;
+    function applyComponents(logId) {
+      if (!Object.keys(componentsMap).length) return;
       let count = 0;
       resultIni = resultIni.map(line => {
         const eq = line.indexOf('=');
         if (eq === -1) return line;
         const key = line.substring(0, eq);
-        if (key in mrKrakenMap) { count++; return key + '=' + mrKrakenMap[key]; }
+        if (key in componentsMap) { count++; return key + '=' + componentsMap[key]; }
         return line;
       });
-      logTo(logId, 'MrKraken strings aplicadas: ' + count + ' entradas (componentes, minerales, misiles).');
+      logTo(logId, 'Componentes de nave aplicados: ' + count + ' entradas.');
     }
 
     async function loadCorrections() {
@@ -618,7 +596,7 @@
     // ── Inicialización ────────────────────────────────────────────────────────
     async function ensureParsed(logId) {
       if (parsedLines.length) return true;
-      logTo(logId, 'Cargando global.ini desde MrKraken...');
+      logTo(logId, 'Cargando global.ini...');
       try {
         const raw  = await fetchText(SOURCE_URL);
         parsedLines = parseIni(raw, TEST_LIMIT);
@@ -700,7 +678,7 @@
       const translMap = buildTranslMap(parsedLines, rawTransl);
       buildResultIni(parsedLines, translMap, 'log-rebuild');
       applyGlobalReplacements('log-rebuild');
-      applyMrKrakenStrings('log-rebuild');
+      applyComponents('log-rebuild');
       applyCorrections('log-rebuild');
 
       // Publicar translations.json (valores ya con vars restauradas + correcciones)
@@ -721,19 +699,14 @@
       document.getElementById('step-merge').style.display = 'none';
       document.getElementById('log-updates').innerHTML = '';
 
-      const selectedKey = document.getElementById('source-select').value;
-      const selectedUrl = SOURCE_URLS[selectedKey];
+      const selectedKey = 'master';
+      const selectedUrl = SOURCE_URL;
 
-      // Si la fuente cambió, forzar recarga del global.ini
-      if (currentSourceKey !== selectedKey) {
-        parsedLines = []; currentSourceKey = null;
-      }
+      logTo('log-updates', 'Fuente: ' + selectedUrl);
 
-      logTo('log-updates', 'Fuente: ' + selectedKey + ' — ' + selectedUrl);
-
-      // Cargar global.ini de la fuente seleccionada
+      // Cargar global.ini
       if (!parsedLines.length) {
-        logTo('log-updates', 'Cargando global.ini desde MrKraken (' + selectedKey + ')...');
+        logTo('log-updates', 'Cargando global.ini...');
         try {
           const raw  = await fetchText(selectedUrl);
           parsedLines = parseIni(raw, TEST_LIMIT);
@@ -847,7 +820,7 @@
       // Construir global.ini desde el nuevo parsedLines + translMap actualizado
       buildResultIni(newParsed, translMap, 'log-merge');
       applyGlobalReplacements('log-merge');
-      applyMrKrakenStrings('log-merge');
+      applyComponents('log-merge');
       applyCorrections('log-merge');
       await publishRelease('log-merge', SOURCE_VERSIONS[document.getElementById('source-select').value] || '');
       setStatus('status-merge', 'Listo para descargar.');
@@ -873,8 +846,8 @@
 
       buildResultIni(parsedLines, translMap, 'log-corrections');
       applyGlobalReplacements('log-corrections');
-      await loadMrKrakenStrings();
-      applyMrKrakenStrings('log-corrections');
+      await loadComponents();
+      applyComponents('log-corrections');
 
       // Recargar correcciones por si han cambiado
       await loadCorrections();
@@ -1236,7 +1209,7 @@
       }
     }
 
-    loadMrKrakenStrings();
+    loadComponents();
     loadCorrections();
     loadRsiPanel();
     initAuth();
