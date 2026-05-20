@@ -164,21 +164,37 @@ function extractRep(v, repAmounts) {
   return repAmounts[rewardFile] ?? 0;
 }
 
-// ── Resolver nombre de item en global.ini ─────────────────────────────────────
+// ── Construir nameMap case-insensitive desde global.ini ───────────────────────
+// Clave: sufijo en minúsculas → {value, key original}
+// Esto permite resolver entityClass independientemente de si es upper/mixed/lower
 
-function resolveItemName(entityClass, ini) {
-  const noSCItem = entityClass.toUpperCase().endsWith('_SCITEM')
-    ? entityClass.slice(0, -7) : entityClass;
-  return ini['item_Name' + entityClass]
-      || ini['item_Name_' + entityClass]
-      || ini['item_Name' + noSCItem]
-      || ini['item_Name_' + noSCItem]
-      || entityClass;
+function buildNameMap(ini) {
+  const map = {};  // sufijo_lower → nombre
+  for (const [k, v] of Object.entries(ini)) {
+    const kl = k.toLowerCase();
+    if (kl.startsWith('item_name_')) {
+      const suffix = kl.substring(10);  // quitar 'item_name_'
+      if (!map[suffix]) map[suffix] = v;
+    } else if (kl.startsWith('item_name')) {
+      const suffix = kl.substring(9);   // quitar 'item_name'
+      if (!map[suffix]) map[suffix] = v;
+    }
+  }
+  return map;
+}
+
+// ── Resolver nombre de item usando nameMap case-insensitive ───────────────────
+
+function resolveItemName(entityClass, nameMap) {
+  const ecl = entityClass.toLowerCase();
+  // Probar con el nombre completo y sin sufijo _scitem
+  const noSCItem = ecl.endsWith('_scitem') ? ecl.slice(0, -7) : ecl;
+  return nameMap[ecl] || nameMap[noSCItem] || entityClass;
 }
 
 // ── Cargar misiones desde MissionBrokerEntry ──────────────────────────────────
 
-function loadMissions(titleToBpPools, bpPools, repAmounts, ini) {
+function loadMissions(titleToBpPools, bpPools, repAmounts, ini, nameMap) {
   const missions = new Map(); // titleKey → entrada
 
   for (const f of walk(BROKER_DIR)) {
@@ -204,7 +220,7 @@ function loadMissions(titleToBpPools, bpPools, repAmounts, ini) {
       for (const p of titleToBpPools[descKey]) poolNames.add(p);
     }
     const bps = [...new Set(
-      [...poolNames].flatMap(p => (bpPools[p] || []).map(e => resolveItemName(e, ini)))
+      [...poolNames].flatMap(p => (bpPools[p] || []).map(e => resolveItemName(e, nameMap)))
     )];
 
     if (!missions.has(titleKey)) {
@@ -243,8 +259,10 @@ async function main() {
   const repAmounts = loadReputationAmounts();
   console.log('  reward files:', Object.keys(repAmounts).length);
 
+  const nameMap = buildNameMap(ini);
+
   console.log('Cargando misiones...');
-  const missions = loadMissions(titleToBpPools, bpPools, repAmounts, ini);
+  const missions = loadMissions(titleToBpPools, bpPools, repAmounts, ini, nameMap);
   console.log('  misiones únicas:', missions.length);
 
   const withBps = missions.filter(m => m.bps.length > 0).length;
