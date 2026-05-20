@@ -277,7 +277,8 @@
       BASE_RAW + 'work/from_google/parte_3.xlsx',
     ];
     const NOVEDADES_URL    = BASE_RAW + 'work/from_google/novedades.xlsx';
-    const NOVEDADES_PATH   = 'work/from_google/novedades.xlsx';
+    const NOVEDADES_PATH      = 'work/from_google/novedades.xlsx';
+    const NOVEDADES_KEYS_PATH = 'work/from_google/novedades_keys.json';
     const TRANSLATIONS_PATH = 'work/translations.json';
     const SNAPSHOT_PATH    = 'work/en_snapshot.json';
     const PART_KEYS_URL    = BASE_RAW + 'work/from_google/part_keys.json';
@@ -719,22 +720,29 @@
       document.getElementById('log-rebuild').innerHTML = '';
       if (!await ensureParsed('log-rebuild')) return;
 
+      // Cargar part_keys.json via API para garantizar versión actual (sin caché raw)
       let partKeys;
       try {
-        const text = await fetchText(PART_KEYS_URL);
+        const buf  = await ghGetBinary(PART_KEYS_PATH);
+        const text = new TextDecoder().decode(buf);
         partKeys = JSON.parse(text);
         logTo('log-rebuild', 'part_keys.json cargado: ' + partKeys.length + ' partes.');
       } catch(e) { logTo('log-rebuild', 'Error cargando part_keys.json: ' + e.message, 'err'); return; }
 
+      // Cargar xlsx también via API para garantizar versión actual
       const rawTransl = {};
       for (let fi = 0; fi < partKeys.length; fi++) {
         let buf;
-        try { buf = await fetchBinary(FROM_GOOGLE_URLS[fi]); }
+        try { buf = await ghGetBinary(PART_PATHS[fi]); }
         catch(e) { logTo('log-rebuild', 'Error cargando parte ' + (fi+1) + ': ' + e.message, 'err'); return; }
         const values = await readXlsxValues(buf);
         const keys   = partKeys[fi];
+        if (values.length !== keys.length) {
+          logTo('log-rebuild', 'ERROR: parte_' + (fi+1) + '.xlsx tiene ' + values.length + ' filas pero part_keys tiene ' + keys.length + ' claves. Los ficheros no coinciden — vuelve a ejecutar el Paso 1.1.', 'err');
+          return;
+        }
         for (let i = 0; i < keys.length; i++) if (values[i]) rawTransl[keys[i]] = values[i];
-        logTo('log-rebuild', 'parte_' + (fi+1) + '.xlsx: ' + values.length + ' filas leidas.');
+        logTo('log-rebuild', 'parte_' + (fi+1) + '.xlsx: ' + values.length + ' filas OK.');
       }
       logTo('log-rebuild', 'Total traducciones cargadas: ' + Object.keys(rawTransl).length);
 
@@ -845,6 +853,12 @@
         logTo('log-updates', 'novedades.xlsx subido al repositorio.');
       } catch(e) { logTo('log-updates', 'Error subiendo novedades.xlsx: ' + e.message, 'err'); }
 
+      // Guardar las claves en el repo para que el Paso 3.2 no dependa de la sesión
+      try {
+        await ghPut(NOVEDADES_KEYS_PATH, toBase64(JSON.stringify(updatesKeys)), 'Actualizar novedades_keys.json');
+        logTo('log-updates', 'novedades_keys.json guardado en el repositorio.');
+      } catch(e) { logTo('log-updates', 'Error guardando novedades_keys.json: ' + e.message, 'err'); }
+
       setStatus('status-updates', 'Listo para descargar.');
       show('dl-updates-xlsx-btn');
       document.getElementById('step-merge').style.display = 'block';
@@ -865,13 +879,32 @@
         logTo('log-merge', 'translations.json cargado: ' + Object.keys(translMap).length + ' entradas.');
       } catch(e) { logTo('log-merge', 'Aviso: no se pudo cargar translations.json.', 'warn'); }
 
-      // Cargar novedades.xlsx traducido
+      // Si updatesKeys no está en memoria (sesión nueva), cargar desde el repo
+      if (!updatesKeys.length) {
+        try {
+          const buf  = await ghGetBinary(NOVEDADES_KEYS_PATH);
+          updatesKeys = JSON.parse(new TextDecoder().decode(buf));
+          logTo('log-merge', 'novedades_keys.json cargado del repositorio: ' + updatesKeys.length + ' claves.');
+        } catch(e) { logTo('log-merge', 'Error cargando novedades_keys.json: ' + e.message + ' — Ejecuta primero el Paso 3.1.', 'err'); return; }
+      }
+
+      // Necesitamos newParsed para restaurar variables; si no está en memoria, cargar global.ini
+      if (!newParsed.length) {
+        if (!await ensureParsed('log-merge')) return;
+        newParsed = parsedLines;
+      }
+
+      // Cargar novedades.xlsx vía API (no raw) para garantizar versión actual
       logTo('log-merge', 'Cargando novedades.xlsx desde el repositorio...');
       let xlsxBuf;
-      try { xlsxBuf = await fetchBinary(NOVEDADES_URL); }
+      try { xlsxBuf = await ghGetBinary(NOVEDADES_PATH); }
       catch(e) { logTo('log-merge', 'Error cargando novedades.xlsx: ' + e.message, 'err'); return; }
 
       const values = await readXlsxValues(xlsxBuf);
+      if (values.length !== updatesKeys.length) {
+        logTo('log-merge', 'ERROR: novedades.xlsx tiene ' + values.length + ' filas pero se esperaban ' + updatesKeys.length + '. Los ficheros no coinciden — vuelve a ejecutar el Paso 3.1.', 'err');
+        return;
+      }
       let countNew = 0;
       for (let i = 0; i < updatesKeys.length; i++) {
         if (values[i]) { translMap[updatesKeys[i]] = restoreVars(values[i], newParsed.find(p => p.key === updatesKeys[i])?.vars ?? []); countNew++; }
