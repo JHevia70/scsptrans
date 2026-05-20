@@ -604,15 +604,15 @@
     "uec": 50250,
     "rep": 50,
     "bps": [
-      "VK-00",
-      "Siren",
-      "XL-1",
-      "Yeager",
-      "Balandin",
-      "TS-2",
-      "Palisade",
-      "Rampart",
-      "Parapet"
+      "Mi/1/A VK-00",
+      "Mi/1/B Siren",
+      "Mi/2/A XL-1",
+      "Mi/2/B Yeager",
+      "Mi/3/B Balandin",
+      "Mi/3/A TS-2",
+      "In/1/A Palisade",
+      "In/2/A Rampart",
+      "In/3/A Parapet"
     ]
   },
   {
@@ -632,15 +632,15 @@
     "uec": 248250,
     "rep": 2000,
     "bps": [
-      "VK-00",
-      "Siren",
-      "XL-1",
-      "Yeager",
-      "Balandin",
-      "TS-2",
-      "Palisade",
-      "Rampart",
-      "Parapet"
+      "Mi/1/A VK-00",
+      "Mi/1/B Siren",
+      "Mi/2/A XL-1",
+      "Mi/2/B Yeager",
+      "Mi/3/B Balandin",
+      "Mi/3/A TS-2",
+      "In/1/A Palisade",
+      "In/2/A Rampart",
+      "In/3/A Parapet"
     ]
   },
   {
@@ -660,15 +660,15 @@
     "uec": 395500,
     "rep": 8000,
     "bps": [
-      "VK-00",
-      "Siren",
-      "XL-1",
-      "Yeager",
-      "Balandin",
-      "TS-2",
-      "Palisade",
-      "Rampart",
-      "Parapet"
+      "Mi/1/A VK-00",
+      "Mi/1/B Siren",
+      "Mi/2/A XL-1",
+      "Mi/2/B Yeager",
+      "Mi/3/B Balandin",
+      "Mi/3/A TS-2",
+      "In/1/A Palisade",
+      "In/2/A Rampart",
+      "In/3/A Parapet"
     ]
   },
   {

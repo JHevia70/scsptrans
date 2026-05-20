@@ -6,15 +6,16 @@ const fs      = require('fs');
 const path    = require('path');
 const readline = require('readline');
 
-const BASE         = path.dirname(__filename);
-const BROKER_DIR   = path.join(BASE, 'dcb_mgiver/libs/foundry/records/missionbroker');
-const CONTRACT_DIR = path.join(BASE, 'dcb_mgiver/libs/foundry/records/contracts');
-const BP_DIR       = path.join(BASE, 'dcb_mgiver/libs/foundry/records/crafting/blueprintrewards');
-const BP_REC_DIR   = path.join(BASE, 'dcb_mgiver/libs/foundry/records/crafting/blueprints');
-const REP_DIR      = path.join(BASE, 'dcb_mgiver/libs/foundry/records/reputation/rewards/missionrewards_reputation');
-const GLOBAL_INI   = path.join(BASE, 'p4k_extract/Data/Localization/english/global.ini');
-const OUT_TSV      = path.join(BASE, '..', 'missions.tsv');
-const OUT_JSON     = path.join(BASE, '..', 'missions_data.json');
+const BASE            = path.dirname(__filename);
+const BROKER_DIR      = path.join(BASE, 'dcb_mgiver/libs/foundry/records/missionbroker');
+const CONTRACT_DIR    = path.join(BASE, 'dcb_mgiver/libs/foundry/records/contracts');
+const BP_DIR          = path.join(BASE, 'dcb_mgiver/libs/foundry/records/crafting/blueprintrewards');
+const BP_REC_DIR      = path.join(BASE, 'dcb_mgiver/libs/foundry/records/crafting/blueprints');
+const REP_DIR         = path.join(BASE, 'dcb_mgiver/libs/foundry/records/reputation/rewards/missionrewards_reputation');
+const COMPONENTS_INI  = path.join(BASE, 'components_generated.ini');
+const GLOBAL_INI      = path.join(BASE, 'p4k_extract/Data/Localization/english/global.ini');
+const OUT_TSV         = path.join(BASE, '..', 'missions.tsv');
+const OUT_JSON        = path.join(BASE, '..', 'missions_data.json');
 
 // ── Utilidades ────────────────────────────────────────────────────────────────
 
@@ -164,6 +165,25 @@ function extractRep(v, repAmounts) {
   return repAmounts[rewardFile] ?? 0;
 }
 
+// ── Cargar components_generated.ini: sufijo_lower → nombre con prefijo ────────
+// Permite que los BPs de nave muestren el nombre enriquecido (e.g. "Mi/1/A VK-00")
+
+function loadComponentsMap() {
+  const map = {};
+  if (!fs.existsSync(COMPONENTS_INI)) return map;
+  for (const line of fs.readFileSync(COMPONENTS_INI, 'utf8').split('\n')) {
+    const eq = line.indexOf('=');
+    if (eq === -1) continue;
+    const key = line.substring(0, eq).trim();
+    const val = line.substring(eq + 1).trim();
+    if (!key || !val) continue;
+    const kl = key.toLowerCase();
+    if (kl.startsWith('item_name_')) map[kl.substring(10)] = val;
+    else if (kl.startsWith('item_name')) map[kl.substring(9)]  = val;
+  }
+  return map;
+}
+
 // ── Construir nameMap case-insensitive desde global.ini ───────────────────────
 // Clave: sufijo en minúsculas → {value, key original}
 // Esto permite resolver entityClass independientemente de si es upper/mixed/lower
@@ -183,18 +203,20 @@ function buildNameMap(ini) {
   return map;
 }
 
-// ── Resolver nombre de item usando nameMap case-insensitive ───────────────────
+// ── Resolver nombre de item ───────────────────────────────────────────────────
+// Prioridad: componentsMap (nombre con prefijo Mi/Ci/…) > nameMap (global.ini) > entityClass
 
-function resolveItemName(entityClass, nameMap) {
+function resolveItemName(entityClass, nameMap, componentsMap) {
   const ecl = entityClass.toLowerCase();
-  // Probar con el nombre completo y sin sufijo _scitem
   const noSCItem = ecl.endsWith('_scitem') ? ecl.slice(0, -7) : ecl;
-  return nameMap[ecl] || nameMap[noSCItem] || entityClass;
+  return componentsMap[ecl] || componentsMap[noSCItem]
+      || nameMap[ecl]       || nameMap[noSCItem]
+      || entityClass;
 }
 
 // ── Cargar misiones desde MissionBrokerEntry ──────────────────────────────────
 
-function loadMissions(titleToBpPools, bpPools, repAmounts, ini, nameMap) {
+function loadMissions(titleToBpPools, bpPools, repAmounts, ini, nameMap, componentsMap) {
   const missions = new Map(); // titleKey → entrada
 
   for (const f of walk(BROKER_DIR)) {
@@ -220,7 +242,7 @@ function loadMissions(titleToBpPools, bpPools, repAmounts, ini, nameMap) {
       for (const p of titleToBpPools[descKey]) poolNames.add(p);
     }
     const bps = [...new Set(
-      [...poolNames].flatMap(p => (bpPools[p] || []).map(e => resolveItemName(e, nameMap)))
+      [...poolNames].flatMap(p => (bpPools[p] || []).map(e => resolveItemName(e, nameMap, componentsMap)))
     )];
 
     if (!missions.has(titleKey)) {
@@ -259,10 +281,12 @@ async function main() {
   const repAmounts = loadReputationAmounts();
   console.log('  reward files:', Object.keys(repAmounts).length);
 
-  const nameMap = buildNameMap(ini);
+  const nameMap      = buildNameMap(ini);
+  const componentsMap = loadComponentsMap();
+  console.log('  components_generated.ini:', Object.keys(componentsMap).length, 'entradas');
 
   console.log('Cargando misiones...');
-  const missions = loadMissions(titleToBpPools, bpPools, repAmounts, ini, nameMap);
+  const missions = loadMissions(titleToBpPools, bpPools, repAmounts, ini, nameMap, componentsMap);
   console.log('  misiones únicas:', missions.length);
 
   const withBps = missions.filter(m => m.bps.length > 0).length;
