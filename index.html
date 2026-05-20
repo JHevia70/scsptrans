@@ -96,88 +96,82 @@
 
   <div id="app-content" style="display:none">
 
-  <!-- ═══ PASO 3 (PRINCIPAL): Actualizar con novedades ═════════════════════ -->
-  <h2 class="main-step collapsible" onclick="toggleSection('sec-update')">Actualizar traducción con novedades</h2>
-  <div id="sec-update" class="section-body">
+  <!-- ═══ PASO 1: Inicialización (colapsado) ══════════════════════════════ -->
+  <h2 class="collapsible collapsed" onclick="toggleSection('sec-init')">Paso 1 — Inicialización (traducción completa desde cero)</h2>
+  <div id="sec-init" class="section-body collapsed">
     <p class="desc">
-      Flujo habitual cuando hay nueva versión del juego.<br>
-      1. Detecta etiquetas nuevas o modificadas respecto al snapshot anterior y sube <code>novedades.xlsx</code> al repositorio.<br>
-      2. Traduce <code>novedades.xlsx</code> con Google y guárdalo de vuelta en <code>work/from_google/novedades.xlsx</code>.<br>
-      3. Fusiona las novedades con <code>translations.json</code>, actualiza el compendio y publica la release.
+      Solo necesario la primera vez o tras un cambio masivo del juego.<br>
+      Genera los Excel completos del juego para traducir con Google y reconstruye el compendio <code>translations.json</code>.
     </p>
-    <div class="controls" style="align-items:center; gap:8px;">
-      <label style="color:#aaa; font-size:0.82rem;">Fuente EN: <span style="color:#e0e0e0; font-family:monospace;">work/source/global.ini</span></label>
-    </div>
-    <div class="controls">
-      <button class="main-btn" onclick="generateUpdatesXlsx()">1. Detectar novedades y subir Excel</button>
-      <button id="dl-updates-xlsx-btn" class="green hidden" onclick="downloadUpdatesXlsx()">Descargar novedades.xlsx</button>
-    </div>
-    <div id="status-updates" class="status">Listo.</div>
-    <div id="log-updates" class="log"></div>
 
-    <div id="step-merge" style="display:none">
-      <div class="controls">
-        <button class="main-btn" onclick="mergeUpdates()">2. Fusionar novedades y publicar</button>
-        <button id="dl-merged-btn" class="green hidden" onclick="downloadIni('global.ini', resultIni)">Descargar global.ini</button>
-      </div>
-      <div id="status-merge" class="status">Listo.</div>
-      <div id="log-merge" class="log"></div>
+    <p class="desc" style="color:#ff9800; margin-top:4px">▸ Paso 1.1 — Generar Excel para Google Translate</p>
+    <p class="desc">
+      Carga <code>global.ini</code> del repositorio propio y genera las 3 partes del Excel.<br>
+      Tradúcelas en <a href="https://translate.google.com/" target="_blank" style="color:#00d4ff">Google Translate</a>
+      y sube el resultado como <code>work/from_google/parte_1.xlsx</code>, <code>parte_2.xlsx</code> y <code>parte_3.xlsx</code> al repositorio.
+    </p>
+    <div class="controls">
+      <button onclick="generateXlsx()">1.1 Generar Excel completo</button>
     </div>
+    <div class="controls" id="dl-xlsx-btns" style="display:none">
+      <button class="green" onclick="downloadXlsx(0)">Descargar parte_1.xlsx</button>
+      <button class="green" onclick="downloadXlsx(1)">Descargar parte_2.xlsx</button>
+      <button class="green" onclick="downloadXlsx(2)">Descargar parte_3.xlsx</button>
+    </div>
+    <div id="status-gen" class="status">Listo.</div>
+    <div id="log-gen" class="log"></div>
+
+    <p class="desc" style="color:#ff9800; margin-top:12px">▸ Paso 1.2 — Reconstruir desde Excel traducido</p>
+    <p class="desc">
+      Una vez subidos los Excel traducidos al repositorio en <code>work/from_google/</code>,
+      construye el compendio <code>translations.json</code> y publica el <code>global.ini</code>.
+    </p>
+    <div class="controls">
+      <button onclick="rebuildFromXlsx()">1.2 Reconstruir y publicar</button>
+      <button id="dl-ini-btn" class="green hidden" onclick="downloadIni('global.ini', resultIni)">Descargar global.ini</button>
+    </div>
+    <div id="status-rebuild" class="status">Listo.</div>
+    <div id="log-rebuild" class="log"></div>
   </div>
 
   <hr>
 
-  <!-- ═══ PASO 4: Aplicar correcciones ════════════════════════════════════ -->
-  <h2 class="main-step collapsible" onclick="toggleSection('sec-corrections')">Aplicar correcciones manuales</h2>
-  <div id="sec-corrections" class="section-body">
-    <p class="desc">
-      Carga <code>translations.json</code> (compendio de todas las traducciones) desde el repositorio,
-      aplica <code>correcciones.ini</code> encima y publica un nuevo <code>global.ini</code> con release.<br>
-      Ejecuta esto cada vez que modifiques <code>correcciones.ini</code>.
-    </p>
-    <div class="controls">
-      <button class="main-btn" onclick="applyCorrectionsAndPublish()">Aplicar correcciones y publicar</button>
-      <button id="dl-corrected-btn" class="green hidden" onclick="downloadIni('global.ini', resultIni)">Descargar global.ini</button>
-    </div>
-    <div id="status-corrections" class="status">Listo.</div>
-    <div id="log-corrections" class="log"></div>
-  </div>
-
-  <hr>
-
-  <!-- ═══ MISIONES ══════════════════════════════════════════════════════════ -->
-  <h2 class="main-step collapsible collapsed" onclick="toggleSection('sec-missions')">Traducción de misiones</h2>
+  <!-- ═══ PASO 2: Misiones (colapsado) ════════════════════════════════════ -->
+  <h2 class="collapsible collapsed" onclick="toggleSection('sec-missions')">Paso 2 — Traducción de misiones</h2>
   <div id="sec-missions" class="section-body collapsed">
     <p class="desc">
-      Gestiona la traducción de títulos y descripciones de misiones del juego.<br>
-      Los datos enriquecidos (aUEC, blueprints) se integran automáticamente desde <code>missions_data.json</code>.<br>
-      Aplica <code>correcciones_missions.ini</code> para ajustes manuales de misiones.
+      Traduce los títulos y descripciones de las misiones del juego.<br>
+      Los datos enriquecidos (aUEC, blueprints, reputación) se añaden automáticamente desde <code>missions_data.json</code>.<br>
+      Aplica <code>correcciones_missions.ini</code> para ajustes manuales. Ejecuta esto después del Paso 1 y siempre que <code>missions_data.json</code> se actualice.
     </p>
 
-    <p class="desc" style="color:#ff9800">▸ Paso A — Generar Excel de misiones para traducir</p>
+    <p class="desc" style="color:#ff9800; margin-top:4px">▸ Paso 2.1 — Generar Excel de misiones para traducir</p>
     <p class="desc">
       Descarga <code>missions.tsv</code> del repositorio y genera <code>missions.xlsx</code> con título y descripción para traducir en Google.
+      Después sube el xlsx traducido al repositorio en <code>work/from_google/missions.xlsx</code>.
     </p>
     <div class="controls">
-      <button onclick="generateMissionsXlsx()">Generar missions.xlsx</button>
+      <button onclick="generateMissionsXlsx()">2.1 Generar missions.xlsx</button>
       <button id="dl-missions-xlsx-btn" class="green hidden" onclick="downloadMissionsXlsx()">Descargar missions.xlsx</button>
     </div>
     <div id="status-missions-gen" class="status">Listo.</div>
     <div id="log-missions-gen" class="log"></div>
 
-    <p class="desc" style="color:#ff9800; margin-top:12px">▸ Paso B — Revisar traducción y publicar</p>
-    <p class="desc">
-      Selecciona el Excel traducido y súbelo al repositorio. Luego genera el Excel de revisión antes de publicar.
-    </p>
-    <div class="controls" style="align-items:center;">
+    <div class="controls" style="align-items:center; margin-top:8px;">
       <input type="file" id="missions-upload-input" accept=".xlsx" style="display:none" onchange="uploadMissionsXlsx(this)">
       <button onclick="document.getElementById('missions-upload-input').click()">Seleccionar missions.xlsx traducido</button>
       <span id="missions-upload-name" style="font-size:0.8rem; color:#888;"></span>
       <button id="missions-upload-btn" class="green hidden" onclick="doUploadMissionsXlsx()">Subir al repositorio</button>
       <span id="missions-upload-status" style="font-size:0.8rem; color:#aaa;"></span>
     </div>
+
+    <p class="desc" style="color:#ff9800; margin-top:12px">▸ Paso 2.2 — Revisar traducción y publicar</p>
+    <p class="desc">
+      Genera el Excel de revisión (EN / ES actual / ES nuevo), revísalo y confirma la publicación de <code>missions_es.json</code>.
+      Después ejecuta el Paso 4 para que los títulos enriquecidos queden incluidos en el release.
+    </p>
     <div class="controls">
-      <button onclick="buildMissionsReview()">Generar revisión.xlsx</button>
+      <button onclick="buildMissionsReview()">2.2 Generar revisión.xlsx</button>
       <button id="dl-missions-review-btn" class="green hidden" onclick="downloadMissionsReview()">Descargar revisión.xlsx</button>
     </div>
     <div id="status-missions-rebuild" class="status">Listo.</div>
@@ -194,42 +188,50 @@
 
   <hr>
 
-  <!-- ═══ PASOS 1+2: Inicialización (colapsado) ═══════════════════════════ -->
-  <h2 class="collapsible collapsed" onclick="toggleSection('sec-init')">Inicialización (traducción completa desde cero)</h2>
-  <div id="sec-init" class="section-body collapsed">
+  <!-- ═══ PASO 3 (PRINCIPAL): Actualizar con novedades ═════════════════════ -->
+  <h2 class="main-step collapsible" onclick="toggleSection('sec-update')">Paso 3 — Actualizar traducción con novedades</h2>
+  <div id="sec-update" class="section-body">
     <p class="desc">
-      Solo necesario la primera vez o tras un cambio masivo del juego.<br>
-      Genera los Excel completos para traducir con Google y reconstruye el compendio <code>translations.json</code>.
+      Flujo habitual cuando hay nueva versión del juego. Detecta etiquetas nuevas o modificadas,
+      genera el Excel de novedades, tradúcelo con Google, súbelo al repositorio en
+      <code>work/from_google/novedades.xlsx</code> y fusiona con el compendio para publicar.
     </p>
+    <div class="controls" style="align-items:center; gap:8px;">
+      <label style="color:#aaa; font-size:0.82rem;">Fuente EN: <span style="color:#e0e0e0; font-family:monospace;">work/source/global.ini</span></label>
+    </div>
+    <div class="controls">
+      <button class="main-btn" onclick="generateUpdatesXlsx()">3.1 Detectar novedades y subir Excel</button>
+      <button id="dl-updates-xlsx-btn" class="green hidden" onclick="downloadUpdatesXlsx()">Descargar novedades.xlsx</button>
+    </div>
+    <div id="status-updates" class="status">Listo.</div>
+    <div id="log-updates" class="log"></div>
 
-    <p class="desc" style="color:#ff9800">▸ Paso 1 — Generar Excel para Google Translate</p>
+    <div id="step-merge" style="display:none">
+      <div class="controls">
+        <button class="main-btn" onclick="mergeUpdates()">3.2 Fusionar novedades y publicar</button>
+        <button id="dl-merged-btn" class="green hidden" onclick="downloadIni('global.ini', resultIni)">Descargar global.ini</button>
+      </div>
+      <div id="status-merge" class="status">Listo.</div>
+      <div id="log-merge" class="log"></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ═══ PASO 4: Aplicar correcciones ════════════════════════════════════ -->
+  <h2 class="main-step collapsible" onclick="toggleSection('sec-corrections')">Paso 4 — Aplicar correcciones y publicar</h2>
+  <div id="sec-corrections" class="section-body">
     <p class="desc">
-      Carga <code>global.ini</code> del repositorio propio y genera los Excel.<br>
-      Tradúcelos en <a href="https://translate.google.com/" target="_blank" style="color:#00d4ff">Google Translate</a>
-      y guarda el resultado en <code>work/from_google/</code> del repositorio.
+      Reconstruye el <code>global.ini</code> desde <code>translations.json</code>, aplica <code>correcciones.ini</code>,
+      los nombres de componentes, los minerales y las misiones enriquecidas, y publica una nueva release.<br>
+      Ejecuta esto cada vez que modifiques <code>correcciones.ini</code> o <code>missions_es.json</code>.
     </p>
     <div class="controls">
-      <button onclick="generateXlsx()">Generar Excel completo</button>
+      <button class="main-btn" onclick="applyCorrectionsAndPublish()">4. Aplicar correcciones y publicar</button>
+      <button id="dl-corrected-btn" class="green hidden" onclick="downloadIni('global.ini', resultIni)">Descargar global.ini</button>
     </div>
-    <div class="controls" id="dl-xlsx-btns" style="display:none">
-      <button class="green" onclick="downloadXlsx(0)">Descargar parte_1.xlsx</button>
-      <button class="green" onclick="downloadXlsx(1)">Descargar parte_2.xlsx</button>
-      <button class="green" onclick="downloadXlsx(2)">Descargar parte_3.xlsx</button>
-    </div>
-    <div id="status-gen" class="status">Listo.</div>
-    <div id="log-gen" class="log"></div>
-
-    <p class="desc" style="color:#ff9800; margin-top:12px">▸ Paso 2 — Reconstruir desde Excel traducido</p>
-    <p class="desc">
-      Carga <code>parte_1.xlsx</code>, <code>parte_2.xlsx</code> y <code>parte_3.xlsx</code> traducidos del repositorio,
-      construye el compendio <code>translations.json</code> y publica el <code>global.ini</code>.
-    </p>
-    <div class="controls">
-      <button onclick="rebuildFromXlsx()">Reconstruir y publicar</button>
-      <button id="dl-ini-btn" class="green hidden" onclick="downloadIni('global.ini', resultIni)">Descargar global.ini</button>
-    </div>
-    <div id="status-rebuild" class="status">Listo.</div>
-    <div id="log-rebuild" class="log"></div>
+    <div id="status-corrections" class="status">Listo.</div>
+    <div id="log-corrections" class="log"></div>
   </div>
 
   <script>
