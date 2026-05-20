@@ -282,8 +282,10 @@
     const NOVEDADES_KEYS_URL  = BASE_RAW + 'work/from_google/novedades_keys.json';
     const TRANSLATIONS_PATH = 'work/translations.json';
     const SNAPSHOT_PATH    = 'work/en_snapshot.json';
-    const PART_KEYS_URL    = BASE_RAW + 'work/from_google/part_keys.json';
-    const PART_KEYS_PATH   = 'work/from_google/part_keys.json';
+    const PART_KEYS_URL    = BASE_RAW + 'work/from_google/part_keys.json';  // legacy
+    const PART_KEYS_PATH   = 'work/from_google/part_keys.json';            // legacy
+    const PART_KEYS_URLS   = [1,2,3].map(i => BASE_RAW + 'work/from_google/part_keys_' + i + '.txt');
+    const PART_KEYS_PATHS  = [1,2,3].map(i => 'work/from_google/part_keys_' + i + '.txt');
     const OUTPUT_PATH      = 'Data/Localization/spanish_(spain)/global.ini';
     const MISSIONS_TSV_URL         = BASE_RAW + 'work/missions.tsv';
     const MISSIONS_DATA_URL        = BASE_RAW + 'work/missions_data.json';
@@ -422,7 +424,7 @@
     }
 
     async function fetchText(url) {
-      const res = await fetch(url + '?t=' + Date.now());
+      const res = await fetch(url + '?t=' + Date.now(), { cache: 'no-store' });
       if (!res.ok) throw new Error('HTTP ' + res.status + ' - ' + url);
       return await res.text();
     }
@@ -710,10 +712,13 @@
         logTo('log-gen', 'en_snapshot.json guardado en el repositorio.');
       } catch(e) { logTo('log-gen', 'Error guardando snapshot: ' + e.message, 'err'); }
 
-      try {
-        await ghPut(PART_KEYS_PATH, toBase64(JSON.stringify(xlsxPartKeys)), 'Actualizar part_keys.json');
-        logTo('log-gen', 'part_keys.json guardado en el repositorio.');
-      } catch(e) { logTo('log-gen', 'Error guardando part_keys.json: ' + e.message, 'err'); }
+      // Guardar claves en ficheros de texto plano (una por línea) — evita límite 1MB de Contents API
+      for (let i = 0; i < xlsxPartKeys.length; i++) {
+        try {
+          await ghPut(PART_KEYS_PATHS[i], toBase64(xlsxPartKeys[i].join('\n')), 'Actualizar part_keys_' + (i+1) + '.txt');
+          logTo('log-gen', 'part_keys_' + (i+1) + '.txt guardado (' + xlsxPartKeys[i].length + ' claves).');
+        } catch(e) { logTo('log-gen', 'Error guardando part_keys_' + (i+1) + '.txt: ' + e.message, 'err'); }
+      }
 
       logTo('log-gen', 'Generadas ' + xlsxParts.length + ' partes.');
       setStatus('status-gen', 'Listo para descargar.');
@@ -728,17 +733,19 @@
       document.getElementById('log-rebuild').innerHTML = '';
       if (!await ensureParsed('log-rebuild')) return;
 
-      // Cargar part_keys.json vía raw con cache-busting (fichero demasiado grande para Contents API)
-      let partKeys;
-      try {
-        const text = await fetchText(PART_KEYS_URL);
-        partKeys = JSON.parse(text);
-        logTo('log-rebuild', 'part_keys.json cargado: ' + partKeys.length + ' partes.');
-      } catch(e) { logTo('log-rebuild', 'Error cargando part_keys.json: ' + e.message, 'err'); return; }
+      // Cargar claves desde ficheros de texto plano (una por línea), vía raw con cache: no-store
+      const partKeys = [];
+      for (let fi = 0; fi < NUM_PARTS; fi++) {
+        try {
+          const text = await fetchText(PART_KEYS_URLS[fi]);
+          partKeys.push(text.split('\n').filter(k => k.trim() !== ''));
+          logTo('log-rebuild', 'part_keys_' + (fi+1) + '.txt cargado: ' + partKeys[fi].length + ' claves.');
+        } catch(e) { logTo('log-rebuild', 'Error cargando part_keys_' + (fi+1) + '.txt: ' + e.message + ' — Ejecuta primero el Paso 1.1.', 'err'); return; }
+      }
 
-      // Cargar xlsx también via API para garantizar versión actual
+      // Cargar xlsx via API para garantizar versión actual (sin caché de raw)
       const rawTransl = {};
-      for (let fi = 0; fi < partKeys.length; fi++) {
+      for (let fi = 0; fi < NUM_PARTS; fi++) {
         let buf;
         try { buf = await ghGetBinary(PART_PATHS[fi]); }
         catch(e) { logTo('log-rebuild', 'Error cargando parte ' + (fi+1) + ': ' + e.message, 'err'); return; }
