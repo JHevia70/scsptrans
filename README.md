@@ -53,24 +53,24 @@ Los nombres de los componentes de nave siguen el formato `Clase/Tamaño/Grado No
 
 | Abrev. | Clase | Descripción | Fabricantes |
 |--------|-------|-------------|-------------|
-| `Mi` | Military | Componentes diseñados para uso militar, máximo rendimiento | Aegis, Apocalypse Arms, WetaTek, Godin, GreenPulse |
-| `Ci` | Civilian | Componentes de uso civil, equilibrio entre rendimiento y precio | Behring, Origin, RSI, Klaus & Werner, LightPulse, WiloTech, WildCat |
+| `Mi` | Militar | Componentes diseñados para uso militar, máximo rendimiento | Aegis, Apocalypse Arms, WetaTek, Godin, GreenPulse |
+| `Ci` | Civil | Componentes de uso civil, equilibrio entre rendimiento y precio | Behring, Origin, RSI, Klaus & Werner, LightPulse, WiloTech, WildCat |
 | `In` | Industrial | Componentes robustos para uso industrial y transporte de carga | Juno Starwerk, BaseLine, Chimera Composites |
-| `Co` | Competition | Componentes de competición, alto rendimiento en carreras y exploración | A&C Orion, Naven Electronics, ACAS |
-| `St` | Stealth | Componentes con baja firma de emisiones para operaciones encubiertas | Assembled, Bolt-R, Tyler Design & Tech |
+| `Co` | Competición | Componentes de alto rendimiento para carreras y exploración | A&C Orion, Naven Electronics, ACAS |
+| `St` | Sigilo | Componentes con baja firma de emisiones para operaciones encubiertas | Assembled, Bolt-R, Tyler Design & Tech |
 
 ### Tamaño
 
-El número indica el tamaño del componente (0–4), donde 0 es el más pequeño (vehículos pequeños) y 4 el más grande (naves capitales).
+El número indica el tamaño del componente (0–4), donde 0 es el más pequeño (vehículos ligeros) y 4 el más grande (naves capitales).
 
 ### Grado
 
 | Letra | Grado | Descripción |
 |-------|-------|-------------|
-| `A` | Grade A | Máxima calidad |
-| `B` | Grade B | Alta calidad |
-| `C` | Grade C | Calidad estándar |
-| `D` | Grade D | Calidad básica |
+| `A` | Grado A | Máxima calidad |
+| `B` | Grado B | Alta calidad |
+| `C` | Grado C | Calidad estándar |
+| `D` | Grado D | Calidad básica |
 
 # Créditos
 - [MrKraken](https://github.com/MrKraken/StarStrings) — por las mejoras sobre el fichero original en inglés que sirven de base para esta traducción
