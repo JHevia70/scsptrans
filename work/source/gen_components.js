@@ -87,13 +87,13 @@ async function readGlobalIni(file) {
     if (!v) continue;
     const kLower = k.toLowerCase();
     if (kLower.startsWith('item_name_')) {
-      // 10 chars: 'item_name_' → suffix starts at index 10
+      // 'item_name_' = 10 chars, key format has underscore separator
       const suffix = k.substring(10).toUpperCase();
-      nameMap[suffix] = v;
+      nameMap[suffix] = { value: v, underscore: true };
     } else if (kLower.startsWith('item_name')) {
-      // 9 chars: 'item_name' → suffix starts at index 9
+      // 'item_name' = 9 chars, key format has no underscore separator
       const suffix = k.substring(9).toUpperCase();
-      nameMap[suffix] = v;
+      nameMap[suffix] = { value: v, underscore: false };
     }
   }
   return nameMap;
@@ -156,36 +156,25 @@ async function main() {
     const gradeLetter = GRADE_LETTER[gradeVal];
     if (!gradeLetter) continue;
 
-    // Build the ini key: item_Name + entity (uppercase match against nameMap)
-    // Try exact match first, then strip _SCITEM suffix (most keys in global.ini omit it)
+    // Look up display name in nameMap (try exact, then without _SCItem suffix)
     const entityUpper = entity.toUpperCase();
-    let displayName = nameMap[entityUpper];
-    if (!displayName && entityUpper.endsWith('_SCITEM')) {
-      displayName = nameMap[entityUpper.slice(0, -7)];
-    }
+    const entityNoSCItem = entity.endsWith('_SCItem') ? entity.slice(0, -7) : entity;
+    const entityNoSCItemUpper = entityNoSCItem.toUpperCase();
 
-    if (!displayName) {
+    let entry = nameMap[entityUpper] || nameMap[entityNoSCItemUpper];
+
+    if (!entry) {
       missing++;
       missingList.push(entity);
       continue;
     }
 
-    // Prefix format: Class/Size/Grade DisplayName
+    // Reconstruct the exact ini key preserving the underscore separator used in global.ini
+    // entry.underscore=true → item_Name_XXX, false → item_NameXXX
     const prefix = `${mfrClass}/${sizeVal}/${gradeLetter}`;
-    // Determine which global.ini key format this entry uses
-    // (item_NameCOOL_XXX vs item_Name_COOL_XXX)
-    const entityNoSCItem = entity.endsWith('_SCItem') ? entity.slice(0, -7) : entity;
-    const entityNoSCItemUpper = entityNoSCItem.toUpperCase();
-    // Check which key format exists in nameMap
-    let iniKey;
-    if (nameMap[entityUpper] !== undefined) {
-      iniKey = `item_Name${entity}`;
-    } else if (nameMap[entityNoSCItemUpper] !== undefined) {
-      iniKey = `item_Name${entityNoSCItem}`;
-    } else {
-      iniKey = `item_Name${entityNoSCItem}`;
-    }
-    entries.push(`${iniKey}=${prefix} ${displayName}`);
+    const baseSuffix = nameMap[entityUpper] ? entity : entityNoSCItem;
+    const iniKey = entry.underscore ? `item_Name_${baseSuffix}` : `item_Name${baseSuffix}`;
+    entries.push(`${iniKey}=${prefix} ${entry.value}`);
   }
 
   // Sort entries
