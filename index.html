@@ -431,8 +431,19 @@
             if (eq === -1) continue;
             const key = line.substring(0, eq).trim();
             if (!key) continue;
-            mrKrakenMap[key] = line.substring(eq + 1);
+            const val = line.substring(eq + 1);
+            mrKrakenMap[key] = val;
             total++;
+            // Registrar también la variante alternativa de clave (con/sin guión bajo tras item_Name)
+            // para cubrir ambas formas que puede tener el global.ini
+            const kl = key.toLowerCase();
+            if (kl.startsWith('item_name_')) {
+              const alt = 'item_Name' + key.substring(10);
+              if (!(alt in mrKrakenMap)) mrKrakenMap[alt] = val;
+            } else if (kl.startsWith('item_name')) {
+              const alt = 'item_Name_' + key.substring(9);
+              if (!(alt in mrKrakenMap)) mrKrakenMap[alt] = val;
+            }
           }
         } catch(e) {
           console.warn('No se pudo cargar ' + url + ': ' + e.message);
