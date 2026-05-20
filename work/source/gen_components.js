@@ -110,6 +110,20 @@ function entityName(recordKey) {
   return recordKey.startsWith(prefix) ? recordKey.substring(prefix.length) : recordKey;
 }
 
+// Extract manufacturer code from entity name pattern: TYPE_MFR_SXX_Name
+// e.g. COOL_WCPR_S03_Elsen → WCPR
+function mfrFromName(entity) {
+  const m = entity.match(/^[A-Z]+_([A-Z0-9]+)_S\d+_/);
+  return m ? m[1] : null;
+}
+
+// Extract size from entity name pattern: TYPE_MFR_SXX_Name
+// Returns the parsed integer, or null if pattern not found
+function sizeFromName(entity) {
+  const m = entity.match(/_S(\d+)_/);
+  return m ? parseInt(m[1], 10) : null;
+}
+
 async function main() {
   console.log('Reading TSV files...');
   const [typeMap, sizeMap, gradeMap, mfrMap] = await Promise.all([
@@ -144,17 +158,45 @@ async function main() {
 
     if (!sizeVal || !gradeVal || !mfrJson) continue;
 
-    const mfrCode  = extractCode(mfrJson);
+    let mfrCode  = extractCode(mfrJson);
     if (!mfrCode) continue;
 
-    const mfrClass = MFR_CLASS[mfrCode];
+    // Fallback: if DCB manufacturer code has no class mapping, try deriving from entity name
+    // This fixes cases like COOL_WCPR_S03_Elsen where DCB stores wrong manufacturer (AEG)
+    let mfrClass = MFR_CLASS[mfrCode];
     if (!mfrClass) {
-      console.warn(`Unknown mfr code: ${mfrCode} for ${entity}`);
-      continue;
+      const nameMfr = mfrFromName(entity);
+      if (nameMfr && MFR_CLASS[nameMfr]) {
+        mfrCode  = nameMfr;
+        mfrClass = MFR_CLASS[nameMfr];
+      } else {
+        console.warn(`Unknown mfr code: ${mfrCode} for ${entity}`);
+        continue;
+      }
+    } else {
+      // If DCB manufacturer doesn't match entity name, prefer name-derived manufacturer
+      // e.g. COOL_WCPR_S03_Elsen has Code=AEG but name clearly says WCPR
+      const nameMfr = mfrFromName(entity);
+      if (nameMfr && nameMfr !== mfrCode && MFR_CLASS[nameMfr]) {
+        console.warn(`Mfr mismatch for ${entity}: DCB=${mfrCode} name=${nameMfr} → using ${nameMfr}`);
+        mfrCode  = nameMfr;
+        mfrClass = MFR_CLASS[nameMfr];
+      }
     }
 
     const gradeLetter = GRADE_LETTER[gradeVal];
     if (!gradeLetter) continue;
+
+    // Fallback: if DCB size=1 but entity name says S0X with X>1, use name-derived size
+    // e.g. QED_WETK_S03_Reynie has DCB itemSize=1 but should be 3
+    let resolvedSize = sizeVal;
+    if (sizeVal === '1') {
+      const nameSize = sizeFromName(entity);
+      if (nameSize && nameSize > 1) {
+        console.warn(`Size mismatch for ${entity}: DCB=1 name=${nameSize} → using ${nameSize}`);
+        resolvedSize = String(nameSize);
+      }
+    }
 
     // Look up display name in nameMap (try exact, then without _SCItem suffix)
     const entityUpper = entity.toUpperCase();
@@ -171,7 +213,7 @@ async function main() {
 
     // Reconstruct the exact ini key preserving the underscore separator used in global.ini
     // entry.underscore=true → item_Name_XXX, false → item_NameXXX
-    const prefix = `${mfrClass}/${sizeVal}/${gradeLetter}`;
+    const prefix = `${mfrClass}/${resolvedSize}/${gradeLetter}`;
     const baseSuffix = nameMap[entityUpper] ? entity : entityNoSCItem;
     const iniKey = entry.underscore ? `item_Name_${baseSuffix}` : `item_Name${baseSuffix}`;
     entries.push(`${iniKey}=${prefix} ${entry.value}`);
