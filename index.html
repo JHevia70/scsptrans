@@ -571,6 +571,35 @@
       logTo(logId, 'global.ini construido: ' + resultIni.length + ' lineas.');
     }
 
+    // Carga missions_es.json del repo y lo aplica sobre resultIni
+    async function applyMissions(logId) {
+      let missions;
+      try {
+        const text = await fetchText(BASE_RAW + MISSIONS_ES_PATH);
+        missions = JSON.parse(text);
+      } catch(e) {
+        logTo(logId, 'missions_es.json no disponible, se omite: ' + e.message);
+        return;
+      }
+
+      // Construir mapa clave → valor ES para lookup rápido
+      const mMap = {};
+      for (const m of missions) {
+        if (m.titleKey && m.titleEs) mMap[m.titleKey] = m.titleEs;
+        if (m.descKey  && m.descEs)  mMap[m.descKey]  = m.descEs;
+      }
+
+      let count = 0;
+      resultIni = resultIni.map(line => {
+        const eq = line.indexOf('=');
+        if (eq === -1) return line;
+        const key = line.substring(0, eq);
+        if (key in mMap) { count++; return key + '=' + mMap[key]; }
+        return line;
+      });
+      logTo(logId, 'Misiones aplicadas: ' + count + ' entradas (títulos + descripciones enriquecidas).');
+    }
+
     // Publica global.ini y dispara release
     async function publishRelease(logId, scVer) {
       try {
@@ -688,6 +717,7 @@
         if (eq !== -1) finalMap[line.substring(0, eq)] = line.substring(eq + 1);
       }
       await publishTranslations(finalMap, 'log-rebuild');
+      await applyMissions('log-rebuild');
       await publishRelease('log-rebuild');
       setStatus('status-rebuild', 'Listo para descargar.');
       show('dl-ini-btn');
@@ -822,7 +852,8 @@
       applyGlobalReplacements('log-merge');
       applyComponents('log-merge');
       applyCorrections('log-merge');
-      await publishRelease('log-merge', SOURCE_VERSIONS[document.getElementById('source-select').value] || '');
+      await applyMissions('log-merge');
+      await publishRelease('log-merge', SOURCE_VERSIONS['master'] || '');
       setStatus('status-merge', 'Listo para descargar.');
       show('dl-merged-btn');
     }
@@ -852,8 +883,9 @@
       // Recargar correcciones por si han cambiado
       await loadCorrections();
       applyCorrections('log-corrections');
+      await applyMissions('log-corrections');
 
-      await publishRelease('log-corrections', SOURCE_VERSIONS[document.getElementById('source-select-corr').value] || '');
+      await publishRelease('log-corrections', SOURCE_VERSIONS['master'] || '');
       setStatus('status-corrections', 'Listo para descargar.');
       show('dl-corrected-btn');
     }
