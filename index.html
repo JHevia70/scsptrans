@@ -178,9 +178,15 @@
 
     <p class="desc" style="color:#ff9800; margin-top:12px">▸ Paso B — Revisar traducción y publicar</p>
     <p class="desc">
-      Sube el Excel traducido a <code>work/from_google/missions.xlsx</code> del repositorio.<br>
-      Pulsa <em>Generar revisión</em> para descargar un Excel comparativo (EN / ES actual / ES nuevo) antes de publicar.
+      Selecciona el Excel traducido y súbelo al repositorio. Luego genera el Excel de revisión antes de publicar.
     </p>
+    <div class="controls" style="align-items:center;">
+      <input type="file" id="missions-upload-input" accept=".xlsx" style="display:none" onchange="uploadMissionsXlsx(this)">
+      <button onclick="document.getElementById('missions-upload-input').click()">Seleccionar missions.xlsx traducido</button>
+      <span id="missions-upload-name" style="font-size:0.8rem; color:#888;"></span>
+      <button id="missions-upload-btn" class="green hidden" onclick="doUploadMissionsXlsx()">Subir al repositorio</button>
+      <span id="missions-upload-status" style="font-size:0.8rem; color:#aaa;"></span>
+    </div>
     <div class="controls">
       <button onclick="buildMissionsReview()">Generar revisión.xlsx</button>
       <button id="dl-missions-review-btn" class="green hidden" onclick="downloadMissionsReview()">Descargar revisión.xlsx</button>
@@ -924,6 +930,39 @@
     }
 
     function downloadMissionsXlsx() { if (missionsXlsx) XLSX.writeFile(missionsXlsx, 'missions.xlsx'); }
+
+    // ── MISIONES: Subida del xlsx traducido al repositorio ────────────────────
+    let _missionsUploadBuf = null;
+
+    function uploadMissionsXlsx(input) {
+      const file = input.files[0];
+      if (!file) return;
+      document.getElementById('missions-upload-name').textContent = file.name;
+      document.getElementById('missions-upload-status').textContent = '';
+      hide('missions-upload-btn');
+      const reader = new FileReader();
+      reader.onload = e => {
+        _missionsUploadBuf = e.target.result;
+        show('missions-upload-btn');
+      };
+      reader.readAsArrayBuffer(file);
+    }
+
+    async function doUploadMissionsXlsx() {
+      if (!_missionsUploadBuf) return;
+      const statusEl = document.getElementById('missions-upload-status');
+      statusEl.textContent = 'Subiendo...';
+      statusEl.style.color = '#aaa';
+      try {
+        const b64 = btoa(Array.from(new Uint8Array(_missionsUploadBuf)).map(b => String.fromCharCode(b)).join(''));
+        await ghPut(MISSIONS_FROM_GOOGLE_PATH, b64, 'Subir missions.xlsx traducido');
+        statusEl.textContent = 'Subido correctamente.';
+        statusEl.style.color = '#4caf50';
+      } catch(e) {
+        statusEl.textContent = 'Error: ' + e.message;
+        statusEl.style.color = '#f44336';
+      }
+    }
 
     // ── MISIONES: Paso B.1 — Construir resultado y generar Excel de revisión ────
     async function buildMissionsReview() {
