@@ -112,12 +112,13 @@ function buildTitleToBpPools() {
     if (!poolRefs.length) continue;
     const poolNames = [...new Set(poolRefs.map(r => refToName(r)).filter(Boolean))];
 
-    // Recoger todos los stringParamOverrides con valores @... para obtener títulos
+    // Recoger solo los stringParamOverrides con param="Title" para obtener claves de título
     const stringOverrides = collectField(d, 'stringParamOverrides');
     const titleKeys = new Set();
     for (const arr of stringOverrides) {
       if (!Array.isArray(arr)) continue;
       for (const item of arr) {
+        if (item?.param !== 'Title') continue;
         const v = item?.value;
         if (typeof v === 'string' && v.startsWith('@') && !v.includes('LOC_UNINITIALIZED')) {
           titleKeys.add(v.replace(/^@/, ''));
@@ -216,9 +217,7 @@ function resolveItemName(entityClass, nameMap, componentsMap) {
 
 // ── Cargar misiones desde MissionBrokerEntry ──────────────────────────────────
 
-function loadMissions(titleToBpPools, bpPools, repAmounts, ini, nameMap, componentsMap) {
-  const missions = new Map(); // titleKey → entrada
-
+function loadMissionsIntoMap(missions, titleToBpPools, bpPools, repAmounts, ini, nameMap, componentsMap) {
   for (const f of walk(BROKER_DIR)) {
     const d = readJson(f);
     if (!d) continue;
@@ -255,7 +254,29 @@ function loadMissions(titleToBpPools, bpPools, repAmounts, ini, nameMap, compone
     }
   }
 
-  return [...missions.values()].sort((a, b) => a.titleKey.localeCompare(b.titleKey));
+}
+
+// ── Añadir misiones de ContractGenerator sin MissionBrokerEntry ───────────────
+// Hay misiones cuyo título solo aparece en stringParamOverrides de contratos y
+// no en ningún broker entry. Las añadimos si tienen BPs y texto en global.ini.
+
+function addContractOnlyMissions(missionsMap, titleToBpPools, bpPools, ini, nameMap, componentsMap) {
+  let added = 0;
+  for (const [titleKey, poolSet] of Object.entries(titleToBpPools)) {
+    if (missionsMap.has(titleKey)) continue;
+    const titleText = ini[titleKey] || '';
+    if (!titleText) continue;
+    const bps = [...new Set(
+      [...poolSet].flatMap(p => (bpPools[p] || []).map(e => resolveItemName(e, nameMap, componentsMap)))
+    )];
+    if (!bps.length) continue;
+    // Buscar clave de descripción: mismo prefijo pero con _Desc_
+    const descKey = titleKey.replace(/_Title_/, '_Desc_');
+    const descText = ini[descKey] || '';
+    missionsMap.set(titleKey, { titleKey, titleText, descKey, descText, uec: 0, rep: 0, bps });
+    added++;
+  }
+  return added;
 }
 
 // ── Main ──────────────────────────────────────────────────────────────────────
@@ -286,7 +307,11 @@ async function main() {
   console.log('  components_generated.ini:', Object.keys(componentsMap).length, 'entradas');
 
   console.log('Cargando misiones...');
-  const missions = loadMissions(titleToBpPools, bpPools, repAmounts, ini, nameMap, componentsMap);
+  const missionsMap = new Map();
+  loadMissionsIntoMap(missionsMap, titleToBpPools, bpPools, repAmounts, ini, nameMap, componentsMap);
+  const contractAdded = addContractOnlyMissions(missionsMap, titleToBpPools, bpPools, ini, nameMap, componentsMap);
+  console.log(`  misiones de broker: ${missionsMap.size - contractAdded}, añadidas de contratos: ${contractAdded}`);
+  const missions = [...missionsMap.values()].sort((a, b) => a.titleKey.localeCompare(b.titleKey));
   console.log('  misiones únicas:', missions.length);
 
   const withBps = missions.filter(m => m.bps.length > 0).length;
