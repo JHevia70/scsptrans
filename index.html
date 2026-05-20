@@ -1051,8 +1051,8 @@
         let descEs  = translMap[m.descKey]  || m.descText;
         if (m.titleKey in mCorrections) titleEs = mCorrections[m.titleKey];
         if (m.descKey  in mCorrections) descEs  = mCorrections[m.descKey];
-        if (m.bps && m.bps.length > 0) titleEs = titleEs + ' [BP]';
-        if (m.rep && m.rep > 0) descEs = (descEs ? descEs + '\n\n' : '') + 'Reputación Otorgada: ' + m.rep;
+        if (m.bps && m.bps.length > 0) titleEs = titleEs + ' <EM4>[BP]</EM4>';
+        if (m.rep && m.rep > 0) descEs = (descEs ? descEs + '\n\n' : '') + '<EM4>Reputación Otorgada:</EM4> ' + m.rep;
         result.push({ titleKey: m.titleKey, titleEs, titleEn: m.titleText, descKey: m.descKey, descEs, descEn: m.descText, uec: m.uec, rep: m.rep || 0, bps: m.bps });
       }
       missionsBuildResult = result;
