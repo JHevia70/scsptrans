@@ -154,6 +154,40 @@
 
   <hr>
 
+  <!-- ═══ MISIONES ══════════════════════════════════════════════════════════ -->
+  <h2 class="main-step collapsible collapsed" onclick="toggleSection('sec-missions')">Traducción de misiones</h2>
+  <div id="sec-missions" class="section-body collapsed">
+    <p class="desc">
+      Gestiona la traducción de títulos y descripciones de misiones del juego.<br>
+      Los datos enriquecidos (aUEC, blueprints) se integran automáticamente desde <code>missions_data.json</code>.<br>
+      Aplica <code>correcciones_missions.ini</code> para ajustes manuales de misiones.
+    </p>
+
+    <p class="desc" style="color:#ff9800">▸ Paso A — Generar Excel de misiones para traducir</p>
+    <p class="desc">
+      Descarga <code>missions.tsv</code> del repositorio y genera <code>missions.xlsx</code> con título y descripción para traducir en Google.
+    </p>
+    <div class="controls">
+      <button onclick="generateMissionsXlsx()">Generar missions.xlsx</button>
+      <button id="dl-missions-xlsx-btn" class="green hidden" onclick="downloadMissionsXlsx()">Descargar missions.xlsx</button>
+    </div>
+    <div id="status-missions-gen" class="status">Listo.</div>
+    <div id="log-missions-gen" class="log"></div>
+
+    <p class="desc" style="color:#ff9800; margin-top:12px">▸ Paso B — Reconstruir desde Excel traducido y publicar</p>
+    <p class="desc">
+      Sube el Excel traducido a <code>work/from_google/missions.xlsx</code> del repositorio, luego pulsa el botón para fusionar con los datos enriquecidos y publicar <code>missions_es.json</code>.
+    </p>
+    <div class="controls">
+      <button onclick="rebuildMissions()">Reconstruir y publicar missions_es.json</button>
+      <button id="dl-missions-json-btn" class="green hidden" onclick="downloadMissionsJson()">Descargar missions_es.json</button>
+    </div>
+    <div id="status-missions-rebuild" class="status">Listo.</div>
+    <div id="log-missions-rebuild" class="log"></div>
+  </div>
+
+  <hr>
+
   <!-- ═══ PASOS 1+2: Inicialización (colapsado) ═══════════════════════════ -->
   <h2 class="collapsible collapsed" onclick="toggleSection('sec-init')">Inicialización (traducción completa desde cero)</h2>
   <div id="sec-init" class="section-body collapsed">
@@ -226,6 +260,12 @@
     const PART_KEYS_URL    = BASE_RAW + 'work/from_google/part_keys.json';
     const PART_KEYS_PATH   = 'work/from_google/part_keys.json';
     const OUTPUT_PATH      = 'Data/Localization/spanish_(spain)/global.ini';
+    const MISSIONS_TSV_URL         = BASE_RAW + 'work/missions.tsv';
+    const MISSIONS_DATA_URL        = BASE_RAW + 'work/missions_data.json';
+    const MISSIONS_CORRECTIONS_URL = BASE_RAW + 'work/correcciones_missions.ini';
+    const MISSIONS_FROM_GOOGLE_URL = BASE_RAW + 'work/from_google/missions.xlsx';
+    const MISSIONS_FROM_GOOGLE_PATH = 'work/from_google/missions.xlsx';
+    const MISSIONS_ES_PATH         = 'work/missions_es.json';
     const TEST_LIMIT       = 0;
     const NUM_PARTS        = 3;
     // ─────────────────────────────────────────────────────────────────────────
@@ -246,6 +286,9 @@
     let updatesKeys    = [];
     let newParsed      = [];
     let resultIni      = [];
+    let missionsXlsx   = null;
+    let missionsTsvRows = [];   // [{titleKey, titleEn, descKey, descEn}]
+    let missionsEsJson = null;
 
     // ── UI ────────────────────────────────────────────────────────────────────
     function toggleSection(id) {
@@ -808,6 +851,162 @@
       await publishRelease('log-corrections', SOURCE_VERSIONS[document.getElementById('source-select-corr').value] || '');
       setStatus('status-corrections', 'Listo para descargar.');
       show('dl-corrected-btn');
+    }
+
+    // ── MISIONES: Paso A — Generar Excel ─────────────────────────────────────
+    async function generateMissionsXlsx() {
+      hide('dl-missions-xlsx-btn');
+      document.getElementById('log-missions-gen').innerHTML = '';
+      setStatus('status-missions-gen', 'Descargando missions.tsv...');
+
+      let tsvText;
+      try {
+        tsvText = await fetchText(MISSIONS_TSV_URL);
+        logTo('log-missions-gen', 'missions.tsv cargado.');
+      } catch(e) { logTo('log-missions-gen', 'Error: ' + e.message, 'err'); setStatus('status-missions-gen', 'Error.'); return; }
+
+      // Parsear TSV: key_titulo, titulo_en, key_descripcion, descripcion_en
+      const lines = tsvText.split('\n');
+      missionsTsvRows = [];
+      for (let i = 1; i < lines.length; i++) {
+        const cols = lines[i].split('\t');
+        if (cols.length < 2 || !cols[0]) continue;
+        missionsTsvRows.push({
+          titleKey: cols[0],
+          titleEn:  (cols[1] || '').replace(/\\n/g, '\n'),
+          descKey:  cols[2] || '',
+          descEn:   (cols[3] || '').replace(/\\n/g, '\n'),
+        });
+      }
+      logTo('log-missions-gen', 'Misiones cargadas: ' + missionsTsvRows.length);
+
+      // Generar Excel con 4 columnas: key_titulo, titulo_en, key_descripcion, descripcion_en
+      const wsData = [['key_titulo', 'titulo_en', 'key_descripcion', 'descripcion_en']];
+      for (const r of missionsTsvRows) {
+        wsData.push([r.titleKey, r.titleEn, r.descKey, r.descEn]);
+      }
+      const ws = XLSX.utils.aoa_to_sheet(wsData);
+      ws['!cols'] = [{ wch: 50 }, { wch: 80 }, { wch: 50 }, { wch: 120 }];
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Misiones');
+      missionsXlsx = wb;
+
+      setStatus('status-missions-gen', 'Listo para descargar.');
+      show('dl-missions-xlsx-btn');
+      logTo('log-missions-gen', 'missions.xlsx generado con ' + missionsTsvRows.length + ' filas.');
+    }
+
+    function downloadMissionsXlsx() { if (missionsXlsx) XLSX.writeFile(missionsXlsx, 'missions.xlsx'); }
+
+    // ── MISIONES: Paso B — Reconstruir y publicar ─────────────────────────────
+    async function rebuildMissions() {
+      hide('dl-missions-json-btn');
+      document.getElementById('log-missions-rebuild').innerHTML = '';
+      setStatus('status-missions-rebuild', 'Cargando...');
+
+      // Cargar missions_data.json (aUEC, BPs)
+      let missionsData;
+      try {
+        const text = await fetchText(MISSIONS_DATA_URL);
+        missionsData = JSON.parse(text);
+        logTo('log-missions-rebuild', 'missions_data.json cargado: ' + missionsData.length + ' misiones.');
+      } catch(e) { logTo('log-missions-rebuild', 'Error cargando missions_data.json: ' + e.message, 'err'); return; }
+
+      // Construir mapa titleKey → datos enriquecidos
+      const dataMap = {};
+      for (const m of missionsData) dataMap[m.titleKey] = m;
+
+      // Cargar correcciones_missions.ini
+      const mCorrections = {};
+      try {
+        const text = await fetchText(MISSIONS_CORRECTIONS_URL);
+        for (const line of text.split('\n')) {
+          if (line.startsWith('#') || line.trim() === '') continue;
+          const eq = line.indexOf('=');
+          if (eq !== -1) mCorrections[line.substring(0, eq).trim()] = line.substring(eq + 1);
+        }
+        logTo('log-missions-rebuild', 'correcciones_missions.ini: ' + Object.keys(mCorrections).length + ' entradas.');
+      } catch(e) { logTo('log-missions-rebuild', 'Aviso: no se pudo cargar correcciones_missions.ini.', 'warn'); }
+
+      // Cargar missions.xlsx traducido desde el repo
+      logTo('log-missions-rebuild', 'Cargando missions.xlsx traducido...');
+      let xlsBuf;
+      try { xlsBuf = await fetchBinary(MISSIONS_FROM_GOOGLE_URL); }
+      catch(e) { logTo('log-missions-rebuild', 'Error: ' + e.message + ' — Sube missions.xlsx traducido a work/from_google/ del repositorio.', 'err'); return; }
+
+      const wb  = XLSX.read(xlsBuf, { type: 'array' });
+      const ws  = wb.Sheets[wb.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(ws, { header: 1 });
+      // Columnas: key_titulo(0), titulo_en(1), titulo_es(2), key_descripcion(3), desc_en(4), desc_es(5)
+      // O: key_titulo(0), titulo_es(1), key_descripcion(2), desc_es(3)
+      // Detectar formato por cabecera
+      const header = rows[0] || [];
+      const hasEnCols = header.length >= 6 || (header[1] && header[1].toString().toLowerCase().includes('_en'));
+      let titleEsCol, descEsCol, titleKeyCol, descKeyCol;
+      if (hasEnCols && header.length >= 5) {
+        // Formato 6 col: key_titulo | titulo_en | titulo_es | key_desc | desc_en | desc_es
+        titleKeyCol = 0; titleEsCol = 2; descKeyCol = 3; descEsCol = 5;
+      } else {
+        // Formato 4 col: key_titulo | titulo_en | key_desc | desc_en  (sin traducción aún = columnas EN)
+        // o formato traducido de Google: key_titulo | titulo_es | key_desc | desc_es
+        titleKeyCol = 0; titleEsCol = 1; descKeyCol = 2; descEsCol = 3;
+      }
+
+      const translMap = {};
+      for (let i = 1; i < rows.length; i++) {
+        const r = rows[i];
+        if (!r || !r[titleKeyCol]) continue;
+        const tk = String(r[titleKeyCol]).trim();
+        const dk = r[descKeyCol] ? String(r[descKeyCol]).trim() : '';
+        const te = r[titleEsCol] != null ? String(r[titleEsCol]).trim() : '';
+        const de = r[descEsCol]  != null ? String(r[descEsCol]).trim()  : '';
+        if (tk) translMap[tk] = { title: te, desc: de, descKey: dk };
+      }
+      logTo('log-missions-rebuild', 'Traducciones leídas: ' + Object.keys(translMap).length + ' misiones.');
+
+      // Construir missions_es.json
+      const result = [];
+      for (const m of missionsData) {
+        const tr = translMap[m.titleKey] || {};
+        let titleEs = tr.title || m.titleText;
+        let descEs  = tr.desc  || m.descText;
+
+        // Aplicar correcciones_missions.ini
+        if (m.titleKey in mCorrections) titleEs = mCorrections[m.titleKey];
+        if (m.descKey  in mCorrections) descEs  = mCorrections[m.descKey];
+
+        result.push({
+          titleKey: m.titleKey,
+          titleEs,
+          titleEn: m.titleText,
+          descKey:  m.descKey,
+          descEs,
+          descEn:   m.descText,
+          uec:      m.uec,
+          bps:      m.bps,
+        });
+      }
+
+      missionsEsJson = JSON.stringify(result, null, 2);
+      logTo('log-missions-rebuild', 'missions_es.json construido: ' + result.length + ' entradas.');
+
+      // Publicar al repositorio
+      try {
+        await ghPut(MISSIONS_ES_PATH, toBase64(missionsEsJson), 'Actualizar missions_es.json');
+        logTo('log-missions-rebuild', 'missions_es.json publicado en el repositorio.');
+      } catch(e) { logTo('log-missions-rebuild', 'Error publicando: ' + e.message, 'err'); return; }
+
+      setStatus('status-missions-rebuild', 'Listo para descargar.');
+      show('dl-missions-json-btn');
+    }
+
+    function downloadMissionsJson() {
+      if (!missionsEsJson) return;
+      const blob = new Blob([missionsEsJson], { type: 'application/json' });
+      const url  = URL.createObjectURL(blob);
+      const a    = document.createElement('a');
+      a.href = url; a.download = 'missions_es.json'; a.click();
+      URL.revokeObjectURL(url);
     }
 
     // ── Autenticación GitHub OAuth ────────────────────────────────────────────
