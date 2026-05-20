@@ -12,6 +12,21 @@ MrKraken mejora y corrige el fichero original en inglés (contratos, descripcion
 - Nombres de lugares (`RR_*`), vehículos (`vehicle_name*`) y bases abandonadas (`FOB_Abandoned_*`) mantenidos en inglés para evitar confusiones
 - Correcciones manuales de terminología específica del juego
 - Terminología minera corregida: `(Ore)`, `(Raw)` en lugar de traducciones literales incorrectas
+- Nombres de componentes de nave con prefijo `Clase/Tamaño/Grado` para identificarlos fácilmente
+
+### Nomenclatura de componentes de nave
+
+El formato es `Clase/Tamaño/Grado Nombre`, por ejemplo: `Mi/2/A Avalanche`.
+
+| Abrev. | Clase | Descripción | Fabricantes |
+|--------|-------|-------------|-------------|
+| `Mi` | Militar | Componentes diseñados para uso militar, máximo rendimiento | Aegis, Apocalypse Arms, WetaTek, Godin, GreenPulse |
+| `Ci` | Civil | Componentes de uso civil, equilibrio entre rendimiento y precio | Behring, Origin, RSI, Klaus & Werner, LightPulse, WiloTech, WildCat |
+| `In` | Industrial | Componentes robustos para uso industrial y transporte de carga | Juno Starwerk, BaseLine, Chimera Composites |
+| `Co` | Competición | Componentes de alto rendimiento para carreras y exploración | A&C Orion, Naven Electronics, ACAS |
+| `St` | Sigilo | Componentes con baja firma de emisiones para operaciones encubiertas | Assembled, Bolt-R, Tyler Design & Tech |
+
+El **tamaño** es un número del 0 al 4 (0 = vehículos ligeros, 4 = naves capitales). El **grado** indica la calidad: `A` (máxima) → `D` (básica).
 
 # Instalación
 1. Descarga el fichero `traduccion_sc.zip` de la última release en el panel derecho de este repositorio
@@ -44,33 +59,6 @@ StarCitizen/
 > - [Star Citizen: Community Localization Update](https://robertsspaceindustries.com/spectrum/community/SC/forum/1/thread/star-citizen-community-localization-update) (2023-10-11)
 > - [RSI Terms of Service](https://robertsspaceindustries.com/en/tos)
 > - [Translation & Fan Localization Statement](https://support.robertsspaceindustries.com/hc/en-us/articles/360006895793)
-
-# Nomenclatura de componentes de nave
-
-Los nombres de los componentes de nave siguen el formato `Clase/Tamaño/Grado Nombre`, por ejemplo: `Mi/2/A Avalanche`.
-
-### Clase del fabricante
-
-| Abrev. | Clase | Descripción | Fabricantes |
-|--------|-------|-------------|-------------|
-| `Mi` | Militar | Componentes diseñados para uso militar, máximo rendimiento | Aegis, Apocalypse Arms, WetaTek, Godin, GreenPulse |
-| `Ci` | Civil | Componentes de uso civil, equilibrio entre rendimiento y precio | Behring, Origin, RSI, Klaus & Werner, LightPulse, WiloTech, WildCat |
-| `In` | Industrial | Componentes robustos para uso industrial y transporte de carga | Juno Starwerk, BaseLine, Chimera Composites |
-| `Co` | Competición | Componentes de alto rendimiento para carreras y exploración | A&C Orion, Naven Electronics, ACAS |
-| `St` | Sigilo | Componentes con baja firma de emisiones para operaciones encubiertas | Assembled, Bolt-R, Tyler Design & Tech |
-
-### Tamaño
-
-El número indica el tamaño del componente (0–4), donde 0 es el más pequeño (vehículos ligeros) y 4 el más grande (naves capitales).
-
-### Grado
-
-| Letra | Grado | Descripción |
-|-------|-------|-------------|
-| `A` | Grado A | Máxima calidad |
-| `B` | Grado B | Alta calidad |
-| `C` | Grado C | Calidad estándar |
-| `D` | Grado D | Calidad básica |
 
 # Créditos
 - [MrKraken](https://github.com/MrKraken/StarStrings) — por las mejoras sobre el fichero original en inglés que sirven de base para esta traducción
