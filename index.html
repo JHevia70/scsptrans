@@ -205,6 +205,12 @@
     };
     const SOURCE_URL       = SOURCE_URLS.master;
     const CORRECTIONS_URL  = BASE_RAW + 'work/correcciones.ini';
+    const MRKRAKEN_BASE    = 'https://raw.githubusercontent.com/MrKraken/StarStrings/master/';
+    const MRKRAKEN_URLS    = [
+      MRKRAKEN_BASE + 'components.ini',
+      MRKRAKEN_BASE + 'mining.ini',
+      MRKRAKEN_BASE + 'ordnance.ini',
+    ];
     const SNAPSHOT_URL     = BASE_RAW + 'work/en_snapshot.json';
     const TRANSLATIONS_URL = BASE_RAW + 'work/translations.json';
     const FROM_GOOGLE_URLS = [
@@ -230,6 +236,7 @@
     const HEADERS = { 'Authorization': 'token ' + TOKEN, 'Content-Type': 'application/json' };
 
     let correctionsMap   = {};
+    let mrKrakenMap      = {};
     let parsedLines      = [];
     let xlsxParts        = [];
     let xlsxPartKeys     = [];
@@ -412,6 +419,40 @@
       logTo(logId, 'Sustituciones globales aplicadas.');
     }
 
+    async function loadMrKrakenStrings() {
+      mrKrakenMap = {};
+      let total = 0;
+      for (const url of MRKRAKEN_URLS) {
+        try {
+          const text = await fetchText(url);
+          for (const line of text.split('\n')) {
+            const eq = line.indexOf('=');
+            if (eq === -1) continue;
+            const key = line.substring(0, eq).trim();
+            if (!key) continue;
+            mrKrakenMap[key] = line.substring(eq + 1);
+            total++;
+          }
+        } catch(e) {
+          console.warn('No se pudo cargar ' + url + ': ' + e.message);
+        }
+      }
+      console.log('MrKraken strings cargadas: ' + total);
+    }
+
+    function applyMrKrakenStrings(logId) {
+      if (!Object.keys(mrKrakenMap).length) return;
+      let count = 0;
+      resultIni = resultIni.map(line => {
+        const eq = line.indexOf('=');
+        if (eq === -1) return line;
+        const key = line.substring(0, eq);
+        if (key in mrKrakenMap) { count++; return key + '=' + mrKrakenMap[key]; }
+        return line;
+      });
+      logTo(logId, 'MrKraken strings aplicadas: ' + count + ' entradas (componentes, minerales, misiles).');
+    }
+
     async function loadCorrections() {
       try {
         const text = await fetchText(CORRECTIONS_URL);
@@ -572,6 +613,7 @@
       const translMap = buildTranslMap(parsedLines, rawTransl);
       buildResultIni(parsedLines, translMap, 'log-rebuild');
       applyGlobalReplacements('log-rebuild');
+      applyMrKrakenStrings('log-rebuild');
       applyCorrections('log-rebuild');
 
       // Publicar translations.json (valores ya con vars restauradas + correcciones)
@@ -718,6 +760,7 @@
       // Construir global.ini desde el nuevo parsedLines + translMap actualizado
       buildResultIni(newParsed, translMap, 'log-merge');
       applyGlobalReplacements('log-merge');
+      applyMrKrakenStrings('log-merge');
       applyCorrections('log-merge');
       await publishRelease('log-merge', SOURCE_VERSIONS[document.getElementById('source-select').value] || '');
       setStatus('status-merge', 'Listo para descargar.');
@@ -743,6 +786,8 @@
 
       buildResultIni(parsedLines, translMap, 'log-corrections');
       applyGlobalReplacements('log-corrections');
+      await loadMrKrakenStrings();
+      applyMrKrakenStrings('log-corrections');
 
       // Recargar correcciones por si han cambiado
       await loadCorrections();
@@ -864,6 +909,7 @@
       }
     }
 
+    loadMrKrakenStrings();
     loadCorrections();
     loadRsiPanel();
     initAuth();
