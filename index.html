@@ -1051,6 +1051,7 @@
         let descEs  = translMap[m.descKey]  || m.descText;
         if (m.titleKey in mCorrections) titleEs = mCorrections[m.titleKey];
         if (m.descKey  in mCorrections) descEs  = mCorrections[m.descKey];
+        if (m.bps && m.bps.length > 0) titleEs = titleEs + ' [BP]';
         result.push({ titleKey: m.titleKey, titleEs, titleEn: m.titleText, descKey: m.descKey, descEs, descEn: m.descText, uec: m.uec, bps: m.bps });
       }
       missionsBuildResult = result;
