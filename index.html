@@ -344,6 +344,7 @@
     // ── Parseo y utilidades ───────────────────────────────────────────────────
     function shouldTranslate(key, value) {
       if (!value || value.trim() === '') return false;
+      if (value.trim().startsWith('@')) return false;
       if (/^[\d\s.,]+$/.test(value.trim())) return false;
       if (key && key.startsWith('RR_') && !key.toLowerCase().endsWith('_desc')) return false;
       if (key && key.toLowerCase().startsWith('vehicle_name')) return false;
@@ -607,7 +608,9 @@
       let empty = 0;
       resultIni = parsed.map(p => {
         if (p.key === null) return p.value;
-        if (!p.translate)   return p.key + '=' + p.value;
+        // Si el EN actual está vacío o es una @referencia, respetar ese valor sin traducir
+        if (!p.translate || p.value.trim() === '' || p.value.trim().startsWith('@'))
+          return p.key + '=' + p.value;
         const val = translMap[p.key];
         if (!val) { empty++; return p.key + '=' + p.value; }
         return p.key + '=' + val;
