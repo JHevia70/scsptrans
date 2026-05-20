@@ -443,6 +443,13 @@
       return buf.buffer;
     }
 
+    async function ghGetText(path) {
+      const res  = await fetch(API + '/contents/' + path, { headers: HEADERS });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message + ' (' + path + ')');
+      return atob(data.content.replace(/\n/g, ''));
+    }
+
     async function readXlsxValues(buf) {
       const wb   = XLSX.read(buf, { type: 'array' });
       const ws   = wb.Sheets[wb.SheetNames[0]];
@@ -723,8 +730,7 @@
       // Cargar part_keys.json via API para garantizar versión actual (sin caché raw)
       let partKeys;
       try {
-        const buf  = await ghGetBinary(PART_KEYS_PATH);
-        const text = new TextDecoder().decode(buf);
+        const text = await ghGetText(PART_KEYS_PATH);
         partKeys = JSON.parse(text);
         logTo('log-rebuild', 'part_keys.json cargado: ' + partKeys.length + ' partes.');
       } catch(e) { logTo('log-rebuild', 'Error cargando part_keys.json: ' + e.message, 'err'); return; }
@@ -882,8 +888,8 @@
       // Si updatesKeys no está en memoria (sesión nueva), cargar desde el repo
       if (!updatesKeys.length) {
         try {
-          const buf  = await ghGetBinary(NOVEDADES_KEYS_PATH);
-          updatesKeys = JSON.parse(new TextDecoder().decode(buf));
+          const text = await ghGetText(NOVEDADES_KEYS_PATH);
+          updatesKeys = JSON.parse(text);
           logTo('log-merge', 'novedades_keys.json cargado del repositorio: ' + updatesKeys.length + ' claves.');
         } catch(e) { logTo('log-merge', 'Error cargando novedades_keys.json: ' + e.message + ' — Ejecuta primero el Paso 3.1.', 'err'); return; }
       }
