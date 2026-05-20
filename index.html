@@ -108,7 +108,7 @@
     <p class="desc">
       Carga <code>global.ini</code> del repositorio propio y genera las 3 partes del Excel.<br>
       Tradúcelas en <a href="https://translate.google.com/" target="_blank" style="color:#00d4ff">Google Translate</a>
-      y sube el resultado como <code>work/from_google/parte_1.xlsx</code>, <code>parte_2.xlsx</code> y <code>parte_3.xlsx</code> al repositorio.
+      y guarda los ficheros resultantes en tu PC.
     </p>
     <div class="controls">
       <button onclick="generateXlsx()">1.1 Generar Excel completo</button>
@@ -121,11 +121,33 @@
     <div id="status-gen" class="status">Listo.</div>
     <div id="log-gen" class="log"></div>
 
-    <p class="desc" style="color:#ff9800; margin-top:12px">▸ Paso 1.2 — Reconstruir desde Excel traducido</p>
+    <p class="desc" style="color:#ff9800; margin-top:12px">▸ Paso 1.2 — Subir Excel traducidos y reconstruir</p>
     <p class="desc">
-      Una vez subidos los Excel traducidos al repositorio en <code>work/from_google/</code>,
-      construye el compendio <code>translations.json</code> y publica el <code>global.ini</code>.
+      Selecciona los 3 Excel traducidos por Google y súbelos al repositorio. Después reconstruye el compendio <code>translations.json</code> y publica el <code>global.ini</code>.
     </p>
+    <div id="parts-upload-panel" style="display:flex; flex-direction:column; gap:6px; margin-bottom:10px;">
+      <div class="controls" style="align-items:center;">
+        <input type="file" id="part1-input" accept=".xlsx" style="display:none" onchange="selectPart(0,this)">
+        <button onclick="document.getElementById('part1-input').click()">Seleccionar parte_1.xlsx</button>
+        <span id="part1-name" style="font-size:0.8rem; color:#888;"></span>
+        <button id="part1-upload-btn" class="green hidden" onclick="uploadPart(0)">Subir parte_1</button>
+        <span id="part1-status" style="font-size:0.8rem; color:#aaa;"></span>
+      </div>
+      <div class="controls" style="align-items:center;">
+        <input type="file" id="part2-input" accept=".xlsx" style="display:none" onchange="selectPart(1,this)">
+        <button onclick="document.getElementById('part2-input').click()">Seleccionar parte_2.xlsx</button>
+        <span id="part2-name" style="font-size:0.8rem; color:#888;"></span>
+        <button id="part2-upload-btn" class="green hidden" onclick="uploadPart(1)">Subir parte_2</button>
+        <span id="part2-status" style="font-size:0.8rem; color:#aaa;"></span>
+      </div>
+      <div class="controls" style="align-items:center;">
+        <input type="file" id="part3-input" accept=".xlsx" style="display:none" onchange="selectPart(2,this)">
+        <button onclick="document.getElementById('part3-input').click()">Seleccionar parte_3.xlsx</button>
+        <span id="part3-name" style="font-size:0.8rem; color:#888;"></span>
+        <button id="part3-upload-btn" class="green hidden" onclick="uploadPart(2)">Subir parte_3</button>
+        <span id="part3-status" style="font-size:0.8rem; color:#aaa;"></span>
+      </div>
+    </div>
     <div class="controls">
       <button onclick="rebuildFromXlsx()">1.2 Reconstruir y publicar</button>
       <button id="dl-ini-btn" class="green hidden" onclick="downloadIni('global.ini', resultIni)">Descargar global.ini</button>
@@ -958,6 +980,38 @@
     }
 
     function downloadMissionsXlsx() { if (missionsXlsx) XLSX.writeFile(missionsXlsx, 'missions.xlsx'); }
+
+    // ── PASO 1.2: Subida de partes traducidas ────────────────────────────────
+    const PART_PATHS = [
+      'work/from_google/parte_1.xlsx',
+      'work/from_google/parte_2.xlsx',
+      'work/from_google/parte_3.xlsx',
+    ];
+    const _partBufs = [null, null, null];
+
+    function selectPart(i, input) {
+      const file = input.files[0];
+      if (!file) return;
+      document.getElementById('part' + (i+1) + '-name').textContent = file.name;
+      document.getElementById('part' + (i+1) + '-status').textContent = '';
+      hide('part' + (i+1) + '-upload-btn');
+      const reader = new FileReader();
+      reader.onload = e => { _partBufs[i] = e.target.result; show('part' + (i+1) + '-upload-btn'); };
+      reader.readAsArrayBuffer(file);
+    }
+
+    async function uploadPart(i) {
+      if (!_partBufs[i]) return;
+      const statusEl = document.getElementById('part' + (i+1) + '-status');
+      statusEl.textContent = 'Subiendo...'; statusEl.style.color = '#aaa';
+      try {
+        const b64 = btoa(Array.from(new Uint8Array(_partBufs[i])).map(b => String.fromCharCode(b)).join(''));
+        await ghPut(PART_PATHS[i], b64, 'Subir parte_' + (i+1) + '.xlsx traducido');
+        statusEl.textContent = 'Subido.'; statusEl.style.color = '#4caf50';
+      } catch(e) {
+        statusEl.textContent = 'Error: ' + e.message; statusEl.style.color = '#f44336';
+      }
+    }
 
     // ── MISIONES: Subida del xlsx traducido al repositorio ────────────────────
     let _missionsUploadBuf = null;
