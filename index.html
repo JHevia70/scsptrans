@@ -279,6 +279,7 @@
     const NOVEDADES_URL    = BASE_RAW + 'work/from_google/novedades.xlsx';
     const NOVEDADES_PATH      = 'work/from_google/novedades.xlsx';
     const NOVEDADES_KEYS_PATH = 'work/from_google/novedades_keys.json';
+    const NOVEDADES_KEYS_URL  = BASE_RAW + 'work/from_google/novedades_keys.json';
     const TRANSLATIONS_PATH = 'work/translations.json';
     const SNAPSHOT_PATH    = 'work/en_snapshot.json';
     const PART_KEYS_URL    = BASE_RAW + 'work/from_google/part_keys.json';
@@ -727,10 +728,10 @@
       document.getElementById('log-rebuild').innerHTML = '';
       if (!await ensureParsed('log-rebuild')) return;
 
-      // Cargar part_keys.json via API para garantizar versión actual (sin caché raw)
+      // Cargar part_keys.json vía raw con cache-busting (fichero demasiado grande para Contents API)
       let partKeys;
       try {
-        const text = await ghGetText(PART_KEYS_PATH);
+        const text = await fetchText(PART_KEYS_URL);
         partKeys = JSON.parse(text);
         logTo('log-rebuild', 'part_keys.json cargado: ' + partKeys.length + ' partes.');
       } catch(e) { logTo('log-rebuild', 'Error cargando part_keys.json: ' + e.message, 'err'); return; }
@@ -888,7 +889,7 @@
       // Si updatesKeys no está en memoria (sesión nueva), cargar desde el repo
       if (!updatesKeys.length) {
         try {
-          const text = await ghGetText(NOVEDADES_KEYS_PATH);
+          const text = await fetchText(NOVEDADES_KEYS_URL);
           updatesKeys = JSON.parse(text);
           logTo('log-merge', 'novedades_keys.json cargado del repositorio: ' + updatesKeys.length + ' claves.');
         } catch(e) { logTo('log-merge', 'Error cargando novedades_keys.json: ' + e.message + ' — Ejecuta primero el Paso 3.1.', 'err'); return; }
