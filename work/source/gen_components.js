@@ -8,44 +8,44 @@ const BASE = path.dirname(__filename);
 // Manufacturer class mapping (Code → class label)
 // DCB sometimes stores abbreviated codes (AEG vs AEGS, BEH vs BEHR, etc.)
 const MFR_CLASS = {
-  // Mil
-  AEGS: 'Mil', AEG: 'Mil',  // Aegis
-  AMRS: 'Mil',               // Armistice
-  WETK: 'Mil',               // WetaTek
-  GODI: 'Mil',               // Godin
-  GRNP: 'Mil',               // GreenPulse
-  BANU: 'Mil',               // Banu
-  VNC: 'Mil', VNCL: 'Mil',  // Vigilance Contracts
-  // Civ
-  BEHR: 'Civ', BEH: 'Civ',  // Behring
-  ORIG: 'Civ',               // Origin
-  RSI: 'Civ',                // Roberts Space Industries
-  JSPN: 'Civ',               // Joker Sp'n
-  LPLT: 'Civ',               // LightPulse
-  WCPR: 'Civ',               // WildCat Petroleum Resources
-  SASU: 'Civ',               // Sakura Sun
-  TARS: 'Civ',               // Taranis
-  ARCC: 'Civ',               // Archangel
-  FSIN: 'Civ',               // Fusion Industries
-  MITE: 'Civ',               // Musashi
-  WLOP: 'Civ', WILO: 'Civ', // WiloTech
-  SECO: 'Civ',               // SecureMe (?) — shields
-  // Ind
-  JUST: 'Ind', JUS: 'Ind',  // Juno Starwerk
-  BASL: 'Ind',               // BaseLine
-  CHCO: 'Ind',               // Chimera Composites
-  SADA: 'Ind',               // Sadar
-  // Cmp
-  ACOM: 'Cmp',               // A&C Orion
-  YORM: 'Cmp',               // Yorman
-  NAVE: 'Cmp',               // Naven Electronics
-  ACAS: 'Cmp',               // ACAS
-  BRRA: 'Cmp',               // Brara
-  // Sth
-  ASAS: 'Sth',               // Assembled
-  BLTR: 'Sth',               // Bolt-R
-  RACO: 'Sth',               // Racing Company
-  TYDT: 'Sth',               // Tyler Design & Tech
+  // Mi (Military)
+  AEGS: 'Mi', AEG: 'Mi',  // Aegis
+  AMRS: 'Mi',              // Armistice
+  WETK: 'Mi',              // WetaTek
+  GODI: 'Mi',              // Godin
+  GRNP: 'Mi',              // GreenPulse
+  BANU: 'Mi',              // Banu
+  VNC: 'Mi', VNCL: 'Mi',  // Vigilance Contracts
+  // Ci (Civilian)
+  BEHR: 'Ci', BEH: 'Ci',  // Behring
+  ORIG: 'Ci',              // Origin
+  RSI: 'Ci',               // Roberts Space Industries
+  JSPN: 'Ci',              // Joker Sp'n
+  LPLT: 'Ci',              // LightPulse
+  WCPR: 'Ci',              // WildCat Petroleum Resources
+  SASU: 'Ci',              // Sakura Sun
+  TARS: 'Ci',              // Taranis
+  ARCC: 'Ci',              // Archangel
+  FSIN: 'Ci',              // Fusion Industries
+  MITE: 'Ci',              // Musashi
+  WLOP: 'Ci', WILO: 'Ci', // WiloTech
+  SECO: 'Ci',              // SecureMe (?) — shields
+  // In (Industrial)
+  JUST: 'In', JUS: 'In',  // Juno Starwerk
+  BASL: 'In',              // BaseLine
+  CHCO: 'In',              // Chimera Composites
+  SADA: 'In',              // Sadar
+  // Co (Competition)
+  ACOM: 'Co',              // A&C Orion
+  YORM: 'Co',              // Yorman
+  NAVE: 'Co',              // Naven Electronics
+  ACAS: 'Co',              // ACAS
+  BRRA: 'Co',              // Brara
+  // St (Stealth)
+  ASAS: 'St',              // Assembled
+  BLTR: 'St',              // Bolt-R
+  RACO: 'St',              // Racing Company
+  TYDT: 'St',              // Tyler Design & Tech
 };
 
 // Grade mapping: DCB integer → letter (1=A, 2=B, 3=C, 4=D, 5=E)
