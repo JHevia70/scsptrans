@@ -265,6 +265,8 @@
     const MISSIONS_CORRECTIONS_URL = BASE_RAW + 'work/correcciones_missions.ini';
     const MISSIONS_FROM_GOOGLE_URL = BASE_RAW + 'work/from_google/missions.xlsx';
     const MISSIONS_FROM_GOOGLE_PATH = 'work/from_google/missions.xlsx';
+    const MISSIONS_KEYS_URL        = BASE_RAW + 'work/from_google/missions_keys.json';
+    const MISSIONS_KEYS_PATH       = 'work/from_google/missions_keys.json';
     const MISSIONS_ES_PATH         = 'work/missions_es.json';
     const TEST_LIMIT       = 0;
     const NUM_PARTS        = 3;
@@ -854,6 +856,8 @@
     }
 
     // ── MISIONES: Paso A — Generar Excel ─────────────────────────────────────
+    // Formato: una columna "texto", filas alternas título/descripción por misión.
+    // Las keys se guardan en missions_keys.json para reconstruir al volver.
     async function generateMissionsXlsx() {
       hide('dl-missions-xlsx-btn');
       document.getElementById('log-missions-gen').innerHTML = '';
@@ -880,20 +884,30 @@
       }
       logTo('log-missions-gen', 'Misiones cargadas: ' + missionsTsvRows.length);
 
-      // Generar Excel con 4 columnas: key_titulo, titulo_en, key_descripcion, descripcion_en
-      const wsData = [['key_titulo', 'titulo_en', 'key_descripcion', 'descripcion_en']];
+      // Una fila por campo: título, luego descripción, intercalados
+      // Guardar el orden de keys en missions_keys.json para reconstruir
+      const keysOrder = [];  // [{titleKey, descKey}]
+      const wsData = [['texto']];
       for (const r of missionsTsvRows) {
-        wsData.push([r.titleKey, r.titleEn, r.descKey, r.descEn]);
+        keysOrder.push({ titleKey: r.titleKey, descKey: r.descKey });
+        wsData.push([r.titleEn]);   // título
+        wsData.push([r.descEn]);    // descripción
       }
       const ws = XLSX.utils.aoa_to_sheet(wsData);
-      ws['!cols'] = [{ wch: 50 }, { wch: 80 }, { wch: 50 }, { wch: 120 }];
+      ws['!cols'] = [{ wch: 150 }];
       const wb = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, 'Misiones');
       missionsXlsx = wb;
 
+      // Guardar missions_keys.json en el repo
+      try {
+        await ghPut(MISSIONS_KEYS_PATH, toBase64(JSON.stringify(keysOrder)), 'Actualizar missions_keys.json');
+        logTo('log-missions-gen', 'missions_keys.json guardado en el repositorio.');
+      } catch(e) { logTo('log-missions-gen', 'Error guardando missions_keys.json: ' + e.message, 'err'); }
+
       setStatus('status-missions-gen', 'Listo para descargar.');
       show('dl-missions-xlsx-btn');
-      logTo('log-missions-gen', 'missions.xlsx generado con ' + missionsTsvRows.length + ' filas.');
+      logTo('log-missions-gen', 'missions.xlsx generado: ' + missionsTsvRows.length + ' misiones (' + (missionsTsvRows.length * 2) + ' filas).');
     }
 
     function downloadMissionsXlsx() { if (missionsXlsx) XLSX.writeFile(missionsXlsx, 'missions.xlsx'); }
@@ -912,9 +926,13 @@
         logTo('log-missions-rebuild', 'missions_data.json cargado: ' + missionsData.length + ' misiones.');
       } catch(e) { logTo('log-missions-rebuild', 'Error cargando missions_data.json: ' + e.message, 'err'); return; }
 
-      // Construir mapa titleKey → datos enriquecidos
-      const dataMap = {};
-      for (const m of missionsData) dataMap[m.titleKey] = m;
+      // Cargar missions_keys.json (orden de keys)
+      let keysOrder;
+      try {
+        const text = await fetchText(MISSIONS_KEYS_URL);
+        keysOrder = JSON.parse(text);
+        logTo('log-missions-rebuild', 'missions_keys.json cargado: ' + keysOrder.length + ' entradas.');
+      } catch(e) { logTo('log-missions-rebuild', 'Error cargando missions_keys.json: ' + e.message + ' — Ejecuta primero el Paso A.', 'err'); return; }
 
       // Cargar correcciones_missions.ini
       const mCorrections = {};
@@ -934,51 +952,38 @@
       try { xlsBuf = await fetchBinary(MISSIONS_FROM_GOOGLE_URL); }
       catch(e) { logTo('log-missions-rebuild', 'Error: ' + e.message + ' — Sube missions.xlsx traducido a work/from_google/ del repositorio.', 'err'); return; }
 
-      const wb  = XLSX.read(xlsBuf, { type: 'array' });
-      const ws  = wb.Sheets[wb.SheetNames[0]];
-      const rows = XLSX.utils.sheet_to_json(ws, { header: 1 });
-      // Columnas: key_titulo(0), titulo_en(1), titulo_es(2), key_descripcion(3), desc_en(4), desc_es(5)
-      // O: key_titulo(0), titulo_es(1), key_descripcion(2), desc_es(3)
-      // Detectar formato por cabecera
-      const header = rows[0] || [];
-      const hasEnCols = header.length >= 6 || (header[1] && header[1].toString().toLowerCase().includes('_en'));
-      let titleEsCol, descEsCol, titleKeyCol, descKeyCol;
-      if (hasEnCols && header.length >= 5) {
-        // Formato 6 col: key_titulo | titulo_en | titulo_es | key_desc | desc_en | desc_es
-        titleKeyCol = 0; titleEsCol = 2; descKeyCol = 3; descEsCol = 5;
-      } else {
-        // Formato 4 col: key_titulo | titulo_en | key_desc | desc_en  (sin traducción aún = columnas EN)
-        // o formato traducido de Google: key_titulo | titulo_es | key_desc | desc_es
-        titleKeyCol = 0; titleEsCol = 1; descKeyCol = 2; descEsCol = 3;
-      }
+      // Leer columna única de traducciones (fila 0 = cabecera "texto")
+      const values = await readXlsxValues(xlsBuf);
+      logTo('log-missions-rebuild', 'Filas leídas del xlsx: ' + values.length);
 
-      const translMap = {};
-      for (let i = 1; i < rows.length; i++) {
-        const r = rows[i];
-        if (!r || !r[titleKeyCol]) continue;
-        const tk = String(r[titleKeyCol]).trim();
-        const dk = r[descKeyCol] ? String(r[descKeyCol]).trim() : '';
-        const te = r[titleEsCol] != null ? String(r[titleEsCol]).trim() : '';
-        const de = r[descEsCol]  != null ? String(r[descEsCol]).trim()  : '';
-        if (tk) translMap[tk] = { title: te, desc: de, descKey: dk };
+      // Reconstruir mapa key → traducción: filas en pares (título, descripción)
+      const translMap = {};  // key → texto traducido
+      for (let i = 0; i < keysOrder.length; i++) {
+        const { titleKey, descKey } = keysOrder[i];
+        const titleEs = values[i * 2]     != null ? String(values[i * 2]).trim()     : '';
+        const descEs  = values[i * 2 + 1] != null ? String(values[i * 2 + 1]).trim() : '';
+        if (titleKey) translMap[titleKey] = titleEs;
+        if (descKey)  translMap[descKey]  = descEs;
       }
-      logTo('log-missions-rebuild', 'Traducciones leídas: ' + Object.keys(translMap).length + ' misiones.');
+      logTo('log-missions-rebuild', 'Traducciones reconstruidas: ' + Object.keys(translMap).length + ' claves.');
 
-      // Construir missions_es.json
+      // Construir missions_es.json combinando traducciones + datos enriquecidos
+      const dataMap = {};
+      for (const m of missionsData) dataMap[m.titleKey] = m;
+
       const result = [];
       for (const m of missionsData) {
-        const tr = translMap[m.titleKey] || {};
-        let titleEs = tr.title || m.titleText;
-        let descEs  = tr.desc  || m.descText;
+        let titleEs = translMap[m.titleKey] || m.titleText;
+        let descEs  = translMap[m.descKey]  || m.descText;
 
-        // Aplicar correcciones_missions.ini
+        // Aplicar correcciones_missions.ini (tienen prioridad sobre la traducción)
         if (m.titleKey in mCorrections) titleEs = mCorrections[m.titleKey];
         if (m.descKey  in mCorrections) descEs  = mCorrections[m.descKey];
 
         result.push({
           titleKey: m.titleKey,
           titleEs,
-          titleEn: m.titleText,
+          titleEn:  m.titleText,
           descKey:  m.descKey,
           descEs,
           descEn:   m.descText,
