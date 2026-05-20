@@ -45,6 +45,33 @@ StarCitizen/
 > - [RSI Terms of Service](https://robertsspaceindustries.com/en/tos)
 > - [Translation & Fan Localization Statement](https://support.robertsspaceindustries.com/hc/en-us/articles/360006895793)
 
+# Nomenclatura de componentes de nave
+
+Los nombres de los componentes de nave siguen el formato `Clase/Tamaño/Grado Nombre`, por ejemplo: `Mi/2/A Avalanche`.
+
+### Clase del fabricante
+
+| Abrev. | Clase | Descripción | Fabricantes |
+|--------|-------|-------------|-------------|
+| `Mi` | Military | Componentes diseñados para uso militar, máximo rendimiento | Aegis, Apocalypse Arms, WetaTek, Godin, GreenPulse |
+| `Ci` | Civilian | Componentes de uso civil, equilibrio entre rendimiento y precio | Behring, Origin, RSI, Klaus & Werner, LightPulse, WiloTech, WildCat |
+| `In` | Industrial | Componentes robustos para uso industrial y transporte de carga | Juno Starwerk, BaseLine, Chimera Composites |
+| `Co` | Competition | Componentes de competición, alto rendimiento en carreras y exploración | A&C Orion, Naven Electronics, ACAS |
+| `St` | Stealth | Componentes con baja firma de emisiones para operaciones encubiertas | Assembled, Bolt-R, Tyler Design & Tech |
+
+### Tamaño
+
+El número indica el tamaño del componente (0–4), donde 0 es el más pequeño (vehículos pequeños) y 4 el más grande (naves capitales).
+
+### Grado
+
+| Letra | Grado | Descripción |
+|-------|-------|-------------|
+| `A` | Grade A | Máxima calidad |
+| `B` | Grade B | Alta calidad |
+| `C` | Grade C | Calidad estándar |
+| `D` | Grade D | Calidad básica |
+
 # Créditos
 - [MrKraken](https://github.com/MrKraken/StarStrings) — por las mejoras sobre el fichero original en inglés que sirven de base para esta traducción
 - [ExoAE](https://github.com/ExoAE/ScCompLangPack) — por la idea original del Language Pack comunitario
