@@ -11,6 +11,7 @@ const BROKER_DIR   = path.join(BASE, 'dcb_mgiver/libs/foundry/records/missionbro
 const CONTRACT_DIR = path.join(BASE, 'dcb_mgiver/libs/foundry/records/contracts');
 const BP_DIR       = path.join(BASE, 'dcb_mgiver/libs/foundry/records/crafting/blueprintrewards');
 const BP_REC_DIR   = path.join(BASE, 'dcb_mgiver/libs/foundry/records/crafting/blueprints');
+const REP_DIR      = path.join(BASE, 'dcb_mgiver/libs/foundry/records/reputation/rewards/missionrewards_reputation');
 const GLOBAL_INI   = path.join(BASE, 'p4k_extract/Data/Localization/english/global.ini');
 const OUT_TSV      = path.join(BASE, '..', 'missions.tsv');
 const OUT_JSON     = path.join(BASE, '..', 'missions_data.json');
@@ -132,6 +133,37 @@ function buildTitleToBpPools() {
   return map;
 }
 
+// ── Cargar mapa filename → reputationAmount ───────────────────────────────────
+
+function loadReputationAmounts() {
+  const map = {};
+  for (const f of walk(REP_DIR)) {
+    const d = readJson(f);
+    if (!d) continue;
+    const amount = d._RecordValue_?.reputationAmount;
+    if (amount != null) map[path.basename(f, '.json').toLowerCase()] = amount;
+  }
+  return map;
+}
+
+// Extrae la reputación al completar con éxito (missionResultReputationRewards[0]).
+// Prefiere el scope affinity; si no, usa el mayor valor positivo del resultado 0.
+function extractRep(v, repAmounts) {
+  const results = v.missionResultReputationRewards;
+  if (!results?.length) return 0;
+  const onSuccess = results[0]?.reputationAmounts;
+  if (!onSuccess?.length) return 0;
+
+  // Buscar entry con scope affinity
+  const affinityEntry = onSuccess.find(e =>
+    typeof e.reputationScope === 'string' && e.reputationScope.includes('affinity')
+  );
+  const target = affinityEntry || onSuccess[0];
+  const rewardFile = refToName(target?.reward);
+  if (!rewardFile) return 0;
+  return repAmounts[rewardFile] ?? 0;
+}
+
 // ── Resolver nombre de item en global.ini ─────────────────────────────────────
 
 function resolveItemName(entityClass, ini) {
@@ -146,7 +178,7 @@ function resolveItemName(entityClass, ini) {
 
 // ── Cargar misiones desde MissionBrokerEntry ──────────────────────────────────
 
-function loadMissions(titleToBpPools, bpPools, ini) {
+function loadMissions(titleToBpPools, bpPools, repAmounts, ini) {
   const missions = new Map(); // titleKey → entrada
 
   for (const f of walk(BROKER_DIR)) {
@@ -164,10 +196,10 @@ function loadMissions(titleToBpPools, bpPools, ini) {
 
     const descText = descKey ? (ini[descKey] || '') : '';
     const uec = v.missionReward?.reward || 0;
+    const rep = extractRep(v, repAmounts);
 
     // BPs: buscar en el mapa titleKey → pools
     const poolNames = titleToBpPools[titleKey] || new Set();
-    // También probar con descKey como complemento
     if (descKey && titleToBpPools[descKey]) {
       for (const p of titleToBpPools[descKey]) poolNames.add(p);
     }
@@ -176,11 +208,12 @@ function loadMissions(titleToBpPools, bpPools, ini) {
     )];
 
     if (!missions.has(titleKey)) {
-      missions.set(titleKey, { titleKey, titleText, descKey: descKey || '', descText, uec, bps });
+      missions.set(titleKey, { titleKey, titleText, descKey: descKey || '', descText, uec, rep, bps });
     } else {
       const ex = missions.get(titleKey);
       for (const bp of bps) if (!ex.bps.includes(bp)) ex.bps.push(bp);
       if (uec > ex.uec) ex.uec = uec;
+      if (rep > ex.rep) ex.rep = rep;
     }
   }
 
@@ -206,13 +239,18 @@ async function main() {
   const titleToBpPools = buildTitleToBpPools();
   console.log('  títulos con BPs:', Object.keys(titleToBpPools).length);
 
+  console.log('Cargando valores de reputación...');
+  const repAmounts = loadReputationAmounts();
+  console.log('  reward files:', Object.keys(repAmounts).length);
+
   console.log('Cargando misiones...');
-  const missions = loadMissions(titleToBpPools, bpPools, ini);
+  const missions = loadMissions(titleToBpPools, bpPools, repAmounts, ini);
   console.log('  misiones únicas:', missions.length);
 
   const withBps = missions.filter(m => m.bps.length > 0).length;
   const withUec = missions.filter(m => m.uec > 0).length;
-  console.log(`  con BPs: ${withBps}, con aUEC: ${withUec}`);
+  const withRep = missions.filter(m => m.rep > 0).length;
+  console.log(`  con BPs: ${withBps}, con aUEC: ${withUec}, con reputación: ${withRep}`);
 
   // JSON con datos completos
   fs.writeFileSync(OUT_JSON, JSON.stringify(missions, null, 2), 'utf8');
