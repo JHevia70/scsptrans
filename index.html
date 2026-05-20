@@ -425,6 +425,17 @@
       return await res.arrayBuffer();
     }
 
+    // Descarga un archivo binario del repo via API (evita caché de raw.githubusercontent.com)
+    async function ghGetBinary(path) {
+      const res  = await fetch(API + '/contents/' + path, { headers: HEADERS });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message + ' (' + path + ')');
+      const bin = atob(data.content.replace(/\n/g, ''));
+      const buf = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
+      return buf.buffer;
+    }
+
     async function readXlsxValues(buf) {
       const wb   = XLSX.read(buf, { type: 'array' });
       const ws   = wb.Sheets[wb.SheetNames[0]];
@@ -1013,11 +1024,11 @@
         logTo('log-missions-rebuild', 'global.ini ES actual cargado: ' + Object.keys(currentEs).length + ' entradas.');
       } catch(e) { logTo('log-missions-rebuild', 'Aviso: no se pudo cargar global.ini ES actual.', 'warn'); }
 
-      // Cargar missions.xlsx traducido desde el repo
+      // Cargar missions.xlsx traducido desde el repo via API (no caché raw)
       logTo('log-missions-rebuild', 'Cargando missions.xlsx traducido...');
       let xlsBuf;
-      try { xlsBuf = await fetchBinary(MISSIONS_FROM_GOOGLE_URL); }
-      catch(e) { logTo('log-missions-rebuild', 'Error: ' + e.message + ' — Sube missions.xlsx traducido a work/from_google/ del repositorio.', 'err'); setStatus('status-missions-rebuild', 'Error.'); return; }
+      try { xlsBuf = await ghGetBinary(MISSIONS_FROM_GOOGLE_PATH); }
+      catch(e) { logTo('log-missions-rebuild', 'Error cargando missions.xlsx: ' + e.message, 'err'); setStatus('status-missions-rebuild', 'Error.'); return; }
 
       const values = await readXlsxValues(xlsBuf);
       logTo('log-missions-rebuild', 'Filas leídas del xlsx: ' + values.length);
