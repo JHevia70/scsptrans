@@ -243,6 +243,7 @@
     };
     const SOURCE_URL       = SOURCE_URLS.master;
     const CORRECTIONS_URL  = BASE_RAW + 'work/correcciones.ini';
+    const MINERALS_URL     = BASE_RAW + 'work/correcciones_minerales.ini';
     const COMPONENTS_URL   = BASE_RAW + 'work/source/components_generated.ini';
     const SNAPSHOT_URL     = BASE_RAW + 'work/en_snapshot.json';
     const TRANSLATIONS_URL = BASE_RAW + 'work/translations.json';
@@ -518,19 +519,28 @@
       logTo(logId, 'Componentes de nave aplicados: ' + count + ' entradas.');
     }
 
-    async function loadCorrections() {
-      try {
-        const text = await fetchText(CORRECTIONS_URL);
-        correctionsMap = {};
-        for (const line of text.split('\n')) {
-          const eq = line.indexOf('=');
-          if (eq !== -1) correctionsMap[line.substring(0, eq).trim()] = line.substring(eq + 1);
-        }
-        console.log('Correcciones cargadas: ' + Object.keys(correctionsMap).length);
-      } catch(e) {
-        console.warn('No se pudo cargar correcciones.ini: ' + e.message);
-        correctionsMap = {};
+    function parseIniMap(text) {
+      const map = {};
+      for (const line of text.split('\n')) {
+        if (line.startsWith('#') || line.startsWith(';')) continue;
+        const eq = line.indexOf('=');
+        if (eq !== -1) map[line.substring(0, eq).trim()] = line.substring(eq + 1);
       }
+      return map;
+    }
+
+    async function loadCorrections() {
+      correctionsMap = {};
+      const urls = [CORRECTIONS_URL, MINERALS_URL];
+      for (const url of urls) {
+        try {
+          const text = await fetchText(url);
+          Object.assign(correctionsMap, parseIniMap(text));
+        } catch(e) {
+          console.warn('No se pudo cargar ' + url.split('/').pop() + ': ' + e.message);
+        }
+      }
+      console.log('Correcciones cargadas: ' + Object.keys(correctionsMap).length);
     }
 
     function applyCorrections(logId) {
