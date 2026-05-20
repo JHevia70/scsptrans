@@ -630,21 +630,48 @@
         return;
       }
 
+      // global.ini usa \n como secuencia de escape, no saltos reales
+      const iniEscape = s => s.replace(/\r\n/g, '\\n').replace(/\n/g, '\\n');
+
       // Construir mapa clave → valor ES para lookup rápido
       const mMap = {};
       for (const m of missions) {
-        if (m.titleKey && m.titleEs) mMap[m.titleKey] = m.titleEs;
-        if (m.descKey  && m.descEs)  mMap[m.descKey]  = m.descEs;
+        if (m.titleKey && m.titleEs) mMap[m.titleKey] = iniEscape(m.titleEs);
+        if (m.descKey  && m.descEs)  mMap[m.descKey]  = iniEscape(m.descEs);
       }
 
       let count = 0;
+      const found = new Set();
       resultIni = resultIni.map(line => {
         const eq = line.indexOf('=');
         if (eq === -1) return line;
         const key = line.substring(0, eq);
-        if (key in mMap) { count++; return key + '=' + mMap[key]; }
+        if (key in mMap) { count++; found.add(key); return key + '=' + mMap[key]; }
         return line;
       });
+
+      // Insertar claves que no existen en el source EN (e.g. descKeys sin entrada)
+      // Insertamos cada una justo después de su titleKey correspondiente
+      const titleToDesc = {};
+      for (const m of missions) {
+        if (m.descKey && m.descEs && !found.has(m.descKey)) titleToDesc[m.titleKey] = { descKey: m.descKey, descEs: m.descEs };
+      }
+      if (Object.keys(titleToDesc).length > 0) {
+        const newIni = [];
+        for (const line of resultIni) {
+          newIni.push(line);
+          const eq = line.indexOf('=');
+          if (eq !== -1) {
+            const key = line.substring(0, eq);
+            if (key in titleToDesc) {
+              const { descKey, descEs } = titleToDesc[key];
+              newIni.push(descKey + '=' + descEs);
+              count++;
+            }
+          }
+        }
+        resultIni = newIni;
+      }
       logTo(logId, 'Misiones aplicadas: ' + count + ' entradas (títulos + descripciones enriquecidas).');
     }
 
