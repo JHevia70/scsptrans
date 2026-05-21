@@ -202,6 +202,33 @@ function extractRep(v, repAmounts) {
   return repAmounts[rewardFile] ?? 0;
 }
 
+// Construye titleKey → max(rep) desde ContractResult_LegacyReputation en los generadores
+// Toma el máximo cuando un título aparece con distintos valores (distintas dificultades)
+function loadContractRepMap(repAmounts) {
+  const map = {};
+  for (const f of walk(CONTRACT_DIR)) {
+    const d = readJson(f);
+    if (!d) continue;
+    const generators = d._RecordValue_?.generators;
+    if (!Array.isArray(generators)) continue;
+    for (const gen of generators) {
+      for (const contract of (gen.contracts || [])) {
+        const titleKey = extractKeyFromOverrides(contract.paramOverrides, 'Title');
+        if (!titleKey) continue;
+        const results = contract.contractResults?.contractResults || [];
+        for (const r of results) {
+          if (r._Type_ !== 'ContractResult_LegacyReputation') continue;
+          const rewardFile = refToName(r.contractResultReputationAmounts?.reward);
+          const amount = rewardFile ? (repAmounts[rewardFile] ?? 0) : 0;
+          if (amount > 0 && amount > (map[titleKey] || 0)) map[titleKey] = amount;
+          break;
+        }
+      }
+    }
+  }
+  return map;
+}
+
 // ── Cargar components_generated.ini: sufijo_lower → nombre con prefijo ────────
 // Permite que los BPs de nave muestren el nombre enriquecido (e.g. "Mi/1/A VK-00")
 
@@ -275,7 +302,7 @@ function inferDescKey(titleKey, ini) {
   return null;
 }
 
-function loadMissionsIntoMap(missions, { byTitle, byDesc }, bpPools, repAmounts, ini, nameMap, componentsMap) {
+function loadMissionsIntoMap(missions, { byTitle, byDesc }, bpPools, repAmounts, contractRepMap, ini, nameMap, componentsMap) {
   for (const f of walk(BROKER_DIR)) {
     const d = readJson(f);
     if (!d) continue;
@@ -293,7 +320,8 @@ function loadMissionsIntoMap(missions, { byTitle, byDesc }, bpPools, repAmounts,
 
     const descText = descKey ? (ini[descKey] || '') : '';
     const uec = v.missionReward?.reward || 0;
-    const rep = extractRep(v, repAmounts);
+    const brokerRep = extractRep(v, repAmounts);
+    const rep = brokerRep || (contractRepMap[titleKey] ?? 0);
 
     // Pools: priorizar byDesc (específico por descripción), luego byTitle (genérico)
     const poolSet = (descKey && byDesc[descKey]) ? byDesc[descKey]
@@ -328,7 +356,7 @@ function loadMissionsIntoMap(missions, { byTitle, byDesc }, bpPools, repAmounts,
 // Hay misiones cuyo título solo aparece en stringParamOverrides de contratos y
 // no en ningún broker entry. Las añadimos si tienen BPs y texto en global.ini.
 
-function addContractOnlyMissions(missionsMap, { byTitle, byDesc }, bpPools, ini, nameMap, componentsMap) {
+function addContractOnlyMissions(missionsMap, { byTitle, byDesc }, bpPools, contractRepMap, ini, nameMap, componentsMap) {
   let added = 0;
   // Combinar byTitle y byDesc; para byDesc usar la clave de descripción como descKey
   const allEntries = [
@@ -353,7 +381,8 @@ function addContractOnlyMissions(missionsMap, { byTitle, byDesc }, bpPools, ini,
     if (!bpGroups.length) continue;
     const descKey = inferDescKey(titleKey, ini) || '';
     const descText = descKey ? (ini[descKey] || '') : '';
-    missionsMap.set(titleKey, { titleKey, titleText, descKey, descText, uec: 0, rep: 0, bpGroups });
+    const rep = contractRepMap[titleKey] ?? 0;
+    missionsMap.set(titleKey, { titleKey, titleText, descKey, descText, uec: 0, rep, bpGroups });
     added++;
   }
   return added;
@@ -381,6 +410,8 @@ async function main() {
   console.log('Cargando valores de reputación...');
   const repAmounts = loadReputationAmounts();
   console.log('  reward files:', Object.keys(repAmounts).length);
+  const contractRepMap = loadContractRepMap(repAmounts);
+  console.log('  títulos con rep (contratos):', Object.keys(contractRepMap).length);
 
   const nameMap      = buildNameMap(ini);
   const componentsMap = loadComponentsMap();
@@ -388,8 +419,12 @@ async function main() {
 
   console.log('Cargando misiones...');
   const missionsMap = new Map();
-  loadMissionsIntoMap(missionsMap, titleToBpPools, bpPools, repAmounts, ini, nameMap, componentsMap);
-  const contractAdded = addContractOnlyMissions(missionsMap, titleToBpPools, bpPools, ini, nameMap, componentsMap);
+  loadMissionsIntoMap(missionsMap, titleToBpPools, bpPools, repAmounts, contractRepMap, ini, nameMap, componentsMap);
+  const contractAdded = addContractOnlyMissions(missionsMap, titleToBpPools, bpPools, contractRepMap, ini, nameMap, componentsMap);
+  // Rellenar rep=0 de broker entries con contractRepMap
+  for (const m of missionsMap.values()) {
+    if (!m.rep && contractRepMap[m.titleKey]) m.rep = contractRepMap[m.titleKey];
+  }
   console.log(`  misiones de broker: ${missionsMap.size - contractAdded}, añadidas de contratos: ${contractAdded}`);
   const missions = [...missionsMap.values()].sort((a, b) => a.titleKey.localeCompare(b.titleKey));
   console.log('  misiones únicas:', missions.length);
