@@ -1030,9 +1030,9 @@
         if (cols.length < 2 || !cols[0]) continue;
         missionsTsvRows.push({
           titleKey: cols[0],
-          titleEn:  (cols[1] || '').replace(/\\n/g, '\n'),
+          titleEn:  (cols[1] || '').replace(/\\n/g, '[NL]'),
           descKey:  cols[2] || '',
-          descEn:   (cols[3] || '').replace(/\\n/g, '\n'),
+          descEn:   (cols[3] || '').replace(/\\n/g, '[NL]'),
         });
       }
       logTo('log-missions-gen', 'Misiones cargadas: ' + missionsTsvRows.length);
@@ -1200,8 +1200,8 @@
       const translMap = {};
       for (let i = 0; i < keysOrder.length; i++) {
         const { titleKey, descKey } = keysOrder[i];
-        const titleEs = values[i * 2]     != null ? String(values[i * 2]).trim()     : '';
-        const descEs  = values[i * 2 + 1] != null ? String(values[i * 2 + 1]).trim() : '';
+        const titleEs = (values[i * 2]     != null ? String(values[i * 2]).trim()     : '').replace(/\[NL\]/g, '\n');
+        const descEs  = (values[i * 2 + 1] != null ? String(values[i * 2 + 1]).trim() : '').replace(/\[NL\]/g, '\n');
         if (titleKey) translMap[titleKey] = titleEs;
         if (descKey)  translMap[descKey]  = descEs;
       }
