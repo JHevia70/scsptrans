@@ -378,18 +378,16 @@ function loadMissionsIntoMap(missions, { byTitle, byDesc }, bpPools, repAmounts,
 
 function addContractOnlyMissions(missionsMap, { byTitle, byDesc }, bpPools, contractRepMap, ini, nameMap, componentsMap) {
   let added = 0;
-  // Combinar byTitle y byDesc; para byDesc usar la clave de descripción como descKey
+
+  // Paso 1: misiones con BPs (byTitle/byDesc)
   const allEntries = [
-    ...Object.entries(byTitle).map(([k, s]) => ({ titleKey: k, descKey: inferDescKey(k, ini) || '', poolSet: s })),
-    ...Object.entries(byDesc).map(([dk, s]) => ({ titleKey: null, descKey: dk, poolSet: s })),
+    ...Object.entries(byTitle).map(([k, s]) => ({ titleKey: k, poolSet: s })),
+    ...Object.entries(byDesc).map(([dk, s]) => ({ titleKey: null, poolSet: s })),
   ];
-  for (const { titleKey: tk, descKey: dk, poolSet } of allEntries) {
-    // Necesitamos el titleKey real — para byDesc, buscarlo en global.ini no es directo,
-    // solo añadir si ya existe la misión en el map (broker entry la registró)
-    if (dk && !tk) continue; // byDesc sin titleKey — el broker entry ya lo manejó
-    const titleKey = tk;
-    if (missionsMap.has(titleKey)) continue;
-    const titleText = ini[titleKey] || '';
+  for (const { titleKey: tk, poolSet } of allEntries) {
+    if (!tk) continue; // byDesc sin titleKey — el broker entry ya lo manejó
+    if (missionsMap.has(tk)) continue;
+    const titleText = ini[tk] || '';
     if (!titleText) continue;
     const seen = new Set();
     const bpGroups = [...poolSet]
@@ -399,12 +397,34 @@ function addContractOnlyMissions(missionsMap, { byTitle, byDesc }, bpPools, cont
       )
       .filter(g => g.length > 0);
     if (!bpGroups.length) continue;
-    const descKey = inferDescKey(titleKey, ini) || '';
+    const descKey = inferDescKey(tk, ini) || '';
     const descText = descKey ? (ini[descKey] || '') : '';
-    const rep = contractRepMap[titleKey] ?? 0;
-    missionsMap.set(titleKey, { titleKey, titleText, descKey, descText, uec: 0, rep, bpGroups });
+    const rep = contractRepMap[tk] ?? 0;
+    missionsMap.set(tk, { titleKey: tk, titleText, descKey, descText, uec: 0, rep, bpGroups });
     added++;
   }
+
+  // Paso 2: misiones sin BPs que solo existen en contract generators (sin broker entry)
+  for (const f of walk(CONTRACT_DIR)) {
+    const d = readJson(f);
+    if (!d) continue;
+    const generators = d._RecordValue_?.generators;
+    if (!Array.isArray(generators)) continue;
+    for (const gen of generators) {
+      for (const contract of (gen.contracts || [])) {
+        const titleKey = extractKeyFromOverrides(contract.paramOverrides, 'Title');
+        if (!titleKey || missionsMap.has(titleKey)) continue;
+        const titleText = ini[titleKey] || '';
+        if (!titleText) continue;
+        const descKey = extractKeyFromOverrides(contract.paramOverrides, 'Description') || inferDescKey(titleKey, ini) || '';
+        const descText = descKey ? (ini[descKey] || '') : '';
+        const rep = contractRepMap[titleKey] ?? 0;
+        missionsMap.set(titleKey, { titleKey, titleText, descKey, descText, uec: 0, rep, bpGroups: [] });
+        added++;
+      }
+    }
+  }
+
   return added;
 }
 
