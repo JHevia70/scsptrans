@@ -228,7 +228,15 @@
     <div id="status-updates" class="status">Listo.</div>
     <div id="log-updates" class="log"></div>
 
-    <div id="step-merge" style="display:none">
+    <div id="step-merge">
+      <p class="desc" style="color:#ff9800; margin-top:12px">▸ Paso 3.2 — Subir novedades.xlsx traducido y fusionar</p>
+      <div class="controls" style="align-items:center;">
+        <input type="file" id="novedades-upload-input" accept=".xlsx" style="display:none" onchange="selectNovedades(this)">
+        <button onclick="document.getElementById('novedades-upload-input').click()">Seleccionar novedades.xlsx traducido</button>
+        <span id="novedades-upload-name" style="font-size:0.8rem; color:#888;"></span>
+        <button id="novedades-upload-btn" class="green hidden" onclick="uploadNovedades()">Subir al repositorio</button>
+        <span id="novedades-upload-status" style="font-size:0.8rem; color:#aaa;"></span>
+      </div>
       <div class="controls">
         <button class="main-btn" onclick="mergeUpdates()">3.2 Fusionar novedades y publicar</button>
         <button id="dl-merged-btn" class="green hidden" onclick="downloadIni('global.ini', resultIni)">Descargar global.ini</button>
@@ -852,7 +860,6 @@
     // ── PASO 3a: Detectar novedades ───────────────────────────────────────────
     async function generateUpdatesXlsx() {
       hide('dl-updates-xlsx-btn');
-      document.getElementById('step-merge').style.display = 'none';
       document.getElementById('log-updates').innerHTML = '';
 
       const selectedKey = 'master';
@@ -945,7 +952,7 @@
 
       setStatus('status-updates', 'Listo para descargar.');
       show('dl-updates-xlsx-btn');
-      document.getElementById('step-merge').style.display = 'block';
+      // step-merge siempre visible
     }
 
     function downloadUpdatesXlsx() { downloadWorkbook(updatesXlsx, 'novedades.xlsx'); }
@@ -1135,6 +1142,33 @@
         const b64 = btoa(Array.from(new Uint8Array(_partBufs[i])).map(b => String.fromCharCode(b)).join(''));
         await ghPut(PART_PATHS[i], b64, 'Subir parte_' + (i+1) + '.xlsx traducido');
         statusEl.textContent = 'Subido.'; statusEl.style.color = '#4caf50';
+      } catch(e) {
+        statusEl.textContent = 'Error: ' + e.message; statusEl.style.color = '#f44336';
+      }
+    }
+
+    // ── NOVEDADES: Subida del xlsx traducido al repositorio ──────────────────
+    let _novedadesUploadBuf = null;
+
+    function selectNovedades(input) {
+      const file = input.files[0];
+      if (!file) return;
+      document.getElementById('novedades-upload-name').textContent = file.name;
+      document.getElementById('novedades-upload-status').textContent = '';
+      hide('novedades-upload-btn');
+      const reader = new FileReader();
+      reader.onload = e => { _novedadesUploadBuf = e.target.result; show('novedades-upload-btn'); };
+      reader.readAsArrayBuffer(file);
+    }
+
+    async function uploadNovedades() {
+      if (!_novedadesUploadBuf) return;
+      const statusEl = document.getElementById('novedades-upload-status');
+      statusEl.textContent = 'Subiendo...'; statusEl.style.color = '#aaa';
+      try {
+        const b64 = btoa(Array.from(new Uint8Array(_novedadesUploadBuf)).map(b => String.fromCharCode(b)).join(''));
+        await ghPut(NOVEDADES_PATH, b64, 'Subir novedades.xlsx traducido');
+        statusEl.textContent = 'Subido. Ya puedes fusionar.'; statusEl.style.color = '#4caf50';
       } catch(e) {
         statusEl.textContent = 'Error: ' + e.message; statusEl.style.color = '#f44336';
       }
