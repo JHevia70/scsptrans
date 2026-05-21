@@ -244,9 +244,13 @@
   <h2 class="main-step collapsible" onclick="toggleSection('sec-corrections')">Paso 4 — Aplicar correcciones y publicar</h2>
   <div id="sec-corrections" class="section-body">
     <p class="desc">
-      Reconstruye el <code>global.ini</code> desde <code>translations.json</code>, aplica <code>correcciones.ini</code>,
-      los nombres de componentes, los minerales y las misiones enriquecidas, y publica una nueva release.<br>
-      Ejecuta esto cada vez que modifiques <code>correcciones.ini</code> o <code>missions_es.json</code>.
+      Reconstruye el <code>global.ini</code> desde <code>translations.json</code> y aplica en orden:<br>
+      1. Sustituciones globales (barco→nave, mineral→Ore…)<br>
+      2. Componentes de nave con prefijo <code>Clase/Tamaño/Grado</code> (<code>components_generated.ini</code>)<br>
+      3. Prefijos de tipo de guiado en misiles: <code>[EM]</code>, <code>[IR]</code>, <code>[CS]</code>, <code>[NU]</code><br>
+      4. Correcciones manuales: <code>correcciones.ini</code>, <code>correcciones_minerales.ini</code>, <code>correcciones_ilegales.ini</code> (prefijos <code>[!]</code>)<br>
+      5. Misiones enriquecidas con aUEC, BPs y reputación (<code>missions_es.json</code>)<br>
+      Ejecuta esto cada vez que modifiques cualquiera de esos ficheros.
     </p>
     <div class="controls">
       <button class="main-btn" onclick="applyCorrectionsAndPublish()">4. Aplicar correcciones y publicar</button>
@@ -268,6 +272,7 @@
     const SOURCE_URL       = SOURCE_URLS.master;
     const CORRECTIONS_URL  = BASE_RAW + 'work/correcciones.ini';
     const MINERALS_URL     = BASE_RAW + 'work/correcciones_minerales.ini';
+    const ILLEGALS_URL     = BASE_RAW + 'work/correcciones_ilegales.ini';
     const COMPONENTS_URL   = BASE_RAW + 'work/source/components_generated.ini';
     const SNAPSHOT_URL     = BASE_RAW + 'work/en_snapshot.json';
     const TRANSLATIONS_URL = BASE_RAW + 'work/translations.json';
@@ -562,6 +567,33 @@
       logTo(logId, 'Componentes de nave aplicados: ' + count + ' entradas.');
     }
 
+    // ── Misiles: prefijo [XX] según tipo de guiado ────────────────────────────
+    // Patrón de clave: item_Name(G)MISL_SXX_TIPO_MFR_Nombre
+    // Tipos conocidos: EM, IR, CS, NU — extraídos de la posición 3 (índice 2) del nombre
+    const MISSILE_TYPE_PREFIX = { EM: '[EM]', IR: '[IR]', CS: '[CS]', NU: '[NU]' };
+
+    function applyMissiles(logId) {
+      let count = 0;
+      resultIni = resultIni.map(line => {
+        const eq = line.indexOf('=');
+        if (eq === -1) return line;
+        const key = line.substring(0, eq);
+        const kl  = key.toLowerCase();
+        if (!kl.startsWith('item_namemisl_') && !kl.startsWith('item_namegmisl_')) return line;
+        // Extraer tipo: item_Name[G]MISL_SXX_TIPO_... → partes[2]
+        const namePart = key.startsWith('item_Name') ? key.substring(9) : key.substring(10);
+        const parts    = namePart.split('_');
+        const typeCode = parts[2] ? parts[2].toUpperCase() : '';
+        const prefix   = MISSILE_TYPE_PREFIX[typeCode];
+        if (!prefix) return line;
+        const val = line.substring(eq + 1);
+        if (val.startsWith(prefix)) return line; // ya tiene el prefijo
+        count++;
+        return key + '=' + prefix + ' ' + val;
+      });
+      if (count > 0) logTo(logId, 'Prefijos de misiles aplicados: ' + count + ' entradas.');
+    }
+
     function parseIniMap(text) {
       const map = {};
       for (const line of text.split('\n')) {
@@ -574,7 +606,7 @@
 
     async function loadCorrections() {
       correctionsMap = {};
-      const urls = [CORRECTIONS_URL, MINERALS_URL];
+      const urls = [CORRECTIONS_URL, MINERALS_URL, ILLEGALS_URL];
       for (const url of urls) {
         try {
           const text = await fetchText(url);
@@ -801,6 +833,7 @@
       buildResultIni(parsedLines, translMap, 'log-rebuild');
       applyGlobalReplacements('log-rebuild');
       applyComponents('log-rebuild');
+      applyMissiles('log-rebuild');
       applyCorrections('log-rebuild');
 
       // Publicar translations.json (valores ya con vars restauradas + correcciones)
@@ -969,6 +1002,7 @@
       buildResultIni(newParsed, translMap, 'log-merge');
       applyGlobalReplacements('log-merge');
       applyComponents('log-merge');
+      applyMissiles('log-merge');
       applyCorrections('log-merge');
       await applyMissions('log-merge');
       await publishRelease('log-merge', SOURCE_VERSIONS['master'] || '');
@@ -997,8 +1031,9 @@
       applyGlobalReplacements('log-corrections');
       await loadComponents();
       applyComponents('log-corrections');
+      applyMissiles('log-corrections');
 
-      // Recargar correcciones por si han cambiado
+      // Recargar correcciones por si han cambiado (correcciones.ini + minerales + ilegales)
       await loadCorrections();
       applyCorrections('log-corrections');
       await applyMissions('log-corrections');
