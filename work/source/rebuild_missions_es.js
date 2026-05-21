@@ -76,13 +76,15 @@ for (const m of missionsData) {
   const hasBps = m.bpGroups && m.bpGroups.length > 0;
   if (hasBps) {
     titleEs = titleEs + ' <EM4>[BP]</EM4>';
-    const bpBlock = formatBpGroups(m.bpGroups);
-    descEs = (descEs ? descEs + '\n\n' : '') + bpBlock;
     withBps++;
   }
   if (m.rep && m.rep > 0) {
     descEs = (descEs ? descEs + '\n\n' : '') + '<EM4>Reputación Otorgada:</EM4> ' + m.rep;
     withRep++;
+  }
+  if (hasBps) {
+    const bpBlock = formatBpGroups(m.bpGroups);
+    descEs = (descEs ? descEs + '\n\n' : '') + bpBlock;
   }
 
   result.push({

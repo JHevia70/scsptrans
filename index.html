@@ -1228,6 +1228,7 @@
         descEs  = restoreMissionVars(descEs,  m.descText);
         const hasBps = m.bpGroups && m.bpGroups.length > 0;
         if (hasBps) titleEs = titleEs + ' <EM4>[BP]</EM4>';
+        if (m.rep && m.rep > 0) descEs = (descEs ? descEs + '\n\n' : '') + '<EM4>Reputación Otorgada:</EM4> ' + m.rep;
         if (hasBps) {
           const bpBlock = m.bpGroups.length === 1
             ? '<EM4>Objetos Fabricables:</EM4>\n' + m.bpGroups[0].map(b => '- ' + b).join('\n')
@@ -1236,7 +1237,6 @@
               ).join('\n\n');
           descEs = (descEs ? descEs + '\n\n' : '') + bpBlock;
         }
-        if (m.rep && m.rep > 0) descEs = (descEs ? descEs + '\n\n' : '') + '<EM4>Reputación Otorgada:</EM4> ' + m.rep;
         result.push({ titleKey: m.titleKey, titleEs, titleEn: m.titleText, descKey: m.descKey, descEs, descEn: m.descText, uec: m.uec, rep: m.rep || 0, bpGroups: m.bpGroups });
       }
       missionsBuildResult = result;
