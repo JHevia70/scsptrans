@@ -83,8 +83,8 @@
   {
     "titleKey": "bhg_bounty_title_ASD_Engineering_001",
     "titleText": "Verified Bounty: ~mission(TargetName) at ~mission(Location)",
-    "descKey": "bhg_bounty_title_ASD_Engineering_001",
-    "descText": "Verified Bounty: ~mission(TargetName) at ~mission(Location)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -134,8 +134,8 @@
   {
     "titleKey": "bhg_bounty_title_ASD_Research_001",
     "titleText": "Verified Bounty: ~mission(TargetName) at ~mission(Location)",
-    "descKey": "bhg_bounty_title_ASD_Research_001",
-    "descText": "Verified Bounty: ~mission(TargetName) at ~mission(Location)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -185,8 +185,8 @@
   {
     "titleKey": "bhg_bounty_title_FPS_intro",
     "titleText": "Preliminary Bounty: ~mission(TargetName)",
-    "descKey": "bhg_bounty_title_FPS_intro",
-    "descText": "Preliminary Bounty: ~mission(TargetName)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -236,8 +236,8 @@
   {
     "titleKey": "bhg_bounty_title_gen_001",
     "titleText": "Verified Bounty: ~mission(TargetName) | ~mission(Danger)",
-    "descKey": "bhg_bounty_title_gen_001",
-    "descText": "Verified Bounty: ~mission(TargetName) | ~mission(Danger)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -287,8 +287,8 @@
   {
     "titleKey": "bhg_bounty_title_HeadHunters_001",
     "titleText": "Verified Bounty: ~mission(TargetName) | HeadHunters | ~mission(Danger)",
-    "descKey": "bhg_bounty_title_HeadHunters_001",
-    "descText": "Verified Bounty: ~mission(TargetName) | HeadHunters | ~mission(Danger)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -307,8 +307,8 @@
   {
     "titleKey": "bhg_bounty_title_Rockcracker_001",
     "titleText": "Verified Bounty: ~mission(TargetName) at QV Breaker Station",
-    "descKey": "bhg_bounty_title_Rockcracker_001",
-    "descText": "Verified Bounty: ~mission(TargetName) at QV Breaker Station",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -358,8 +358,8 @@
   {
     "titleKey": "bhg_bounty_title_ShatteredBlade_001",
     "titleText": "Verified Bounty: ~mission(TargetName)",
-    "descKey": "bhg_bounty_title_ShatteredBlade_001",
-    "descText": "Verified Bounty: ~mission(TargetName)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -378,8 +378,8 @@
   {
     "titleKey": "bhg_bounty_title_XT_001",
     "titleText": "Verified Bounty: ~mission(TargetName) | XenoThreat | ~mission(Danger)",
-    "descKey": "bhg_bounty_title_XT_001",
-    "descText": "Verified Bounty: ~mission(TargetName) | XenoThreat | ~mission(Danger)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -536,8 +536,8 @@
   {
     "titleKey": "bhg_EliminateBoss_FPS_Rockcracker_Warehouse_name_001",
     "titleText": "High-Risk Bounty: ~mission(TargetName) at QV Breaker Station",
-    "descKey": "bhg_EliminateBoss_FPS_Rockcracker_Warehouse_name_001",
-    "descText": "High-Risk Bounty: ~mission(TargetName) at QV Breaker Station",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -911,8 +911,8 @@
   {
     "titleKey": "cfp_bombingrun_E_title_001",
     "titleText": "Eliminate Fuel Stores",
-    "descKey": "cfp_bombingrun_E_title_001",
-    "descText": "Eliminate Fuel Stores",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -947,8 +947,8 @@
   {
     "titleKey": "cfp_bombingrun_sabotage_generators_title_001",
     "titleText": "Reduce Outlaw's Operational Readiness",
-    "descKey": "cfp_bombingrun_sabotage_generators_title_001",
-    "descText": "Reduce Outlaw's Operational Readiness",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -983,8 +983,8 @@
   {
     "titleKey": "cfp_ChainElimAll_1C_ElimSpec_GenAttack_E_title_001",
     "titleText": "Alert: ~mission(Location) under attack",
-    "descKey": "cfp_ChainElimAll_1C_ElimSpec_GenAttack_E_title_001",
-    "descText": "Alert: ~mission(Location) under attack",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -1016,8 +1016,8 @@
   {
     "titleKey": "cfp_ChainElimAll_1C_ElimSpec_HHAttack_M_title_001",
     "titleText": "Taking back from the Headhunters",
-    "descKey": "cfp_ChainElimAll_1C_ElimSpec_HHAttack_M_title_001",
-    "descText": "Taking back from the Headhunters",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -1049,8 +1049,8 @@
   {
     "titleKey": "cfp_ChainElimAll_1C_HHAttack_M_title_001",
     "titleText": "Help defend ~mission(Location) from Headhunters",
-    "descKey": "cfp_ChainElimAll_1C_HHAttack_M_title_001",
-    "descText": "Help defend ~mission(Location) from Headhunters",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -1082,8 +1082,8 @@
   {
     "titleKey": "cfp_ChainElimAll_2C_ElimSpec_GenAttack_M_title_001",
     "titleText": "Outlaw attack at ~mission(Location)",
-    "descKey": "cfp_ChainElimAll_2C_ElimSpec_GenAttack_M_title_001",
-    "descText": "Outlaw attack at ~mission(Location)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -1115,8 +1115,8 @@
   {
     "titleKey": "cfp_ChainElimAll_2C_ElimSpec_HHAttack_H_title_001",
     "titleText": "Retaking Outposts from Headhunters",
-    "descKey": "cfp_ChainElimAll_2C_ElimSpec_HHAttack_H_title_001",
-    "descText": "Retaking Outposts from Headhunters",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -1148,8 +1148,8 @@
   {
     "titleKey": "cfp_ChainElimAll_2C_ElimSpec_XTAttack_H_title_001",
     "titleText": "Reclaiming Outposts from XenoThreat",
-    "descKey": "cfp_ChainElimAll_2C_ElimSpec_XTAttack_H_title_001",
-    "descText": "Reclaiming Outposts from XenoThreat",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -1181,8 +1181,8 @@
   {
     "titleKey": "cfp_ChainElimAll_3C_ElimSpec_GenAttack_M_title_001",
     "titleText": "Need multiple CFP outposts retaken",
-    "descKey": "cfp_ChainElimAll_3C_ElimSpec_GenAttack_M_title_001",
-    "descText": "Need multiple CFP outposts retaken",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -1214,8 +1214,8 @@
   {
     "titleKey": "cfp_ChainElimAll_3C_ElimSpec_HHAttack_VH_title_001",
     "titleText": "Reclaiming Clusters from Headhunters",
-    "descKey": "cfp_ChainElimAll_3C_ElimSpec_HHAttack_VH_title_001",
-    "descText": "Reclaiming Clusters from Headhunters",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -1247,8 +1247,8 @@
   {
     "titleKey": "cfp_ChainElimAll_3C_ElimSpec_XTAttack_VH_title_001",
     "titleText": "Campaign to reclaim XenoThreat outposts ",
-    "descKey": "cfp_ChainElimAll_3C_ElimSpec_XTAttack_VH_title_001",
-    "descText": "Campaign to reclaim XenoThreat outposts ",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -1280,8 +1280,8 @@
   {
     "titleKey": "cfp_defend_boss_Generic_title_001",
     "titleText": "~mission(Location|Address) needs help",
-    "descKey": "cfp_defend_boss_Generic_title_001",
-    "descText": "~mission(Location|Address) needs help",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -1313,8 +1313,8 @@
   {
     "titleKey": "cfp_defend_cave_Generic_title_001",
     "titleText": "Assistance needed at ~mission(Location)",
-    "descKey": "cfp_defend_cave_Generic_title_001",
-    "descText": "Assistance needed at ~mission(Location)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -1346,8 +1346,8 @@
   {
     "titleKey": "cfp_defend_headhunters_H_title_001",
     "titleText": "Headhunter attack on ~mission(Location)",
-    "descKey": "cfp_defend_headhunters_H_title_001",
-    "descText": "Headhunter attack on ~mission(Location)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -1379,8 +1379,8 @@
   {
     "titleKey": "cfp_defend_headhunters_M_title_001",
     "titleText": "~mission(Location) needs assistance",
-    "descKey": "cfp_defend_headhunters_M_title_001",
-    "descText": "~mission(Location) needs assistance",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -1412,8 +1412,8 @@
   {
     "titleKey": "cfp_defend_regionshift_title_001",
     "titleText": "Call for Help: ~mission(Location)",
-    "descKey": "cfp_defend_regionshift_title_001",
-    "descText": "Call for Help: ~mission(Location)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -1445,8 +1445,8 @@
   {
     "titleKey": "cfp_defend-criminals_title_001",
     "titleText": "Defend ~mission(Location) from Outlaws",
-    "descKey": "cfp_defend-criminals_title_001",
-    "descText": "Defend ~mission(Location) from Outlaws",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -1478,8 +1478,8 @@
   {
     "titleKey": "cfp_defend-xenothreat_title_001",
     "titleText": "Protect ~mission(Location) from XenoThreat Attack",
-    "descKey": "cfp_defend-xenothreat_title_001",
-    "descText": "Protect ~mission(Location) from XenoThreat Attack",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -1511,8 +1511,8 @@
   {
     "titleKey": "cfp_defend-xenothreat_title_002",
     "titleText": "Protect ~mission(Location) from XenoThreat Raid",
-    "descKey": "cfp_defend-xenothreat_title_002",
-    "descText": "Protect ~mission(Location) from XenoThreat Raid",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -1544,8 +1544,8 @@
   {
     "titleKey": "cfp_defend-xenothreat_title_003",
     "titleText": "Protect ~mission(Location) from XenoThreat Incursion",
-    "descKey": "cfp_defend-xenothreat_title_003",
-    "descText": "Protect ~mission(Location) from XenoThreat Incursion",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -1577,8 +1577,8 @@
   {
     "titleKey": "cfp_defendship_Intro_title_001",
     "titleText": "Seeking Experienced Combat Pilots",
-    "descKey": "cfp_defendship_Intro_title_001",
-    "descText": "Seeking Experienced Combat Pilots",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -1597,8 +1597,8 @@
   {
     "titleKey": "cfp_defendship_LRT_SB_title_001",
     "titleText": "Provide Combat Support",
-    "descKey": "cfp_defendship_LRT_SB_title_001",
-    "descText": "Provide Combat Support",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -1617,8 +1617,8 @@
   {
     "titleKey": "cfp_defendship_LRT_title_001",
     "titleText": "Pilot Seeking Combat Support",
-    "descKey": "cfp_defendship_LRT_title_001",
-    "descText": "Pilot Seeking Combat Support",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -1637,8 +1637,8 @@
   {
     "titleKey": "cfp_defendship_MRT_bombingrun_title_001",
     "titleText": "Assist Retreating Ship",
-    "descKey": "cfp_defendship_MRT_bombingrun_title_001",
-    "descText": "Assist Retreating Ship",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -1657,8 +1657,8 @@
   {
     "titleKey": "cfp_defendship_MRT_SB_title_001",
     "titleText": "Stop Attack on Ship",
-    "descKey": "cfp_defendship_MRT_SB_title_001",
-    "descText": "Stop Attack on Ship",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -1677,8 +1677,8 @@
   {
     "titleKey": "cfp_defendship_MRT_title_001",
     "titleText": "Ship Needs Emergency Assistance",
-    "descKey": "cfp_defendship_MRT_title_001",
-    "descText": "Ship Needs Emergency Assistance",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -1697,8 +1697,8 @@
   {
     "titleKey": "cfp_defendship_multi_HRT_SB_title_001",
     "titleText": "Help Ambushed Convoy",
-    "descKey": "cfp_defendship_multi_HRT_SB_title_001",
-    "descText": "Help Ambushed Convoy",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -1717,8 +1717,8 @@
   {
     "titleKey": "cfp_defendship_multi_HRT_title_001",
     "titleText": "Convoy Caught in Brutal Attack",
-    "descKey": "cfp_defendship_multi_HRT_title_001",
-    "descText": "Convoy Caught in Brutal Attack",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -1737,8 +1737,8 @@
   {
     "titleKey": "cfp_defendship_multi_MRT_title_001",
     "titleText": "Convoy Needs Emergency Assistance",
-    "descKey": "cfp_defendship_multi_MRT_title_001",
-    "descText": "Convoy Needs Emergency Assistance",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -1757,8 +1757,8 @@
   {
     "titleKey": "cfp_defendship_multi_SRT_SB_title_001",
     "titleText": "Stop Savage Shattered Blade Attack",
-    "descKey": "cfp_defendship_multi_SRT_SB_title_001",
-    "descText": "Stop Savage Shattered Blade Attack",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -1777,8 +1777,8 @@
   {
     "titleKey": "cfp_defendship_multi_SRT_title_001",
     "titleText": "Come to Aid of Convoy",
-    "descKey": "cfp_defendship_multi_SRT_title_001",
-    "descText": "Come to Aid of Convoy",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -1797,8 +1797,8 @@
   {
     "titleKey": "cfp_defendship_multi_VHRT_SB_title_001",
     "titleText": "Convoy Under Attack",
-    "descKey": "cfp_defendship_multi_VHRT_SB_title_001",
-    "descText": "Convoy Under Attack",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -1817,8 +1817,8 @@
   {
     "titleKey": "cfp_defendship_multi_VHRT_title_001",
     "titleText": "Respond to Distress Beacon",
-    "descKey": "cfp_defendship_multi_VHRT_title_001",
-    "descText": "Respond to Distress Beacon",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -1837,8 +1837,8 @@
   {
     "titleKey": "cfp_defendship_multi_VHRT_XT_title_001",
     "titleText": "Convoy Under XenoThreat Attack",
-    "descKey": "cfp_defendship_multi_VHRT_XT_title_001",
-    "descText": "Convoy Under XenoThreat Attack",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -1857,8 +1857,8 @@
   {
     "titleKey": "cfp_defendship_VLRT_SB_title_001",
     "titleText": "Support Ship Under Attack",
-    "descKey": "cfp_defendship_VLRT_SB_title_001",
-    "descText": "Support Ship Under Attack",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -1877,8 +1877,8 @@
   {
     "titleKey": "cfp_defendship_VLRT_title_001",
     "titleText": "Pilot in Distress",
-    "descKey": "cfp_defendship_VLRT_title_001",
-    "descText": "Pilot in Distress",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -1897,8 +1897,8 @@
   {
     "titleKey": "cfp_delivery_eliminateall_sabotage_server_H_XT_title_001",
     "titleText": "Assistance Needed Against XenoThreat Raid",
-    "descKey": "cfp_delivery_eliminateall_sabotage_server_H_XT_title_001",
-    "descText": "Assistance Needed Against XenoThreat Raid",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -1960,8 +1960,8 @@
   {
     "titleKey": "cfp_eliminateall_fromCFP_Gen_E_title_001",
     "titleText": "Attack on CFP outpost",
-    "descKey": "cfp_eliminateall_fromCFP_Gen_E_title_001",
-    "descText": "Attack on CFP outpost",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -1993,8 +1993,8 @@
   {
     "titleKey": "cfp_eliminateall_fromCFP_hh_M_title_001",
     "titleText": "Defenders needed against Headhunters",
-    "descKey": "cfp_eliminateall_fromCFP_hh_M_title_001",
-    "descText": "Defenders needed against Headhunters",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -2026,8 +2026,8 @@
   {
     "titleKey": "cfp_eliminateall_fromCFP_XT_M_title_001",
     "titleText": "Protecting outpost from XenoThreat",
-    "descKey": "cfp_eliminateall_fromCFP_XT_M_title_001",
-    "descText": "Protecting outpost from XenoThreat",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -2059,8 +2059,8 @@
   {
     "titleKey": "cfp_eliminateall_hh_E_title_001",
     "titleText": "Reclaim Headhunter Outpost",
-    "descKey": "cfp_eliminateall_hh_E_title_001",
-    "descText": "Reclaim Headhunter Outpost",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -2092,8 +2092,8 @@
   {
     "titleKey": "cfp_eliminateall_intro_title_001",
     "titleText": "Establishing Security",
-    "descKey": "cfp_eliminateall_intro_title_001",
-    "descText": "Establishing Security",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -2125,8 +2125,8 @@
   {
     "titleKey": "cfp_eliminateall_XT_E_title_001",
     "titleText": "Reclaim XenoThreat Outpost",
-    "descKey": "cfp_eliminateall_XT_E_title_001",
-    "descText": "Reclaim XenoThreat Outpost",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -2158,8 +2158,8 @@
   {
     "titleKey": "cfp_EliminateSpecific_Generic_E_title_001",
     "titleText": "Protection against ~mission(TargetName|Last)",
-    "descKey": "cfp_EliminateSpecific_Generic_E_title_001",
-    "descText": "Protection against ~mission(TargetName|Last)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -2191,8 +2191,8 @@
   {
     "titleKey": "CFP_RecoverCargo_Easy_Title",
     "titleText": "Intercepted Supply Run",
-    "descKey": "CFP_RecoverCargo_Easy_Title",
-    "descText": "Intercepted Supply Run",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -2215,8 +2215,8 @@
   {
     "titleKey": "CFP_RecoverCargo_Hard_Title",
     "titleText": "Crucial Supplies Need Retrieving",
-    "descKey": "CFP_RecoverCargo_Hard_Title",
-    "descText": "Crucial Supplies Need Retrieving",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -2239,8 +2239,8 @@
   {
     "titleKey": "CFP_RecoverCargo_Medium_Title",
     "titleText": "Recovering Valuable Supplies",
-    "descKey": "CFP_RecoverCargo_Medium_Title",
-    "descText": "Recovering Valuable Supplies",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -2263,8 +2263,8 @@
   {
     "titleKey": "CFP_RecoverCargo_Super_Title",
     "titleText": "Special Recovery Operation",
-    "descKey": "CFP_RecoverCargo_Super_Title",
-    "descText": "Special Recovery Operation",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -2287,8 +2287,8 @@
   {
     "titleKey": "CFP_RecoverCargo_VeryHard_Title",
     "titleText": "Cargo Shipment Must Be Completed",
-    "descKey": "CFP_RecoverCargo_VeryHard_Title",
-    "descText": "Cargo Shipment Must Be Completed",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -2320,8 +2320,8 @@
   {
     "titleKey": "CFP_RetrieveCargo_AsteroidBase_VE_title_001",
     "titleText": "Recover Cargo",
-    "descKey": "CFP_RetrieveCargo_AsteroidBase_VE_title_001",
-    "descText": "Recover Cargo",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -2344,8 +2344,8 @@
   {
     "titleKey": "CFP_RetrieveCargo_CrimBase_H_title_001",
     "titleText": "Raid to Recover Supplies",
-    "descKey": "CFP_RetrieveCargo_CrimBase_H_title_001",
-    "descText": "Raid to Recover Supplies",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -2368,8 +2368,8 @@
   {
     "titleKey": "CFP_RetrieveCargo_CrimBase_M_title_001",
     "titleText": "Reclaim Stolen Cargo",
-    "descKey": "CFP_RetrieveCargo_CrimBase_M_title_001",
-    "descText": "Reclaim Stolen Cargo",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -2392,8 +2392,8 @@
   {
     "titleKey": "CFP_RetrieveCargo_CrimBase_XT_VH_title_001",
     "titleText": "Regain Supplies from XenoThreat",
-    "descKey": "CFP_RetrieveCargo_CrimBase_XT_VH_title_001",
-    "descText": "Regain Supplies from XenoThreat",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -2416,8 +2416,8 @@
   {
     "titleKey": "CFP_RetrieveCargo_Lagrange_E_title_001",
     "titleText": "Retrieve Supplies",
-    "descKey": "CFP_RetrieveCargo_Lagrange_E_title_001",
-    "descText": "Retrieve Supplies",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -2440,8 +2440,8 @@
   {
     "titleKey": "CFP_RetrieveCargo_Lagrange_M_title_001",
     "titleText": "Find Lost Supply Ship",
-    "descKey": "CFP_RetrieveCargo_Lagrange_M_title_001",
-    "descText": "Find Lost Supply Ship",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -2473,8 +2473,8 @@
   {
     "titleKey": "cfp_sabotage_drugs_M_title_001",
     "titleText": "Halt Narcotics Operation",
-    "descKey": "cfp_sabotage_drugs_M_title_001",
-    "descText": "Halt Narcotics Operation",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -2509,8 +2509,8 @@
   {
     "titleKey": "cfp_sabotage_generators_E_HH_title_001",
     "titleText": "Take Headhunter Stronghold Offline",
-    "descKey": "cfp_sabotage_generators_E_HH_title_001",
-    "descText": "Take Headhunter Stronghold Offline",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -2545,8 +2545,8 @@
   {
     "titleKey": "cfp_sabotage_generators_H_title_001",
     "titleText": "Limit Outlaw Operational Capacity",
-    "descKey": "cfp_sabotage_generators_H_title_001",
-    "descText": "Limit Outlaw Operational Capacity",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -2581,8 +2581,8 @@
   {
     "titleKey": "cfp_sabotage_generators_M_title_001",
     "titleText": "Take Outlaws at ~mission(Location) Offline",
-    "descKey": "cfp_sabotage_generators_M_title_001",
-    "descText": "Take Outlaws at ~mission(Location) Offline",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -2617,8 +2617,8 @@
   {
     "titleKey": "cfp_sabotage_generators_VE_title_001",
     "titleText": "Disable Outlaw Stronghold at ~mission(Location)",
-    "descKey": "cfp_sabotage_generators_VE_title_001",
-    "descText": "Disable Outlaw Stronghold at ~mission(Location)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -2653,8 +2653,8 @@
   {
     "titleKey": "cfp_sabotage_server_elimiatespecific_HH_title_001",
     "titleText": "Eradicate All Traces of Headhunter Data",
-    "descKey": "cfp_sabotage_server_elimiatespecific_HH_title_001",
-    "descText": "Eradicate All Traces of Headhunter Data",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -2689,8 +2689,8 @@
   {
     "titleKey": "cfp_sabotage_servers_E_HH_title_001",
     "titleText": "Wipe Headhunter Data Servers",
-    "descKey": "cfp_sabotage_servers_E_HH_title_001",
-    "descText": "Wipe Headhunter Data Servers",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -2725,8 +2725,8 @@
   {
     "titleKey": "cfp_sabotage_servers_H_XT_title_001",
     "titleText": "Destroy XenoThreat Logistic Data",
-    "descKey": "cfp_sabotage_servers_H_XT_title_001",
-    "descText": "Destroy XenoThreat Logistic Data",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -2761,8 +2761,8 @@
   {
     "titleKey": "cfp_sabotage_servers_M_HH_title_001",
     "titleText": "Destroy Headhunter Stolen Data",
-    "descKey": "cfp_sabotage_servers_M_HH_title_001",
-    "descText": "Destroy Headhunter Stolen Data",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -2797,8 +2797,8 @@
   {
     "titleKey": "cfp_sabotage_servers_M_title_001",
     "titleText": "Clear Outlaw Data Center",
-    "descKey": "cfp_sabotage_servers_M_title_001",
-    "descText": "Clear Outlaw Data Center",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -2833,8 +2833,8 @@
   {
     "titleKey": "cfp_sabotage_servers_VH_XT_title_001",
     "titleText": "Destroy XenoThreat Data Servers",
-    "descKey": "cfp_sabotage_servers_VH_XT_title_001",
-    "descText": "Destroy XenoThreat Data Servers",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -2869,8 +2869,8 @@
   {
     "titleKey": "cfp_sabotage_VH_title_001",
     "titleText": "Destroy Outlaw Data Servers",
-    "descKey": "cfp_sabotage_VH_title_001",
-    "descText": "Destroy Outlaw Data Servers",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -3484,8 +3484,8 @@
   {
     "titleKey": "eckhart_defendship_LRT_SB_title_001",
     "titleText": "Request for Ship Support",
-    "descKey": "eckhart_defendship_LRT_SB_title_001",
-    "descText": "Request for Ship Support",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -3504,8 +3504,8 @@
   {
     "titleKey": "eckhart_defendship_LRT_title_001",
     "titleText": "Support Client Under Attack",
-    "descKey": "eckhart_defendship_LRT_title_001",
-    "descText": "Support Client Under Attack",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -3524,8 +3524,8 @@
   {
     "titleKey": "eckhart_defendship_MRT_SB_title_001",
     "titleText": "Repel Shattered Blade Ships",
-    "descKey": "eckhart_defendship_MRT_SB_title_001",
-    "descText": "Repel Shattered Blade Ships",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -3544,8 +3544,8 @@
   {
     "titleKey": "eckhart_defendship_MRT_title_001",
     "titleText": "Stop Attack on High-Profile Client",
-    "descKey": "eckhart_defendship_MRT_title_001",
-    "descText": "Stop Attack on High-Profile Client",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -3564,8 +3564,8 @@
   {
     "titleKey": "eckhart_defendship_multi_HRT_SB_title_001",
     "titleText": "Serious Shattered Blade Attack",
-    "descKey": "eckhart_defendship_multi_HRT_SB_title_001",
-    "descText": "Serious Shattered Blade Attack",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -3584,8 +3584,8 @@
   {
     "titleKey": "eckhart_defendship_multi_HRT_title_001",
     "titleText": "High-Risk Ship Encounter",
-    "descKey": "eckhart_defendship_multi_HRT_title_001",
-    "descText": "High-Risk Ship Encounter",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -3604,8 +3604,8 @@
   {
     "titleKey": "eckhart_defendship_multi_SRT_SB_title_001",
     "titleText": "Shattered Blade Strike",
-    "descKey": "eckhart_defendship_multi_SRT_SB_title_001",
-    "descText": "Shattered Blade Strike",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -3624,8 +3624,8 @@
   {
     "titleKey": "eckhart_defendship_multi_SRT_title_001",
     "titleText": "Extremely Dangerous Defense",
-    "descKey": "eckhart_defendship_multi_SRT_title_001",
-    "descText": "Extremely Dangerous Defense",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -3644,8 +3644,8 @@
   {
     "titleKey": "eckhart_defendship_multi_VHRT_SB_title_001",
     "titleText": "Client Needs Combat Support",
-    "descKey": "eckhart_defendship_multi_VHRT_SB_title_001",
-    "descText": "Client Needs Combat Support",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -3664,8 +3664,8 @@
   {
     "titleKey": "eckhart_defendship_multi_VHRT_title_001",
     "titleText": "Stop Deadly Ship Attack",
-    "descKey": "eckhart_defendship_multi_VHRT_title_001",
-    "descText": "Stop Deadly Ship Attack",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -3684,8 +3684,8 @@
   {
     "titleKey": "eckhart_defendship_VLRT_SB_title_001",
     "titleText": "Stop Shattered Blade Attack",
-    "descKey": "eckhart_defendship_VLRT_SB_title_001",
-    "descText": "Stop Shattered Blade Attack",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -3704,8 +3704,8 @@
   {
     "titleKey": "eckhart_defendship_VLRT_title_001",
     "titleText": "Save Ship",
-    "descKey": "eckhart_defendship_VLRT_title_001",
-    "descText": "Save Ship",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -3724,8 +3724,8 @@
   {
     "titleKey": "Eckhart_EscortShips_E_title",
     "titleText": "Executive Protection Detail",
-    "descKey": "Eckhart_EscortShips_E_title",
-    "descText": "Executive Protection Detail",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -3750,8 +3750,8 @@
   {
     "titleKey": "Eckhart_EscortShips_H_title",
     "titleText": "VIP Client Needs Protection",
-    "descKey": "Eckhart_EscortShips_H_title",
-    "descText": "VIP Client Needs Protection",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -3776,8 +3776,8 @@
   {
     "titleKey": "Eckhart_EscortShips_M_title",
     "titleText": "Experienced Protection Detail Needed",
-    "descKey": "Eckhart_EscortShips_M_title",
-    "descText": "Experienced Protection Detail Needed",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -3802,8 +3802,8 @@
   {
     "titleKey": "Eckhart_EscortShips_S_title",
     "titleText": "Top Tier Operator Needed",
-    "descKey": "Eckhart_EscortShips_S_title",
-    "descText": "Top Tier Operator Needed",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -3828,8 +3828,8 @@
   {
     "titleKey": "Eckhart_EscortShips_VE_title",
     "titleText": "Low Risk Protection Detail",
-    "descKey": "Eckhart_EscortShips_VE_title",
-    "descText": "Low Risk Protection Detail",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -3854,8 +3854,8 @@
   {
     "titleKey": "Eckhart_EscortShips_VH_title",
     "titleText": "Protection Detail Needed. High Risk.",
-    "descKey": "Eckhart_EscortShips_VH_title",
-    "descText": "Protection Detail Needed. High Risk.",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -3880,8 +3880,8 @@
   {
     "titleKey": "Eckhart_ShipAmbush_E_title",
     "titleText": "Time to Teach a Lesson",
-    "descKey": "Eckhart_ShipAmbush_E_title",
-    "descText": "Time to Teach a Lesson",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -3905,8 +3905,8 @@
   {
     "titleKey": "Eckhart_ShipAmbush_H_title",
     "titleText": "Tricky Ambush",
-    "descKey": "Eckhart_ShipAmbush_H_title",
-    "descText": "Tricky Ambush",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -3930,8 +3930,8 @@
   {
     "titleKey": "Eckhart_ShipAmbush_Intro_title",
     "titleText": "New Opportunity - Ambush Strike",
-    "descKey": "Eckhart_ShipAmbush_Intro_title",
-    "descText": "New Opportunity - Ambush Strike",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -3955,8 +3955,8 @@
   {
     "titleKey": "Eckhart_ShipAmbush_M_title",
     "titleText": "Launch Surprise Attack",
-    "descKey": "Eckhart_ShipAmbush_M_title",
-    "descText": "Launch Surprise Attack",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -3980,8 +3980,8 @@
   {
     "titleKey": "Eckhart_ShipAmbush_S_title",
     "titleText": "Highly Dangerous Ambush",
-    "descKey": "Eckhart_ShipAmbush_S_title",
-    "descText": "Highly Dangerous Ambush",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -4005,8 +4005,8 @@
   {
     "titleKey": "Eckhart_ShipAmbush_VE_title",
     "titleText": "Settle a Score",
-    "descKey": "Eckhart_ShipAmbush_VE_title",
-    "descText": "Settle a Score",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -4030,8 +4030,8 @@
   {
     "titleKey": "Eckhart_ShipAmbush_VH_title",
     "titleText": "Dangerous Ambush",
-    "descKey": "Eckhart_ShipAmbush_VH_title",
-    "descText": "Dangerous Ambush",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -4123,8 +4123,8 @@
   {
     "titleKey": "EckhartSecurity_EliminateAll_storm_data_H_title_001",
     "titleText": "Combat Support: ~mission(Location)",
-    "descKey": "EckhartSecurity_EliminateAll_storm_data_H_title_001",
-    "descText": "Combat Support: ~mission(Location)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -4140,8 +4140,8 @@
   {
     "titleKey": "EckhartSecurity_EliminateAll_storm_shut_H_title_001",
     "titleText": "Requesting Help",
-    "descKey": "EckhartSecurity_EliminateAll_storm_shut_H_title_001",
-    "descText": "Requesting Help",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -4242,8 +4242,8 @@
   {
     "titleKey": "Foxwell_bombingrun_E_title_001",
     "titleText": "Yellow Level Contract: Disrupt Operations",
-    "descKey": "Foxwell_bombingrun_E_title_001",
-    "descText": "Yellow Level Contract: Disrupt Operations",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -4260,8 +4260,8 @@
   {
     "titleKey": "Foxwell_bombingrun_H_title_001",
     "titleText": "Orange Level Contract: Destroy Outlaw Infrastructure",
-    "descKey": "Foxwell_bombingrun_H_title_001",
-    "descText": "Orange Level Contract: Destroy Outlaw Infrastructure",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -4278,8 +4278,8 @@
   {
     "titleKey": "Foxwell_bombingrun_M_title_001",
     "titleText": "Orange Level Contract: Take Out Fuel Supplies",
-    "descKey": "Foxwell_bombingrun_M_title_001",
-    "descText": "Orange Level Contract: Take Out Fuel Supplies",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -4296,8 +4296,8 @@
   {
     "titleKey": "Foxwell_bombingrun_S_title_001",
     "titleText": "Red Level Contract: Destroy Outlaw Infrastructure",
-    "descKey": "Foxwell_bombingrun_S_title_001",
-    "descText": "Red Level Contract: Destroy Outlaw Infrastructure",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -4314,8 +4314,8 @@
   {
     "titleKey": "Foxwell_bombingrun_VE_title_001",
     "titleText": "Yellow Level Contract: Limiting Potential Threat",
-    "descKey": "Foxwell_bombingrun_VE_title_001",
-    "descText": "Yellow Level Contract: Limiting Potential Threat",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -4332,8 +4332,8 @@
   {
     "titleKey": "Foxwell_bombingrun_VH_title_001",
     "titleText": "Red Level Contract: Fuel Container Demolition",
-    "descKey": "Foxwell_bombingrun_VH_title_001",
-    "descText": "Red Level Contract: Fuel Container Demolition",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -4542,8 +4542,8 @@
   {
     "titleKey": "foxwell_DefendShip_E_title_001",
     "titleText": "Yellow Level Contract: Ship Under Attack",
-    "descKey": "foxwell_DefendShip_E_title_001",
-    "descText": "Yellow Level Contract: Ship Under Attack",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -4560,8 +4560,8 @@
   {
     "titleKey": "foxwell_DefendShip_H_title_001",
     "titleText": "Red Level Contract: Ship Under Attack",
-    "descKey": "foxwell_DefendShip_H_title_001",
-    "descText": "Red Level Contract: Ship Under Attack",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -4578,8 +4578,8 @@
   {
     "titleKey": "foxwell_DefendShip_M_title_001",
     "titleText": "Orange Level Contract: ~mission(Ship) Needs Assistance",
-    "descKey": "foxwell_DefendShip_M_title_001",
-    "descText": "Orange Level Contract: ~mission(Ship) Needs Assistance",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -4596,8 +4596,8 @@
   {
     "titleKey": "Foxwell_DestroyNarcotics_E_title_001",
     "titleText": "Knock Out New Drug Op",
-    "descKey": "Foxwell_DestroyNarcotics_E_title_001",
-    "descText": "Knock Out New Drug Op",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -4614,8 +4614,8 @@
   {
     "titleKey": "Foxwell_DestroyNarcotics_H_title_001",
     "titleText": "Destroy Dangerous Drugs",
-    "descKey": "Foxwell_DestroyNarcotics_H_title_001",
-    "descText": "Destroy Dangerous Drugs",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -4632,8 +4632,8 @@
   {
     "titleKey": "Foxwell_DestroyNarcotics_M_title_001",
     "titleText": "Destroy Illegal Drugs",
-    "descKey": "Foxwell_DestroyNarcotics_M_title_001",
-    "descText": "Destroy Illegal Drugs",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -4650,8 +4650,8 @@
   {
     "titleKey": "Foxwell_EliminateAll_Allies_title_001",
     "titleText": "Help Protect Site",
-    "descKey": "Foxwell_EliminateAll_Allies_title_001",
-    "descText": "Help Protect Site",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -4668,8 +4668,8 @@
   {
     "titleKey": "Foxwell_EliminateAll_NonHostiles_title_001",
     "titleText": "Carefully Clear Site",
-    "descKey": "Foxwell_EliminateAll_NonHostiles_title_001",
-    "descText": "Carefully Clear Site",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -4686,8 +4686,8 @@
   {
     "titleKey": "Foxwell_EliminateAll_OLP_M_title_001",
     "titleText": "Yellow Level Contract: Merc Work",
-    "descKey": "Foxwell_EliminateAll_OLP_M_title_001",
-    "descText": "Yellow Level Contract: Merc Work",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -4704,8 +4704,8 @@
   {
     "titleKey": "Foxwell_EliminateAll_PAF_M_title_001",
     "titleText": "Yellow Level Contract: Clear Out PAF",
-    "descKey": "Foxwell_EliminateAll_PAF_M_title_001",
-    "descText": "Yellow Level Contract: Clear Out PAF",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -4722,8 +4722,8 @@
   {
     "titleKey": "Foxwell_EliminateAll_title_001",
     "titleText": "Sweep and Clear Location",
-    "descKey": "Foxwell_EliminateAll_title_001",
-    "descText": "Sweep and Clear Location",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -4740,8 +4740,8 @@
   {
     "titleKey": "Foxwell_EliminateSpecific_NonHostiles_title_001",
     "titleText": "Precision Strike on ~mission(TargetName)",
-    "descKey": "Foxwell_EliminateSpecific_NonHostiles_title_001",
-    "descText": "Precision Strike on ~mission(TargetName)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -4758,8 +4758,8 @@
   {
     "titleKey": "Foxwell_EliminateSpecific_title_001",
     "titleText": "Track Down ~mission(TargetName)",
-    "descKey": "Foxwell_EliminateSpecific_title_001",
-    "descText": "Track Down ~mission(TargetName)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -4776,8 +4776,8 @@
   {
     "titleKey": "Foxwell_HaulCargo_AToB_OLP_title_01",
     "titleText": "Red Level Contract: Retrieve Cargo Haul",
-    "descKey": "Foxwell_HaulCargo_AToB_OLP_title_01",
-    "descText": "Red Level Contract: Retrieve Cargo Haul",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -4794,8 +4794,8 @@
   {
     "titleKey": "Foxwell_HaulCargo_AToB_PAF_title_01",
     "titleText": "Red Level Contract: Recoup Stolen Cargo Haul",
-    "descKey": "Foxwell_HaulCargo_AToB_PAF_title_01",
-    "descText": "Red Level Contract: Recoup Stolen Cargo Haul",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -4812,8 +4812,8 @@
   {
     "titleKey": "Foxwell_HaulCargo_MultiToSingle_title_01",
     "titleText": "Red Level Contract: Clear PAFs, Recover Cargo, and Deliver to OLP",
-    "descKey": "Foxwell_HaulCargo_MultiToSingle_title_01",
-    "descText": "Red Level Contract: Clear PAFs, Recover Cargo, and Deliver to OLP",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -4830,8 +4830,8 @@
   {
     "titleKey": "Foxwell_Mercenary_Intro_title_001",
     "titleText": "Exciting New Opportunities with Foxwell Enforcement",
-    "descKey": "Foxwell_Mercenary_Intro_title_001",
-    "descText": "Exciting New Opportunities with Foxwell Enforcement",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -4848,8 +4848,8 @@
   {
     "titleKey": "Foxwell_Mercenary_Rehire_title_001",
     "titleText": "Still Looking for Work?",
-    "descKey": "Foxwell_Mercenary_Rehire_title_001",
-    "descText": "Still Looking for Work?",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -4962,8 +4962,8 @@
   {
     "titleKey": "Foxwell_ShipAmbush_E_title_001",
     "titleText": "Yellow Level Contract: Surprise Strike",
-    "descKey": "Foxwell_ShipAmbush_E_title_001",
-    "descText": "Yellow Level Contract: Surprise Strike",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -4977,8 +4977,8 @@
   {
     "titleKey": "Foxwell_ShipAmbush_H_title_001",
     "titleText": "Orange Level Contract: Return the Favor",
-    "descKey": "Foxwell_ShipAmbush_H_title_001",
-    "descText": "Orange Level Contract: Return the Favor",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -4992,8 +4992,8 @@
   {
     "titleKey": "Foxwell_ShipAmbush_M_title_001",
     "titleText": "Orange Level Contract: Spring a Trap",
-    "descKey": "Foxwell_ShipAmbush_M_title_001",
-    "descText": "Orange Level Contract: Spring a Trap",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -5007,8 +5007,8 @@
   {
     "titleKey": "Foxwell_ShipAmbush_S_title_001",
     "titleText": "Red Level Contract: Surprise Attack",
-    "descKey": "Foxwell_ShipAmbush_S_title_001",
-    "descText": "Red Level Contract: Surprise Attack",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -5022,8 +5022,8 @@
   {
     "titleKey": "Foxwell_ShipAmbush_VE_title_001",
     "titleText": "Yellow Level Contract: Ambush An Amateur",
-    "descKey": "Foxwell_ShipAmbush_VE_title_001",
-    "descText": "Yellow Level Contract: Ambush An Amateur",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -5037,8 +5037,8 @@
   {
     "titleKey": "Foxwell_ShipAmbush_VH_title_001",
     "titleText": "Red Level Contract: Ambush Attack Squad",
-    "descKey": "Foxwell_ShipAmbush_VH_title_001",
-    "descText": "Red Level Contract: Ambush Attack Squad",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -5242,8 +5242,8 @@
   {
     "titleKey": "headhunters_ChainElimAll_1C_AttackCFP_E_title_001",
     "titleText": "A little retaliation",
-    "descKey": "headhunters_ChainElimAll_1C_AttackCFP_E_title_001",
-    "descText": "A little retaliation",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -5294,8 +5294,8 @@
   {
     "titleKey": "headhunters_ChainElimAll_1C_AttackXT_M_title_001",
     "titleText": "Taking out some XenoThreat trash",
-    "descKey": "headhunters_ChainElimAll_1C_AttackXT_M_title_001",
-    "descText": "Taking out some XenoThreat trash",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -5346,8 +5346,8 @@
   {
     "titleKey": "headhunters_ChainElimAll_1C_ElimSpec_AttackCFP_M_title_001",
     "titleText": "Driving CFP out",
-    "descKey": "headhunters_ChainElimAll_1C_ElimSpec_AttackCFP_M_title_001",
-    "descText": "Driving CFP out",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -5398,8 +5398,8 @@
   {
     "titleKey": "headhunters_ChainElimAll_2C_ElimSpec_AttackCFP_H_title_001",
     "titleText": "Sweep and clear some CFP haunts",
-    "descKey": "headhunters_ChainElimAll_2C_ElimSpec_AttackCFP_H_title_001",
-    "descText": "Sweep and clear some CFP haunts",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -5450,8 +5450,8 @@
   {
     "titleKey": "headhunters_ChainElimAll_2C_ElimSpec_AttackXT_H_title_001",
     "titleText": "Taking XenoThreat Turf",
-    "descKey": "headhunters_ChainElimAll_2C_ElimSpec_AttackXT_H_title_001",
-    "descText": "Taking XenoThreat Turf",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -5502,8 +5502,8 @@
   {
     "titleKey": "headhunters_ChainElimAll_3C_ElimSpec_AttackCFP_VH_title_001",
     "titleText": "Hit a CFP Complex",
-    "descKey": "headhunters_ChainElimAll_3C_ElimSpec_AttackCFP_VH_title_001",
-    "descText": "Hit a CFP Complex",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -5554,8 +5554,8 @@
   {
     "titleKey": "headhunters_ChainElimAll_3C_ElimSpec_AttackXT_VH_title_001",
     "titleText": "Taking down a XenoThreat Hideout",
-    "descKey": "headhunters_ChainElimAll_3C_ElimSpec_AttackXT_VH_title_001",
-    "descText": "Taking down a XenoThreat Hideout",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -5606,8 +5606,8 @@
   {
     "titleKey": "headhunters_ChainElimAll_AttackCFP_E_title_001",
     "titleText": "Time to roll on CFP",
-    "descKey": "headhunters_ChainElimAll_AttackCFP_E_title_001",
-    "descText": "Time to roll on CFP",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -5658,8 +5658,8 @@
   {
     "titleKey": "headhunters_ChainElimAll_AttackGen_E_title_001",
     "titleText": "Go on the warpath",
-    "descKey": "headhunters_ChainElimAll_AttackGen_E_title_001",
-    "descText": "Go on the warpath",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -5710,8 +5710,8 @@
   {
     "titleKey": "headhunters_ChainElimAll_Boss_XenoThreat_VH_title_001",
     "titleText": "Hit on XenoThreat command",
-    "descKey": "headhunters_ChainElimAll_Boss_XenoThreat_VH_title_001",
-    "descText": "Hit on XenoThreat command",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -5798,8 +5798,8 @@
   {
     "titleKey": "headhunters_defend_Generic_M_Carvers_title_001",
     "titleText": "Take back Carvers Ridge",
-    "descKey": "headhunters_defend_Generic_M_Carvers_title_001",
-    "descText": "Take back Carvers Ridge",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -5850,8 +5850,8 @@
   {
     "titleKey": "headhunters_defend_Generic_M_GoldenRivera_title_001",
     "titleText": "Rally at ~mission(Location)",
-    "descKey": "headhunters_defend_Generic_M_GoldenRivera_title_001",
-    "descText": "Rally at ~mission(Location)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -5902,8 +5902,8 @@
   {
     "titleKey": "headhunters_defend_Generic_M_TheYard_title_001",
     "titleText": "The Yard's under attack",
-    "descKey": "headhunters_defend_Generic_M_TheYard_title_001",
-    "descText": "The Yard's under attack",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -5954,8 +5954,8 @@
   {
     "titleKey": "headhunters_defend_Generic_M_title_001",
     "titleText": "~mission(Location|Address) under attack",
-    "descKey": "headhunters_defend_Generic_M_title_001",
-    "descText": "~mission(Location|Address) under attack",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -6006,8 +6006,8 @@
   {
     "titleKey": "headhunters_defend_Generic_M_WindFall_title_001",
     "titleText": "Don't let Windfall Fall",
-    "descKey": "headhunters_defend_Generic_M_WindFall_title_001",
-    "descText": "Don't let Windfall Fall",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -6058,8 +6058,8 @@
   {
     "titleKey": "Headhunters_defend_XT_H_title_001",
     "titleText": "Halt XenoThreat Expansion",
-    "descKey": "Headhunters_defend_XT_H_title_001",
-    "descText": "Halt XenoThreat Expansion",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -6110,8 +6110,8 @@
   {
     "titleKey": "headhunters_defend_xt_title_001",
     "titleText": "Back up needed at outpost",
-    "descKey": "headhunters_defend_xt_title_001",
-    "descText": "Back up needed at outpost",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -6162,8 +6162,8 @@
   {
     "titleKey": "Headhunters_defend_XT_VH_title_001",
     "titleText": "Block XenoThreat Expansion",
-    "descKey": "Headhunters_defend_XT_VH_title_001",
-    "descText": "Block XenoThreat Expansion",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -6214,8 +6214,8 @@
   {
     "titleKey": "HeadHunters_DefendEntitesAndEscort_E_Title",
     "titleText": "Provide Protection at ~mission(Location)",
-    "descKey": "HeadHunters_DefendEntitesAndEscort_E_Title",
-    "descText": "Provide Protection at ~mission(Location)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -6278,8 +6278,8 @@
   {
     "titleKey": "HeadHunters_DefendEntitesAndEscort_H_Title",
     "titleText": "Stop Rival Attack at ~mission(Location)",
-    "descKey": "HeadHunters_DefendEntitesAndEscort_H_Title",
-    "descText": "Stop Rival Attack at ~mission(Location)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -6342,8 +6342,8 @@
   {
     "titleKey": "HeadHunters_DefendEntitesAndEscort_M_Title",
     "titleText": "Secure ~mission(Location) from Upstarts",
-    "descKey": "HeadHunters_DefendEntitesAndEscort_M_Title",
-    "descText": "Secure ~mission(Location) from Upstarts",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -6406,8 +6406,8 @@
   {
     "titleKey": "HeadHunters_DefendEntitesAndEscort_S_Title",
     "titleText": "Guard ~mission(Location) From Rivals",
-    "descKey": "HeadHunters_DefendEntitesAndEscort_S_Title",
-    "descText": "Guard ~mission(Location) From Rivals",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -6470,8 +6470,8 @@
   {
     "titleKey": "HeadHunters_DefendEntitesAndEscort_VE_Title",
     "titleText": "Keep ~mission(Location) Safe",
-    "descKey": "HeadHunters_DefendEntitesAndEscort_VE_Title",
-    "descText": "Keep ~mission(Location) Safe",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -6534,8 +6534,8 @@
   {
     "titleKey": "HeadHunters_DefendEntitesAndEscort_VH_Title",
     "titleText": "Defend ~mission(Location) From Mercs",
-    "descKey": "HeadHunters_DefendEntitesAndEscort_VH_Title",
-    "descText": "Defend ~mission(Location) From Mercs",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -6598,8 +6598,8 @@
   {
     "titleKey": "headhunters_eliminateall_base_Generic_E_title_001",
     "titleText": "Need a hitter",
-    "descKey": "headhunters_eliminateall_base_Generic_E_title_001",
-    "descText": "Need a hitter",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -6702,8 +6702,8 @@
   {
     "titleKey": "headhunters_eliminateall_cfp_E_title_001",
     "titleText": "Hitting a CFP site",
-    "descKey": "headhunters_eliminateall_cfp_E_title_001",
-    "descText": "Hitting a CFP site",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -6754,8 +6754,8 @@
   {
     "titleKey": "headhunters_eliminateall_cfp_M_title_001",
     "titleText": "~mission(Location) has been greenlit",
-    "descKey": "headhunters_eliminateall_cfp_M_title_001",
-    "descText": "~mission(Location) has been greenlit",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -6806,8 +6806,8 @@
   {
     "titleKey": "headhunters_eliminateall_cfp_title_001",
     "titleText": "Looking for a little revenge",
-    "descKey": "headhunters_eliminateall_cfp_title_001",
-    "descText": "Looking for a little revenge",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -6858,8 +6858,8 @@
   {
     "titleKey": "headhunters_eliminateall_Generic_M_title_001",
     "titleText": "Wipe ~mission(Location) out",
-    "descKey": "headhunters_eliminateall_Generic_M_title_001",
-    "descText": "Wipe ~mission(Location) out",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -6910,8 +6910,8 @@
   {
     "titleKey": "Headhunters_EliminateAll_OLP_H_title_001",
     "titleText": "Deliver a Message",
-    "descKey": "Headhunters_EliminateAll_OLP_H_title_001",
-    "descText": "Deliver a Message",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -7014,8 +7014,8 @@
   {
     "titleKey": "Headhunters_EliminateAll_PAF_H_title_001",
     "titleText": "Show Them Who's Boss",
-    "descKey": "Headhunters_EliminateAll_PAF_H_title_001",
-    "descText": "Show Them Who's Boss",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -7066,8 +7066,8 @@
   {
     "titleKey": "headhunters_eliminateall_retrievestolen_base_Generic_M_title_001",
     "titleText": "Death and cargo",
-    "descKey": "headhunters_eliminateall_retrievestolen_base_Generic_M_title_001",
-    "descText": "Death and cargo",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -7118,8 +7118,8 @@
   {
     "titleKey": "headhunters_eliminateall_retrievestolen_missingperson_base_Generic_M_title_001",
     "titleText": "A tricky tricky task",
-    "descKey": "headhunters_eliminateall_retrievestolen_missingperson_base_Generic_M_title_001",
-    "descText": "A tricky tricky task",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -7170,8 +7170,8 @@
   {
     "titleKey": "headhunters_EliminateAll_XenoThreat_H_title_001",
     "titleText": "Hit XenoThreat at ~mission(Location)",
-    "descKey": "headhunters_EliminateAll_XenoThreat_H_title_001",
-    "descText": "Hit XenoThreat at ~mission(Location)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -7222,8 +7222,8 @@
   {
     "titleKey": "headhunters_eliminateall_XT_derelicts_title_01",
     "titleText": "Turf War",
-    "descKey": "headhunters_eliminateall_XT_derelicts_title_01",
-    "descText": "Turf War",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -7274,8 +7274,8 @@
   {
     "titleKey": "headhunters_eliminateall_xt_title_001",
     "titleText": "Green light on ~mission(Location)",
-    "descKey": "headhunters_eliminateall_xt_title_001",
-    "descText": "Green light on ~mission(Location)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -7326,8 +7326,8 @@
   {
     "titleKey": "Headhunters_EliminateBoss_OLP_VH_title_001",
     "titleText": "Settle a Grudge",
-    "descKey": "Headhunters_EliminateBoss_OLP_VH_title_001",
-    "descText": "Settle a Grudge",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -7378,8 +7378,8 @@
   {
     "titleKey": "headhunters_EliminateSpecific_Asteroid_Generic_M_title_001",
     "titleText": "Need a death at ~mission(Location)",
-    "descKey": "headhunters_EliminateSpecific_Asteroid_Generic_M_title_001",
-    "descText": "Need a death at ~mission(Location)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -7430,8 +7430,8 @@
   {
     "titleKey": "headhunters_EliminateSpecific_Asteroid_Generic_VE_title_001",
     "titleText": "Deep space hit",
-    "descKey": "headhunters_EliminateSpecific_Asteroid_Generic_VE_title_001",
-    "descText": "Deep space hit",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -7482,8 +7482,8 @@
   {
     "titleKey": "headhunters_EliminateSpecific_Carvers_XenoThreat_H_title_001",
     "titleText": "Need a scalpel at Carver's",
-    "descKey": "headhunters_EliminateSpecific_Carvers_XenoThreat_H_title_001",
-    "descText": "Need a scalpel at Carver's",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -7534,8 +7534,8 @@
   {
     "titleKey": "headhunters_EliminateSpecific_CFP_E_title_001",
     "titleText": "Shot in the chaos",
-    "descKey": "headhunters_EliminateSpecific_CFP_E_title_001",
-    "descText": "Shot in the chaos",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -7586,8 +7586,8 @@
   {
     "titleKey": "headhunters_EliminateSpecific_CFP_H_title_001",
     "titleText": "Paid Target in CFP",
-    "descKey": "headhunters_EliminateSpecific_CFP_H_title_001",
-    "descText": "Paid Target in CFP",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -7638,8 +7638,8 @@
   {
     "titleKey": "headhunters_EliminateSpecific_CFP_M_title_001",
     "titleText": "Need a CFP taken down",
-    "descKey": "headhunters_EliminateSpecific_CFP_M_title_001",
-    "descText": "Need a CFP taken down",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -7690,8 +7690,8 @@
   {
     "titleKey": "headhunters_EliminateSpecific_Defector_title_001",
     "titleText": "Plug a traitor",
-    "descKey": "headhunters_EliminateSpecific_Defector_title_001",
-    "descText": "Plug a traitor",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -7742,8 +7742,8 @@
   {
     "titleKey": "headhunters_EliminateSpecific_Generic_E_title_001",
     "titleText": "Kill the king",
-    "descKey": "headhunters_EliminateSpecific_Generic_E_title_001",
-    "descText": "Kill the king",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -7794,8 +7794,8 @@
   {
     "titleKey": "headhunters_EliminateSpecific_Generic_M_title_001",
     "titleText": "Need someone taken out",
-    "descKey": "headhunters_EliminateSpecific_Generic_M_title_001",
-    "descText": "Need someone taken out",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -7846,8 +7846,8 @@
   {
     "titleKey": "headhunters_EliminateSpecific_Generic_VH_title_001",
     "titleText": "Green light on ~mission(TargetName|Last)",
-    "descKey": "headhunters_EliminateSpecific_Generic_VH_title_001",
-    "descText": "Green light on ~mission(TargetName|Last)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -7898,8 +7898,8 @@
   {
     "titleKey": "Headhunters_EliminateSpecific_PAF_title_001",
     "titleText": "Ghost ~mission(TargetName)",
-    "descKey": "Headhunters_EliminateSpecific_PAF_title_001",
-    "descText": "Ghost ~mission(TargetName)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -7950,8 +7950,8 @@
   {
     "titleKey": "headhunters_EliminateSpecific_Riviera_XenoThreat_VH_title_001",
     "titleText": "Need a hit on the Riviera",
-    "descKey": "headhunters_EliminateSpecific_Riviera_XenoThreat_VH_title_001",
-    "descText": "Need a hit on the Riviera",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -8002,8 +8002,8 @@
   {
     "titleKey": "headhunters_EliminateSpecific_TheYard_XenoThreat_H_title_001",
     "titleText": "Hit on XenoThreat at the Yard",
-    "descKey": "headhunters_EliminateSpecific_TheYard_XenoThreat_H_title_001",
-    "descText": "Hit on XenoThreat at the Yard",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -8063,8 +8063,8 @@
   {
     "titleKey": "headhunters_EliminateSpecific_Windfall_XenoThreat_H_title_001",
     "titleText": "Head of the snake",
-    "descKey": "headhunters_EliminateSpecific_Windfall_XenoThreat_H_title_001",
-    "descText": "Head of the snake",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -8115,8 +8115,8 @@
   {
     "titleKey": "headhunters_EliminateSpecific_XenoThreat_H_title_001",
     "titleText": "XenoThreat Lieutenant needs some killing",
-    "descKey": "headhunters_EliminateSpecific_XenoThreat_H_title_001",
-    "descText": "XenoThreat Lieutenant needs some killing",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -8167,8 +8167,8 @@
   {
     "titleKey": "headhunters_EliminateSpecific_XenoThreat_title_001",
     "titleText": "Drop a XenoThreat",
-    "descKey": "headhunters_EliminateSpecific_XenoThreat_title_001",
-    "descText": "Drop a XenoThreat",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -8219,8 +8219,8 @@
   {
     "titleKey": "headhunters_EliminateSpecific_XenoThreat_VH_title_001",
     "titleText": "Wanted: ~mission(TargetName)",
-    "descKey": "headhunters_EliminateSpecific_XenoThreat_VH_title_001",
-    "descText": "Wanted: ~mission(TargetName)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -8271,8 +8271,8 @@
   {
     "titleKey": "headhunters_killship_asteroid_rank0_title_001",
     "titleText": "Target takedown for a fast track in",
-    "descKey": "headhunters_killship_asteroid_rank0_title_001",
-    "descText": "Target takedown for a fast track in",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -8304,8 +8304,8 @@
   {
     "titleKey": "headhunters_killship_asteroid_rank1_title_001",
     "titleText": "Target at ~mission(Location) ",
-    "descKey": "headhunters_killship_asteroid_rank1_title_001",
-    "descText": "Target at ~mission(Location) ",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -8337,8 +8337,8 @@
   {
     "titleKey": "headhunters_killship_cfp_hrt_title_001",
     "titleText": "Kill Order",
-    "descKey": "headhunters_killship_cfp_hrt_title_001",
-    "descText": "Kill Order",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -8370,8 +8370,8 @@
   {
     "titleKey": "headhunters_killship_cfp_mrt_title_001",
     "titleText": "Hit a CFP Ship",
-    "descKey": "headhunters_killship_cfp_mrt_title_001",
-    "descText": "Hit a CFP Ship",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -8403,8 +8403,8 @@
   {
     "titleKey": "headhunters_killship_cfp_vhrt_title_001",
     "titleText": "Primo Target",
-    "descKey": "headhunters_killship_cfp_vhrt_title_001",
-    "descText": "Primo Target",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -8436,8 +8436,8 @@
   {
     "titleKey": "headhunters_killship_gen_hrt_title_001",
     "titleText": "Wanted: ~mission(TargetName)",
-    "descKey": "headhunters_killship_gen_hrt_title_001",
-    "descText": "Wanted: ~mission(TargetName)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -8469,8 +8469,8 @@
   {
     "titleKey": "headhunters_killship_gen_lrt_title_001",
     "titleText": "Simple Hit",
-    "descKey": "headhunters_killship_gen_lrt_title_001",
-    "descText": "Simple Hit",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -8502,8 +8502,8 @@
   {
     "titleKey": "headhunters_killship_gen_mrt_title_001",
     "titleText": "Treat yourself to a fight",
-    "descKey": "headhunters_killship_gen_mrt_title_001",
-    "descText": "Treat yourself to a fight",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -8535,8 +8535,8 @@
   {
     "titleKey": "headhunters_killship_gen_vlrt_rank0_title_001",
     "titleText": "Wanna be a Headhunter?",
-    "descKey": "headhunters_killship_gen_vlrt_rank0_title_001",
-    "descText": "Wanna be a Headhunter?",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -8568,8 +8568,8 @@
   {
     "titleKey": "headhunters_killship_gen_vlrt_title_001",
     "titleText": "~mission(TargetName) needs stomping",
-    "descKey": "headhunters_killship_gen_vlrt_title_001",
-    "descText": "~mission(TargetName) needs stomping",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -8601,8 +8601,8 @@
   {
     "titleKey": "headhunters_killship_xenothreat_ert_title_001",
     "titleText": "Ghost some XenoTrash",
-    "descKey": "headhunters_killship_xenothreat_ert_title_001",
-    "descText": "Ghost some XenoTrash",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -8634,8 +8634,8 @@
   {
     "titleKey": "headhunters_multikillship_base_Generic_M_title_001",
     "titleText": "Crash some ships",
-    "descKey": "headhunters_multikillship_base_Generic_M_title_001",
-    "descText": "Crash some ships",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -8667,8 +8667,8 @@
   {
     "titleKey": "Headhunters_Theft_OLP_title_001",
     "titleText": "Opportunity Knocks at ~mission(Location)",
-    "descKey": "Headhunters_Theft_OLP_title_001",
-    "descText": "Opportunity Knocks at ~mission(Location)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -8719,8 +8719,8 @@
   {
     "titleKey": "Headhunters_Theft_PAF_title_001",
     "titleText": "Steal Some ~mission(Item)",
-    "descKey": "Headhunters_Theft_PAF_title_001",
-    "descText": "Steal Some ~mission(Item)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -8834,8 +8834,8 @@
   {
     "titleKey": "hh_killanimals_e_derelictoutpostscaves_title_001",
     "titleText": "Deal with Kopions at ~mission(Location)",
-    "descKey": "hh_killanimals_e_derelictoutpostscaves_title_001",
-    "descText": "Deal with Kopions at ~mission(Location)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -8886,8 +8886,8 @@
   {
     "titleKey": "hh_killanimals_h_derelictoutpostscaves_title_001",
     "titleText": "Butcher Kopion Pack at ~mission(Location)",
-    "descKey": "hh_killanimals_h_derelictoutpostscaves_title_001",
-    "descText": "Butcher Kopion Pack at ~mission(Location)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -8938,8 +8938,8 @@
   {
     "titleKey": "hh_killanimals_m_derelictoutpostscaves_title_001",
     "titleText": "Kill Kopions at ~mission(Location)",
-    "descKey": "hh_killanimals_m_derelictoutpostscaves_title_001",
-    "descText": "Kill Kopions at ~mission(Location)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -8990,8 +8990,8 @@
   {
     "titleKey": "Highpoint_KillAnimals_AtLocation_title",
     "titleText": "Pest Control",
-    "descKey": "Highpoint_KillAnimals_AtLocation_title",
-    "descText": "Pest Control",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -9010,8 +9010,8 @@
   {
     "titleKey": "Highpoint_KillAnimals_MultiType_H_title",
     "titleText": "Intensive Eradication Effort",
-    "descKey": "Highpoint_KillAnimals_MultiType_H_title",
-    "descText": "Intensive Eradication Effort",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -9030,8 +9030,8 @@
   {
     "titleKey": "Highpoint_KillAnimals_MultiType_M_title",
     "titleText": "Cull Invasive Creatures",
-    "descKey": "Highpoint_KillAnimals_MultiType_M_title",
-    "descText": "Cull Invasive Creatures",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -9050,8 +9050,8 @@
   {
     "titleKey": "Highpoint_KillAnimals_OneType_title",
     "titleText": "Reduce Overpopulation",
-    "descKey": "Highpoint_KillAnimals_OneType_title",
-    "descText": "Reduce Overpopulation",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -9070,8 +9070,8 @@
   {
     "titleKey": "Highpoint_KillAnimals_PAF_Kopion_name",
     "titleText": "Kopion Culling Request",
-    "descKey": "Highpoint_KillAnimals_PAF_Kopion_name",
-    "descText": "Kopion Culling Request",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -9090,8 +9090,8 @@
   {
     "titleKey": "Highpoint_KillAnimals_rockcracker_title_E_001",
     "titleText": "Reduce Valakkar Breaker Station Population",
-    "descKey": "Highpoint_KillAnimals_rockcracker_title_E_001",
-    "descText": "Reduce Valakkar Breaker Station Population",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -9110,8 +9110,8 @@
   {
     "titleKey": "Highpoint_KillAnimals_storm_H_title_001",
     "titleText": "Cull Irradiated Kopions",
-    "descKey": "Highpoint_KillAnimals_storm_H_title_001",
-    "descText": "Cull Irradiated Kopions",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -9130,8 +9130,8 @@
   {
     "titleKey": "Hockrow_FacilityDelve_P1M1_title",
     "titleText": "Jorrit Dossier: Onyx Personnel Files",
-    "descKey": "Hockrow_FacilityDelve_P1M1_title",
-    "descText": "Jorrit Dossier: Onyx Personnel Files",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -9197,8 +9197,8 @@
   {
     "titleKey": "Hockrow_FacilityDelve_P1M2_title",
     "titleText": "Jorrit Dossier: Access Engineering Files",
-    "descKey": "Hockrow_FacilityDelve_P1M2_title",
-    "descText": "Jorrit Dossier: Access Engineering Files",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -9264,8 +9264,8 @@
   {
     "titleKey": "Hockrow_FacilityDelve_P1M3_title",
     "titleText": "Jorrit Dossier: Access Research Files",
-    "descKey": "Hockrow_FacilityDelve_P1M3_title",
-    "descText": "Jorrit Dossier: Access Research Files",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -9331,8 +9331,8 @@
   {
     "titleKey": "Hockrow_FacilityDelve_P2M1_Repeat_title",
     "titleText": "Jorrit Dossier: Updated Energy Anomaly Data",
-    "descKey": "Hockrow_FacilityDelve_P2M1_Repeat_title",
-    "descText": "Jorrit Dossier: Updated Energy Anomaly Data",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -9398,8 +9398,8 @@
   {
     "titleKey": "Hockrow_FacilityDelve_P2M2_Repeat_title",
     "titleText": "Jorrit Dossier: Updated Security Data",
-    "descKey": "Hockrow_FacilityDelve_P2M2_Repeat_title",
-    "descText": "Jorrit Dossier: Updated Security Data",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -9465,8 +9465,8 @@
   {
     "titleKey": "Hockrow_FacilityDelve_P2M3_Repeat_title",
     "titleText": "Jorrit Dossier: Updated Seismic Data",
-    "descKey": "Hockrow_FacilityDelve_P2M3_Repeat_title",
-    "descText": "Jorrit Dossier: Updated Seismic Data",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -9532,8 +9532,8 @@
   {
     "titleKey": "Hockrow_FacilityDelve_P2M4_Repeat_title",
     "titleText": "Jorrit Dossier: Updated Power Usage Data",
-    "descKey": "Hockrow_FacilityDelve_P2M4_Repeat_title",
-    "descText": "Jorrit Dossier: Updated Power Usage Data",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -10047,8 +10047,8 @@
   {
     "titleKey": "InterSec_ResourceGathering_Cryopods_Title",
     "titleText": "Recover Vanduul Corpses",
-    "descKey": "InterSec_ResourceGathering_Cryopods_Title",
-    "descText": "Recover Vanduul Corpses",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -10064,8 +10064,8 @@
   {
     "titleKey": "InterSec_ResourceGathering_Tech_Title",
     "titleText": "Recover Vanduul Tech",
-    "descKey": "InterSec_ResourceGathering_Tech_Title",
-    "descText": "Recover Vanduul Tech",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -10495,8 +10495,8 @@
   {
     "titleKey": "Kaboos_Intro_Title",
     "titleText": "Vanduul-Tech Smugglers",
-    "descKey": "Kaboos_Intro_Title",
-    "descText": "Vanduul-Tech Smugglers",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -10522,8 +10522,8 @@
   {
     "titleKey": "Kaboos_Mission_Title",
     "titleText": "Retrieve Additional Smuggler Intel",
-    "descKey": "Kaboos_Mission_Title",
-    "descText": "Retrieve Additional Smuggler Intel",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -10549,8 +10549,8 @@
   {
     "titleKey": "LingFamily_HaulCargo_AToB_Intro_title",
     "titleText": "Cargo Hauling Opportunity with Ling Hauling",
-    "descKey": "LingFamily_HaulCargo_AToB_Intro_title",
-    "descText": "Cargo Hauling Opportunity with Ling Hauling",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -10566,8 +10566,8 @@
   {
     "titleKey": "LingFamily_HaulCargo_AToB_title",
     "titleText": "Ling Family ~mission(ReputationRank) Cargo Haul - ~mission(CargoGradeToken) Scale",
-    "descKey": "LingFamily_HaulCargo_AToB_title",
-    "descText": "Ling Family ~mission(ReputationRank) Cargo Haul - ~mission(CargoGradeToken) Scale",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -10583,8 +10583,8 @@
   {
     "titleKey": "LingFamily_HaulCargo_MultiToSingle_title",
     "titleText": "Ling Family ~mission(ReputationRank) Cargo Haul - ~mission(CargoGradeToken) Scale",
-    "descKey": "LingFamily_HaulCargo_MultiToSingle_title",
-    "descText": "Ling Family ~mission(ReputationRank) Cargo Haul - ~mission(CargoGradeToken) Scale",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -10636,8 +10636,8 @@
   {
     "titleKey": "LOC_PLACEHOLDER",
     "titleText": "<= PLACEHOLDER =>",
-    "descKey": "LOC_PLACEHOLDER",
-    "descText": "<= PLACEHOLDER =>",
+    "descKey": "",
+    "descText": "",
     "uec": 15000,
     "rep": 100,
     "bps": []
@@ -11281,8 +11281,8 @@
   {
     "titleKey": "Northrock_Bounty_OLP_Boss_H_title_001",
     "titleText": "Pro Tem Bounty Assignment: ~mission(TargetName)",
-    "descKey": "Northrock_Bounty_OLP_Boss_H_title_001",
-    "descText": "Pro Tem Bounty Assignment: ~mission(TargetName)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -11536,8 +11536,8 @@
   {
     "titleKey": "RAIN_collectresources_multiple_GEN_name_01",
     "titleText": "Additional Resources For Research",
-    "descKey": "RAIN_collectresources_multiple_GEN_name_01",
-    "descText": "Additional Resources For Research",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -11572,8 +11572,8 @@
   {
     "titleKey": "RAIN_collectresources_multiple_OLP_name_01",
     "titleText": "Vital Resources Needed For Research",
-    "descKey": "RAIN_collectresources_multiple_OLP_name_01",
-    "descText": "Vital Resources Needed For Research",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -11608,8 +11608,8 @@
   {
     "titleKey": "RAIN_collectresources_single_OLP_name_01",
     "titleText": "Need Resource for Research\\n",
-    "descKey": "RAIN_collectresources_single_OLP_name_01",
-    "descText": "Need Resource for Research\\n",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -11644,8 +11644,8 @@
   {
     "titleKey": "RAIN_CollectResources_storm_title_001",
     "titleText": "Collect Irradiated Kopion Horns",
-    "descKey": "RAIN_CollectResources_storm_title_001",
-    "descText": "Collect Irradiated Kopion Horns",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -11680,8 +11680,8 @@
   {
     "titleKey": "RAIN_CollectResources_storm_title_002",
     "titleText": "Obtain Irradiated Valakkar Pearls",
-    "descKey": "RAIN_CollectResources_storm_title_002",
-    "descText": "Obtain Irradiated Valakkar Pearls",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -11716,8 +11716,8 @@
   {
     "titleKey": "RAIN_CollectResources_storm_title_003",
     "titleText": "Gather Irradiated Valakkar Fangs",
-    "descKey": "RAIN_CollectResources_storm_title_003",
-    "descText": "Gather Irradiated Valakkar Fangs",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -11752,8 +11752,8 @@
   {
     "titleKey": "RAIN_CollectResources_storm_title_004",
     "titleText": "Collect Irradiated Valakkar Eggs",
-    "descKey": "RAIN_CollectResources_storm_title_004",
-    "descText": "Collect Irradiated Valakkar Eggs",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -11788,8 +11788,8 @@
   {
     "titleKey": "RAIN_intro_name_01",
     "titleText": "Interested in Building a Better Future?",
-    "descKey": "RAIN_intro_name_01",
-    "descText": "Interested in Building a Better Future?",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -12187,8 +12187,8 @@
   {
     "titleKey": "searchbody_cave_title",
     "titleText": "~mission(Contractor|SearchBodyCaveTitle)",
-    "descKey": "searchbody_cave_title",
-    "descText": "~mission(Contractor|SearchBodyCaveTitle)",
+    "descKey": "",
+    "descText": "",
     "uec": 14250,
     "rep": 50,
     "bps": []
@@ -13914,8 +13914,8 @@
   {
     "titleKey": "shubin_rockcracker_pvp_title_01",
     "titleText": "QV Breaker Station Mining Rights (Shared)",
-    "descKey": "shubin_rockcracker_pvp_title_01",
-    "descText": "QV Breaker Station Mining Rights (Shared)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -13935,8 +13935,8 @@
   {
     "titleKey": "shubin_rockcracker_pvp_title_specific_02",
     "titleText": "QV Breaker Station BRK-320 Mining Rights (Shared)",
-    "descKey": "shubin_rockcracker_pvp_title_specific_02",
-    "descText": "QV Breaker Station BRK-320 Mining Rights (Shared)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -13956,8 +13956,8 @@
   {
     "titleKey": "shubin_rockcracker_pvp_title_specific_03",
     "titleText": "QV Breaker Station BRK-546 Mining Rights (Shared)",
-    "descKey": "shubin_rockcracker_pvp_title_specific_03",
-    "descText": "QV Breaker Station BRK-546 Mining Rights (Shared)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -13977,8 +13977,8 @@
   {
     "titleKey": "shubin_rockcracker_pvp_title_specific_04",
     "titleText": "QV Breaker Station BRK-127 Mining Rights (Shared)",
-    "descKey": "shubin_rockcracker_pvp_title_specific_04",
-    "descText": "QV Breaker Station BRK-127 Mining Rights (Shared)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -13998,8 +13998,8 @@
   {
     "titleKey": "shubin_rockcracker_pvp_title_specific_05",
     "titleText": "QV Breaker Station BRK-425 Mining Rights (Shared)",
-    "descKey": "shubin_rockcracker_pvp_title_specific_05",
-    "descText": "QV Breaker Station BRK-425 Mining Rights (Shared)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -14019,8 +14019,8 @@
   {
     "titleKey": "shubin_rockcracker_pvp_title_specific_06",
     "titleText": "QV Breaker Station BRK-608 Mining Rights (Shared)",
-    "descKey": "shubin_rockcracker_pvp_title_specific_06",
-    "descText": "QV Breaker Station BRK-608 Mining Rights (Shared)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -14040,8 +14040,8 @@
   {
     "titleKey": "shubin_rockcracker_pvp_title_specific_07",
     "titleText": "QV Breaker Station BRK-267 Mining Rights (Shared)",
-    "descKey": "shubin_rockcracker_pvp_title_specific_07",
-    "descText": "QV Breaker Station BRK-267 Mining Rights (Shared)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -14061,8 +14061,8 @@
   {
     "titleKey": "shubin_rockcracker_pvp_title_specific_08",
     "titleText": "QV Breaker Station BRK-235 Mining Rights (Shared)",
-    "descKey": "shubin_rockcracker_pvp_title_specific_08",
-    "descText": "QV Breaker Station BRK-235 Mining Rights (Shared)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -14082,8 +14082,8 @@
   {
     "titleKey": "shubin_rockcracker_pvp_title_specific_09",
     "titleText": "QV Breaker Station BRK-304 Mining Rights (Shared)",
-    "descKey": "shubin_rockcracker_pvp_title_specific_09",
-    "descText": "QV Breaker Station BRK-304 Mining Rights (Shared)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -14103,8 +14103,8 @@
   {
     "titleKey": "shubin_rockcracker_pvp_title_specific_10",
     "titleText": "QV Breaker Station BRK-521 Mining Rights (Shared)",
-    "descKey": "shubin_rockcracker_pvp_title_specific_10",
-    "descText": "QV Breaker Station BRK-521 Mining Rights (Shared)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -14124,8 +14124,8 @@
   {
     "titleKey": "shubin_rockcracker_pvp_title_specific_11",
     "titleText": "QV Breaker Station BRK-985 Mining Rights (Shared)",
-    "descKey": "shubin_rockcracker_pvp_title_specific_11",
-    "descText": "QV Breaker Station BRK-985 Mining Rights (Shared)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -14145,8 +14145,8 @@
   {
     "titleKey": "shubin_rockcracker_pvp_title_specific_12",
     "titleText": "QV Breaker Station BRK-542 Mining Rights (Shared)",
-    "descKey": "shubin_rockcracker_pvp_title_specific_12",
-    "descText": "QV Breaker Station BRK-542 Mining Rights (Shared)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -14166,8 +14166,8 @@
   {
     "titleKey": "shubin_rockcracker_pvp_title_specific_13",
     "titleText": "QV Breaker Station BRK-184 Mining Rights (Shared)",
-    "descKey": "shubin_rockcracker_pvp_title_specific_13",
-    "descText": "QV Breaker Station BRK-184 Mining Rights (Shared)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -14187,8 +14187,8 @@
   {
     "titleKey": "shubin_rockcracker_pvp_title_specific_14",
     "titleText": "QV Breaker Station BRK-970 Mining Rights (Shared)",
-    "descKey": "shubin_rockcracker_pvp_title_specific_14",
-    "descText": "QV Breaker Station BRK-970 Mining Rights (Shared)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -14208,8 +14208,8 @@
   {
     "titleKey": "shubin_rockcracker_pvp_title_specific_15",
     "titleText": "QV Breaker Station BRK-879 Mining Rights (Shared)",
-    "descKey": "shubin_rockcracker_pvp_title_specific_15",
-    "descText": "QV Breaker Station BRK-879 Mining Rights (Shared)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -14229,8 +14229,8 @@
   {
     "titleKey": "shubin_rockcracker_pvp_title_specific_16",
     "titleText": "QV Breaker Station BRK-563 Mining Rights (Shared)",
-    "descKey": "shubin_rockcracker_pvp_title_specific_16",
-    "descText": "QV Breaker Station BRK-563 Mining Rights (Shared)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -14250,8 +14250,8 @@
   {
     "titleKey": "shubin_rockcracker_pvp_title_specific_17",
     "titleText": "QV Breaker Station BRK-782 Mining Rights (Shared)",
-    "descKey": "shubin_rockcracker_pvp_title_specific_17",
-    "descText": "QV Breaker Station BRK-782 Mining Rights (Shared)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -14271,8 +14271,8 @@
   {
     "titleKey": "shubin_rockcracker_pvp_title_specific_18",
     "titleText": "QV Breaker Station BRK-711 Mining Rights (Shared)",
-    "descKey": "shubin_rockcracker_pvp_title_specific_18",
-    "descText": "QV Breaker Station BRK-711 Mining Rights (Shared)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -14292,8 +14292,8 @@
   {
     "titleKey": "shubin_rockcracker_pvp_title_specific_19",
     "titleText": "QV Breaker Station BRK-284 Mining Rights (Shared)",
-    "descKey": "shubin_rockcracker_pvp_title_specific_19",
-    "descText": "QV Breaker Station BRK-284 Mining Rights (Shared)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -14313,8 +14313,8 @@
   {
     "titleKey": "shubin_rockcracker_pvp_title_specific_20",
     "titleText": "QV Breaker Station BRK-437 Mining Rights (Shared)",
-    "descKey": "shubin_rockcracker_pvp_title_specific_20",
-    "descText": "QV Breaker Station BRK-437 Mining Rights (Shared)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -14334,8 +14334,8 @@
   {
     "titleKey": "shubin_rockcracker_pvp_title_specific_21",
     "titleText": "QV Breaker Station BRK-630 Mining Rights (Shared)",
-    "descKey": "shubin_rockcracker_pvp_title_specific_21",
-    "descText": "QV Breaker Station BRK-630 Mining Rights (Shared)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -14355,8 +14355,8 @@
   {
     "titleKey": "shubin_rockcracker_pvp_title_specific_22",
     "titleText": "QV Breaker Station BRK-892 Mining Rights (Shared)",
-    "descKey": "shubin_rockcracker_pvp_title_specific_22",
-    "descText": "QV Breaker Station BRK-892 Mining Rights (Shared)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -14376,8 +14376,8 @@
   {
     "titleKey": "shubin_rockcracker_pvp_title_specific_23",
     "titleText": "QV Breaker Station BRK-597 Mining Rights (Shared)",
-    "descKey": "shubin_rockcracker_pvp_title_specific_23",
-    "descText": "QV Breaker Station BRK-597 Mining Rights (Shared)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -14397,8 +14397,8 @@
   {
     "titleKey": "shubin_rockcracker_pvp_title_specific_24",
     "titleText": "QV Breaker Station BRK-110 Mining Rights (Shared)",
-    "descKey": "shubin_rockcracker_pvp_title_specific_24",
-    "descText": "QV Breaker Station BRK-110 Mining Rights (Shared)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -14418,8 +14418,8 @@
   {
     "titleKey": "shubin_rockcracker_pvp_title_specific_25",
     "titleText": "QV Breaker Station BRK-913 Mining Rights (Shared)",
-    "descKey": "shubin_rockcracker_pvp_title_specific_25",
-    "descText": "QV Breaker Station BRK-913 Mining Rights (Shared)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -14439,8 +14439,8 @@
   {
     "titleKey": "shubin_rockcracker_pvp_title_specific_26",
     "titleText": "QV Breaker Station BRK-864 Mining Rights (Shared)",
-    "descKey": "shubin_rockcracker_pvp_title_specific_26",
-    "descText": "QV Breaker Station BRK-864 Mining Rights (Shared)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -14460,8 +14460,8 @@
   {
     "titleKey": "shubin_rockcracker_pvp_title_specific_27",
     "titleText": "QV Breaker Station BRK-529 Mining Rights (Shared)",
-    "descKey": "shubin_rockcracker_pvp_title_specific_27",
-    "descText": "QV Breaker Station BRK-529 Mining Rights (Shared)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -14481,8 +14481,8 @@
   {
     "titleKey": "shubin_rockcracker_pvp_title_specific_28",
     "titleText": "QV Breaker Station BRK-709 Mining Rights (Shared)",
-    "descKey": "shubin_rockcracker_pvp_title_specific_28",
-    "descText": "QV Breaker Station BRK-709 Mining Rights (Shared)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -14502,8 +14502,8 @@
   {
     "titleKey": "shubin_rockcracker_pvp_title_specific_29",
     "titleText": "QV Breaker Station BRK-766 Mining Rights (Shared)",
-    "descKey": "shubin_rockcracker_pvp_title_specific_29",
-    "descText": "QV Breaker Station BRK-766 Mining Rights (Shared)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -14523,8 +14523,8 @@
   {
     "titleKey": "shubin_rockcracker_pvp_title_specific_30",
     "titleText": "QV Breaker Station BRK-223 Mining Rights (Shared)",
-    "descKey": "shubin_rockcracker_pvp_title_specific_30",
-    "descText": "QV Breaker Station BRK-223 Mining Rights (Shared)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -14544,8 +14544,8 @@
   {
     "titleKey": "shubin_rockcracker_solo_title_01",
     "titleText": "QV Breaker Station Mining Rights (Exclusive)",
-    "descKey": "shubin_rockcracker_solo_title_01",
-    "descText": "QV Breaker Station Mining Rights (Exclusive)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -14583,8 +14583,8 @@
   {
     "titleKey": "spacecollect_cargo_title_E_01",
     "titleText": "~mission(Contractor|RecoverSpaceTitleEasy)",
-    "descKey": "spacecollect_cargo_title_E_01",
-    "descText": "~mission(Contractor|RecoverSpaceTitleEasy)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -14604,8 +14604,8 @@
   {
     "titleKey": "spacecollect_cargo_title_H_01",
     "titleText": "~mission(Contractor|RecoverSpaceTitleHard)",
-    "descKey": "spacecollect_cargo_title_H_01",
-    "descText": "~mission(Contractor|RecoverSpaceTitleHard)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -14625,8 +14625,8 @@
   {
     "titleKey": "spacecollect_cargo_title_intro_01",
     "titleText": "~mission(Contractor|RecoverSpaceTitleIntro)",
-    "descKey": "spacecollect_cargo_title_intro_01",
-    "descText": "~mission(Contractor|RecoverSpaceTitleIntro)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -14646,8 +14646,8 @@
   {
     "titleKey": "spacecollect_cargo_title_M_01",
     "titleText": "~mission(Contractor|RecoverSpaceTitleMedium)",
-    "descKey": "spacecollect_cargo_title_M_01",
-    "descText": "~mission(Contractor|RecoverSpaceTitleMedium)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -14667,8 +14667,8 @@
   {
     "titleKey": "spacecollect_cargo_title_VE_01",
     "titleText": "~mission(Contractor|RecoverSpaceTitleVeryEasy)",
-    "descKey": "spacecollect_cargo_title_VE_01",
-    "descText": "~mission(Contractor|RecoverSpaceTitleVeryEasy)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -14688,8 +14688,8 @@
   {
     "titleKey": "spacecollect_cargo_title_VH_01",
     "titleText": "~mission(Contractor|RecoverSpaceTitleVeryHard)",
-    "descKey": "spacecollect_cargo_title_VH_01",
-    "descText": "~mission(Contractor|RecoverSpaceTitleVeryHard)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -14772,8 +14772,8 @@
   {
     "titleKey": "TheCollector_Conversion_Favors_Title",
     "titleText": "Turn Things to Favor",
-    "descKey": "TheCollector_Conversion_Favors_Title",
-    "descText": "Turn Things to Favor",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -14828,8 +14828,8 @@
   {
     "titleKey": "TheCollector_Conversion_SpecialFavors_Title",
     "titleText": "Want Polaris? Need something special.",
-    "descKey": "TheCollector_Conversion_SpecialFavors_Title",
-    "descText": "Want Polaris? Need something special.",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -14842,8 +14842,8 @@
   {
     "titleKey": "TheCollector_Intro_Title",
     "titleText": "Wikelo Arrive to System",
-    "descKey": "TheCollector_Intro_Title",
-    "descText": "Wikelo Arrive to System",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -14856,8 +14856,8 @@
   {
     "titleKey": "TheCollector_Lunch_Title",
     "titleText": "Very Hungry",
-    "descKey": "TheCollector_Lunch_Title",
-    "descText": "Very Hungry",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15346,8 +15346,8 @@
   {
     "titleKey": "TheCollector_Ships_Anvil_Asgard_Title",
     "titleText": "Asgard Fight Mod",
-    "descKey": "TheCollector_Ships_Anvil_Asgard_Title",
-    "descText": "Asgard Fight Mod",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15360,8 +15360,8 @@
   {
     "titleKey": "TheCollector_Ships_ARGO_Raft_Title",
     "titleText": "Ready for RAFT? ",
-    "descKey": "TheCollector_Ships_ARGO_Raft_Title",
-    "descText": "Ready for RAFT? ",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15374,8 +15374,8 @@
   {
     "titleKey": "TheCollector_Ships_Constellation_Taurus_TItle",
     "titleText": "Want Taurus ship",
-    "descKey": "TheCollector_Ships_Constellation_Taurus_TItle",
-    "descText": "Want Taurus ship",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15388,8 +15388,8 @@
   {
     "titleKey": "TheCollector_Ships_Crusader_A2_Title",
     "titleText": "Starlifter A2 War Mod",
-    "descKey": "TheCollector_Ships_Crusader_A2_Title",
-    "descText": "Starlifter A2 War Mod",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15402,8 +15402,8 @@
   {
     "titleKey": "TheCollector_Ships_Drake_Golem_Title",
     "titleText": "Golem Rocks",
-    "descKey": "TheCollector_Ships_Drake_Golem_Title",
-    "descText": "Golem Rocks",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15416,8 +15416,8 @@
   {
     "titleKey": "TheCollector_Ships_F7_MK2_TItle",
     "titleText": "Wikelo Navy F7",
-    "descKey": "TheCollector_Ships_F7_MK2_TItle",
-    "descText": "Wikelo Navy F7",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15430,8 +15430,8 @@
   {
     "titleKey": "TheCollector_Ships_F8C_Milt_TItle",
     "titleText": "F8 War Mod",
-    "descKey": "TheCollector_Ships_F8C_Milt_TItle",
-    "descText": "F8 War Mod",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15444,8 +15444,8 @@
   {
     "titleKey": "TheCollector_Ships_F8C_Stealth_TItle",
     "titleText": "Sneaky Stabber",
-    "descKey": "TheCollector_Ships_F8C_Stealth_TItle",
-    "descText": "Sneaky Stabber",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15458,8 +15458,8 @@
   {
     "titleKey": "TheCollector_Ships_Firebird_TItle",
     "titleText": "Firebird Mod",
-    "descKey": "TheCollector_Ships_Firebird_TItle",
-    "descText": "Firebird Mod",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15472,8 +15472,8 @@
   {
     "titleKey": "TheCollector_Ships_Fortune_Indus_TItle",
     "titleText": "Fortune ship for you",
-    "descKey": "TheCollector_Ships_Fortune_Indus_TItle",
-    "descText": "Fortune ship for you",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15486,8 +15486,8 @@
   {
     "titleKey": "TheCollector_Ships_Guardian_TItle",
     "titleText": "Guardian Fight Mod",
-    "descKey": "TheCollector_Ships_Guardian_TItle",
-    "descText": "Guardian Fight Mod",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15500,8 +15500,8 @@
   {
     "titleKey": "TheCollector_Ships_GuardianMX_Title",
     "titleText": "Guardian WiK-X",
-    "descKey": "TheCollector_Ships_GuardianMX_Title",
-    "descText": "Guardian WiK-X",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15514,8 +15514,8 @@
   {
     "titleKey": "TheCollector_Ships_GuardianQI_TItle",
     "titleText": "Guardian take down ship",
-    "descKey": "TheCollector_Ships_GuardianQI_TItle",
-    "descText": "Guardian take down ship",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15528,8 +15528,8 @@
   {
     "titleKey": "TheCollector_Ships_Idris_Title",
     "titleText": "Special Idris For Killing",
-    "descKey": "TheCollector_Ships_Idris_Title",
-    "descText": "Special Idris For Killing",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15542,8 +15542,8 @@
   {
     "titleKey": "TheCollector_Ships_Intrepid_TItle",
     "titleText": "Upgrade Intrepid",
-    "descKey": "TheCollector_Ships_Intrepid_TItle",
-    "descText": "Upgrade Intrepid",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15556,8 +15556,8 @@
   {
     "titleKey": "TheCollector_Ships_Kruger_Wolf_Title",
     "titleText": "Where Wolf? Here Wolf",
-    "descKey": "TheCollector_Ships_Kruger_Wolf_Title",
-    "descText": "Where Wolf? Here Wolf",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15570,8 +15570,8 @@
   {
     "titleKey": "TheCollector_Ships_Meteor_Title",
     "titleText": "RSI Meteor Mod",
-    "descKey": "TheCollector_Ships_Meteor_Title",
-    "descText": "RSI Meteor Mod",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15584,8 +15584,8 @@
   {
     "titleKey": "TheCollector_Ships_MISC_Prospector_Title",
     "titleText": "Prospects Look Good",
-    "descKey": "TheCollector_Ships_MISC_Prospector_Title",
-    "descText": "Prospects Look Good",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15598,8 +15598,8 @@
   {
     "titleKey": "TheCollector_Ships_Nox_TItle",
     "titleText": "Noxy Mod",
-    "descKey": "TheCollector_Ships_Nox_TItle",
-    "descText": "Noxy Mod",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15612,8 +15612,8 @@
   {
     "titleKey": "TheCollector_Ships_Peregrine_TItle",
     "titleText": "Peregrine Wikelo Mod",
-    "descKey": "TheCollector_Ships_Peregrine_TItle",
-    "descText": "Peregrine Wikelo Mod",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15626,8 +15626,8 @@
   {
     "titleKey": "TheCollector_Ships_Prowler_Util_Title",
     "titleText": "Prowler More Utility",
-    "descKey": "TheCollector_Ships_Prowler_Util_Title",
-    "descText": "Prowler More Utility",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15640,8 +15640,8 @@
   {
     "titleKey": "TheCollector_Ships_Pulse_TItle",
     "titleText": "Pulse Plus",
-    "descKey": "TheCollector_Ships_Pulse_TItle",
-    "descText": "Pulse Plus",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15654,8 +15654,8 @@
   {
     "titleKey": "TheCollector_Ships_Scorpius_TItle",
     "titleText": "Build a Mod Scorpius",
-    "descKey": "TheCollector_Ships_Scorpius_TItle",
-    "descText": "Build a Mod Scorpius",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15668,8 +15668,8 @@
   {
     "titleKey": "TheCollector_Ships_Spirit_C1_TItle",
     "titleText": "Spirit Cargo mod",
-    "descKey": "TheCollector_Ships_Spirit_C1_TItle",
-    "descText": "Spirit Cargo mod",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15682,8 +15682,8 @@
   {
     "titleKey": "TheCollector_Ships_Starfighter_Inferno_Title",
     "titleText": "Starfighter Inferno Special",
-    "descKey": "TheCollector_Ships_Starfighter_Inferno_Title",
-    "descText": "Starfighter Inferno Special",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15696,8 +15696,8 @@
   {
     "titleKey": "TheCollector_Ships_Starfighter_Ion_Title",
     "titleText": "Sneaky Starfighter Ion",
-    "descKey": "TheCollector_Ships_Starfighter_Ion_Title",
-    "descText": "Sneaky Starfighter Ion",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15710,8 +15710,8 @@
   {
     "titleKey": "TheCollector_Ships_Starlancer_ATC_Title",
     "titleText": "New Move Big Starlancer Ship",
-    "descKey": "TheCollector_Ships_Starlancer_ATC_Title",
-    "descText": "New Move Big Starlancer Ship",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15724,8 +15724,8 @@
   {
     "titleKey": "TheCollector_Ships_Starlift_Max_TItle",
     "titleText": "More than a Max",
-    "descKey": "TheCollector_Ships_Starlift_Max_TItle",
-    "descText": "More than a Max",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15738,8 +15738,8 @@
   {
     "titleKey": "TheCollector_Ships_Terrapin_Medic_Title",
     "titleText": "What is Terrapin?",
-    "descKey": "TheCollector_Ships_Terrapin_Medic_Title",
-    "descText": "What is Terrapin?",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15752,8 +15752,8 @@
   {
     "titleKey": "TheCollector_Ships_Ursa_TItle",
     "titleText": "Make a Ursa Mod",
-    "descKey": "TheCollector_Ships_Ursa_TItle",
-    "descText": "Make a Ursa Mod",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15766,8 +15766,8 @@
   {
     "titleKey": "TheCollector_Ships_Wolf_Unique_Title",
     "titleText": "Most Special Wolf",
-    "descKey": "TheCollector_Ships_Wolf_Unique_Title",
-    "descText": "Most Special Wolf",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15780,8 +15780,8 @@
   {
     "titleKey": "TheCollector_Ships_ZeusCL_TItle",
     "titleText": "Zeus Cargo Special",
-    "descKey": "TheCollector_Ships_ZeusCL_TItle",
-    "descText": "Zeus Cargo Special",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15794,8 +15794,8 @@
   {
     "titleKey": "TheCollector_Ships_ZeusES_TItle",
     "titleText": "Zeus Special",
-    "descKey": "TheCollector_Ships_ZeusES_TItle",
-    "descText": "Zeus Special",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15808,8 +15808,8 @@
   {
     "titleKey": "TheCollector_Trade_GG_Coda_Name",
     "titleText": "Fix up Coda gun",
-    "descKey": "TheCollector_Trade_GG_Coda_Name",
-    "descText": "Fix up Coda gun",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15822,8 +15822,8 @@
   {
     "titleKey": "TheCollector_Trade_GG_ExpolrationSuit_Name",
     "titleText": "Walk in danger. Look good.",
-    "descKey": "TheCollector_Trade_GG_ExpolrationSuit_Name",
-    "descText": "Walk in danger. Look good.",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15836,8 +15836,8 @@
   {
     "titleKey": "TheCollector_Trade_GG_Karna_Name",
     "titleText": "Prettify Karna Gun",
-    "descKey": "TheCollector_Trade_GG_Karna_Name",
-    "descText": "Prettify Karna Gun",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15850,8 +15850,8 @@
   {
     "titleKey": "TheCollector_Trade_GG_S71_Name",
     "titleText": "Built on S71 rifle",
-    "descKey": "TheCollector_Trade_GG_S71_Name",
-    "descText": "Built on S71 rifle",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15864,8 +15864,8 @@
   {
     "titleKey": "TheCollector_Trade_GG_VentureSuilt_Name",
     "titleText": "Adventure a A-Venture",
-    "descKey": "TheCollector_Trade_GG_VentureSuilt_Name",
-    "descText": "Adventure a A-Venture",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15878,8 +15878,8 @@
   {
     "titleKey": "TheCollector_Trade_GG_XanthuleSuit_Name",
     "titleText": "Xi'an Xanthule Suit made better",
-    "descKey": "TheCollector_Trade_GG_XanthuleSuit_Name",
-    "descText": "Xi'an Xanthule Suit made better",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -15982,8 +15982,8 @@
   {
     "titleKey": "UWC_Refueling_easy_title_001",
     "titleText": "REFUEL REQUEST: ~mission(Ship)",
-    "descKey": "UWC_Refueling_easy_title_001",
-    "descText": "REFUEL REQUEST: ~mission(Ship)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -16000,8 +16000,8 @@
   {
     "titleKey": "UWC_Refueling_high_title_001",
     "titleText": " CRITICAL REFUEL REQUEST: ~mission(Ship)",
-    "descKey": "UWC_Refueling_high_title_001",
-    "descText": " CRITICAL REFUEL REQUEST: ~mission(Ship)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -16018,8 +16018,8 @@
   {
     "titleKey": "UWC_Refueling_intro_title_001",
     "titleText": "UWC'S HIRING REFUELERS",
-    "descKey": "UWC_Refueling_intro_title_001",
-    "descText": "UWC'S HIRING REFUELERS",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -16036,8 +16036,8 @@
   {
     "titleKey": "UWC_Refueling_moderate_title_001",
     "titleText": "URGENT REFUEL REQUEST: ~mission(Ship)",
-    "descKey": "UWC_Refueling_moderate_title_001",
-    "descText": "URGENT REFUEL REQUEST: ~mission(Ship)",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -16054,8 +16054,8 @@
   {
     "titleKey": "UWC_Refueling_multiple_med_title_001",
     "titleText": "URGENT FLEET REFUEL",
-    "descKey": "UWC_Refueling_multiple_med_title_001",
-    "descText": "URGENT FLEET REFUEL",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -16237,8 +16237,8 @@
   {
     "titleKey": "Vaughn_EliminateBoss_FPS_Rockcracker_Warehouse_name_001",
     "titleText": "End of a Salamander",
-    "descKey": "Vaughn_EliminateBoss_FPS_Rockcracker_Warehouse_name_001",
-    "descText": "End of a Salamander",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -16288,8 +16288,8 @@
   {
     "titleKey": "Vaughn_EliminateSpecific_FPS_Rockcracker_title_001",
     "titleText": "A Well Deserved Break",
-    "descKey": "Vaughn_EliminateSpecific_FPS_Rockcracker_title_001",
-    "descText": "A Well Deserved Break",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -16339,8 +16339,8 @@
   {
     "titleKey": "Vaughn_EliminateSpecific_FPS_storm_H_title_001",
     "titleText": "A Challenging Contract",
-    "descKey": "Vaughn_EliminateSpecific_FPS_storm_H_title_001",
-    "descText": "A Challenging Contract",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -16390,8 +16390,8 @@
   {
     "titleKey": "Vaughn_EliminateSpecific_FPS_storm_H_title_002",
     "titleText": "Another Challenge to be Removed",
-    "descKey": "Vaughn_EliminateSpecific_FPS_storm_H_title_002",
-    "descText": "Another Challenge to be Removed",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -16441,8 +16441,8 @@
   {
     "titleKey": "Vaughn_EliminateSpecific_FPS_storm_H_title_003",
     "titleText": "Killing a Ghost",
-    "descKey": "Vaughn_EliminateSpecific_FPS_storm_H_title_003",
-    "descText": "Killing a Ghost",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [
@@ -16492,8 +16492,8 @@
   {
     "titleKey": "Vaughn_EliminateSpecific_FPS_storm_H_title_004",
     "titleText": "Pyro Contract",
-    "descKey": "Vaughn_EliminateSpecific_FPS_storm_H_title_004",
-    "descText": "Pyro Contract",
+    "descKey": "",
+    "descText": "",
     "uec": 0,
     "rep": 0,
     "bps": [

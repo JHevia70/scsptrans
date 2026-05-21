@@ -225,7 +225,8 @@ function loadMissionsIntoMap(missions, titleToBpPools, bpPools, repAmounts, ini,
     if (!v || v.notForRelease) continue;
 
     const titleKey = v.title ? v.title.replace(/^@/, '') : null;
-    const descKey  = v.description ? v.description.replace(/^@/, '') : null;
+    const descKeyRaw = v.description ? v.description.replace(/^@/, '') : null;
+    const descKey = (descKeyRaw && descKeyRaw !== titleKey) ? descKeyRaw : null;
     if (!titleKey || titleKey === 'LOC_UNINITIALIZED') continue;
 
     const titleText = ini[titleKey] || '';
@@ -270,9 +271,10 @@ function addContractOnlyMissions(missionsMap, titleToBpPools, bpPools, ini, name
       [...poolSet].flatMap(p => (bpPools[p] || []).map(e => resolveItemName(e, nameMap, componentsMap)))
     )];
     if (!bps.length) continue;
-    // Buscar clave de descripción: mismo prefijo pero con _Desc_
-    const descKey = titleKey.replace(/_Title_/, '_Desc_');
-    const descText = ini[descKey] || '';
+    // Buscar clave de descripción: mismo prefijo pero con _Desc_ (vacío si coincide con titleKey)
+    const descKeyRaw = titleKey.replace(/_Title_/, '_Desc_');
+    const descKey = descKeyRaw !== titleKey ? descKeyRaw : '';
+    const descText = descKey ? (ini[descKey] || '') : '';
     missionsMap.set(titleKey, { titleKey, titleText, descKey, descText, uec: 0, rep: 0, bps });
     added++;
   }
