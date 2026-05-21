@@ -8,11 +8,9 @@
     "rep": 100,
     "bpGroups": [
       [
-        "salvage_modifier_scraper_large",
-        "salvage_modifier_scraper_medium",
-        "salvage_modifier_scraper_salvation_medium",
-        "salvage_modifier_scraper_salvation_small",
-        "salvage_modifier_scraper_small"
+        "Trawler Scraper Module",
+        "Abrade Scraper Module",
+        "Cinch Scraper Module"
       ]
     ]
   },
@@ -25,11 +23,9 @@
     "rep": 100,
     "bpGroups": [
       [
-        "salvage_modifier_scraper_large",
-        "salvage_modifier_scraper_medium",
-        "salvage_modifier_scraper_salvation_medium",
-        "salvage_modifier_scraper_salvation_small",
-        "salvage_modifier_scraper_small"
+        "Trawler Scraper Module",
+        "Abrade Scraper Module",
+        "Cinch Scraper Module"
       ]
     ]
   },
@@ -42,11 +38,9 @@
     "rep": 100,
     "bpGroups": [
       [
-        "salvage_modifier_scraper_large",
-        "salvage_modifier_scraper_medium",
-        "salvage_modifier_scraper_salvation_medium",
-        "salvage_modifier_scraper_salvation_small",
-        "salvage_modifier_scraper_small"
+        "Trawler Scraper Module",
+        "Abrade Scraper Module",
+        "Cinch Scraper Module"
       ]
     ]
   },
@@ -140,7 +134,7 @@
         "Palatino Core Moonfall",
         "Palatino Legs Moonfall",
         "Palatino Helmet Moonfall",
-        "behr_rifle_ballistic_02_mag_civilian"
+        "P8-AR Rifle Magazine (15 Cap)"
       ]
     ]
   },
@@ -576,13 +570,13 @@
         "BR-2 Shotgun",
         "Gallant Rifle",
         "ADP Arms Woodland",
-        "cds_legacy_armor_heavy_core_01_01_01",
-        "cds_legacy_armor_heavy_legs_01_01_01",
-        "cds_legacy_armor_heavy_helmet_01_01_01",
-        "cds_armor_heavy_arms_01_01_01",
-        "cds_armor_heavy_legs_01_01_01",
-        "cds_armor_heavy_core_01_01_01",
-        "cds_armor_heavy_helmet_01_01_01",
+        "ADP Core",
+        "ADP Legs Woodland",
+        "Balor HCH Helmet",
+        "ADP-mk4 Arms Woodland",
+        "ADP-mk4 Legs Woodland",
+        "ADP-mk4 Core Woodland",
+        "ADP-mk4 Helmet Woodland",
         "FS-9 Magazine (75 cap)",
         "BR-2 Shotgun Magazine (12 cap)",
         "Gallant Rifle Battery (45 cap)"
@@ -616,13 +610,13 @@
         "BR-2 Shotgun",
         "Gallant Rifle",
         "ADP Arms Woodland",
-        "cds_legacy_armor_heavy_core_01_01_01",
-        "cds_legacy_armor_heavy_legs_01_01_01",
-        "cds_legacy_armor_heavy_helmet_01_01_01",
-        "cds_armor_heavy_arms_01_01_01",
-        "cds_armor_heavy_legs_01_01_01",
-        "cds_armor_heavy_core_01_01_01",
-        "cds_armor_heavy_helmet_01_01_01",
+        "ADP Core",
+        "ADP Legs Woodland",
+        "Balor HCH Helmet",
+        "ADP-mk4 Arms Woodland",
+        "ADP-mk4 Legs Woodland",
+        "ADP-mk4 Core Woodland",
+        "ADP-mk4 Helmet Woodland",
         "FS-9 Magazine (75 cap)",
         "BR-2 Shotgun Magazine (12 cap)",
         "Gallant Rifle Battery (45 cap)"
@@ -689,8 +683,8 @@
     "bpGroups": [
       [
         "Karna \"Fate\" Rifle",
-        "qrt_specialist_medium_core_01_9tails_01",
-        "qrt_specialist_medium_arms_01_9tails_01",
+        "Artimex Core (Modified)",
+        "Artimex Arms (Modified)",
         "Karna Rifle Battery (35 cap)"
       ]
     ]
@@ -759,8 +753,8 @@
     "bpGroups": [
       [
         "Karna \"Fate\" Rifle",
-        "qrt_specialist_medium_core_01_9tails_01",
-        "qrt_specialist_medium_arms_01_9tails_01",
+        "Artimex Core (Modified)",
+        "Artimex Arms (Modified)",
         "Karna Rifle Battery (35 cap)"
       ]
     ]
@@ -775,8 +769,8 @@
     "bpGroups": [
       [
         "Karna \"Fate\" Rifle",
-        "qrt_specialist_medium_core_01_9tails_01",
-        "qrt_specialist_medium_arms_01_9tails_01",
+        "Artimex Core (Modified)",
+        "Artimex Arms (Modified)",
         "Karna Rifle Battery (35 cap)"
       ]
     ]
@@ -791,8 +785,8 @@
     "bpGroups": [
       [
         "Karna \"Fate\" Rifle",
-        "qrt_specialist_medium_core_01_9tails_01",
-        "qrt_specialist_medium_arms_01_9tails_01",
+        "Artimex Core (Modified)",
+        "Artimex Arms (Modified)",
         "Karna Rifle Battery (35 cap)"
       ]
     ]
@@ -918,8 +912,8 @@
       ],
       [
         "Karna \"Fate\" Rifle",
-        "qrt_specialist_medium_core_01_9tails_01",
-        "qrt_specialist_medium_arms_01_9tails_01"
+        "Artimex Core (Modified)",
+        "Artimex Arms (Modified)"
       ]
     ]
   },
@@ -933,8 +927,8 @@
     "bpGroups": [
       [
         "Karna \"Fate\" Rifle",
-        "qrt_specialist_medium_core_01_9tails_01",
-        "qrt_specialist_medium_arms_01_9tails_01",
+        "Artimex Core (Modified)",
+        "Artimex Arms (Modified)",
         "Karna Rifle Battery (35 cap)"
       ]
     ]
@@ -1120,13 +1114,13 @@
         "BR-2 Shotgun",
         "Gallant Rifle",
         "ADP Arms Woodland",
-        "cds_legacy_armor_heavy_core_01_01_01",
-        "cds_legacy_armor_heavy_legs_01_01_01",
-        "cds_legacy_armor_heavy_helmet_01_01_01",
-        "cds_armor_heavy_arms_01_01_01",
-        "cds_armor_heavy_legs_01_01_01",
-        "cds_armor_heavy_core_01_01_01",
-        "cds_armor_heavy_helmet_01_01_01",
+        "ADP Core",
+        "ADP Legs Woodland",
+        "Balor HCH Helmet",
+        "ADP-mk4 Arms Woodland",
+        "ADP-mk4 Legs Woodland",
+        "ADP-mk4 Core Woodland",
+        "ADP-mk4 Helmet Woodland",
         "FS-9 Magazine (75 cap)",
         "BR-2 Shotgun Magazine (12 cap)",
         "Gallant Rifle Battery (45 cap)"
@@ -1276,10 +1270,10 @@
         "P8-SC SMG",
         "C54 SMG",
         "S71 Rifle",
-        "cds_armor_medium_arms_01_01_01",
-        "cds_armor_medium_legs_01_01_01",
+        "ORC-mkX Arms Woodland",
+        "ORC-mkX Legs Woodland",
         "ORC-mkX Core Woodland",
-        "cds_armor_medium_helmet_01_01_01",
+        "ORC-mkX Helmet Woodland",
         "ORC-mkV Arms Woodland",
         "ORC-mkV Legs Woodland",
         "ORC-mkV Core Woodland",
@@ -1302,10 +1296,10 @@
         "P8-SC SMG",
         "C54 SMG",
         "S71 Rifle",
-        "cds_armor_medium_arms_01_01_01",
-        "cds_armor_medium_legs_01_01_01",
+        "ORC-mkX Arms Woodland",
+        "ORC-mkX Legs Woodland",
         "ORC-mkX Core Woodland",
-        "cds_armor_medium_helmet_01_01_01",
+        "ORC-mkX Helmet Woodland",
         "ORC-mkV Arms Woodland",
         "ORC-mkV Legs Woodland",
         "ORC-mkV Core Woodland",
@@ -1328,10 +1322,10 @@
         "P8-SC SMG",
         "C54 SMG",
         "S71 Rifle",
-        "cds_armor_medium_arms_01_01_01",
-        "cds_armor_medium_legs_01_01_01",
+        "ORC-mkX Arms Woodland",
+        "ORC-mkX Legs Woodland",
         "ORC-mkX Core Woodland",
-        "cds_armor_medium_helmet_01_01_01",
+        "ORC-mkX Helmet Woodland",
         "ORC-mkV Arms Woodland",
         "ORC-mkV Legs Woodland",
         "ORC-mkV Core Woodland",
@@ -1354,10 +1348,10 @@
         "P8-SC SMG",
         "C54 SMG",
         "S71 Rifle",
-        "cds_armor_medium_arms_01_01_01",
-        "cds_armor_medium_legs_01_01_01",
+        "ORC-mkX Arms Woodland",
+        "ORC-mkX Legs Woodland",
         "ORC-mkX Core Woodland",
-        "cds_armor_medium_helmet_01_01_01",
+        "ORC-mkX Helmet Woodland",
         "ORC-mkV Arms Woodland",
         "ORC-mkV Legs Woodland",
         "ORC-mkV Core Woodland",
@@ -1380,10 +1374,10 @@
         "P8-SC SMG",
         "C54 SMG",
         "S71 Rifle",
-        "cds_armor_medium_arms_01_01_01",
-        "cds_armor_medium_legs_01_01_01",
+        "ORC-mkX Arms Woodland",
+        "ORC-mkX Legs Woodland",
         "ORC-mkX Core Woodland",
-        "cds_armor_medium_helmet_01_01_01",
+        "ORC-mkX Helmet Woodland",
         "ORC-mkV Arms Woodland",
         "ORC-mkV Legs Woodland",
         "ORC-mkV Core Woodland",
@@ -1425,13 +1419,13 @@
         "BR-2 Shotgun",
         "Gallant Rifle",
         "ADP Arms Woodland",
-        "cds_legacy_armor_heavy_core_01_01_01",
-        "cds_legacy_armor_heavy_legs_01_01_01",
-        "cds_legacy_armor_heavy_helmet_01_01_01",
-        "cds_armor_heavy_arms_01_01_01",
-        "cds_armor_heavy_legs_01_01_01",
-        "cds_armor_heavy_core_01_01_01",
-        "cds_armor_heavy_helmet_01_01_01",
+        "ADP Core",
+        "ADP Legs Woodland",
+        "Balor HCH Helmet",
+        "ADP-mk4 Arms Woodland",
+        "ADP-mk4 Legs Woodland",
+        "ADP-mk4 Core Woodland",
+        "ADP-mk4 Helmet Woodland",
         "FS-9 Magazine (75 cap)",
         "BR-2 Shotgun Magazine (12 cap)",
         "Gallant Rifle Battery (45 cap)"
@@ -1489,13 +1483,13 @@
         "BR-2 Shotgun",
         "Gallant Rifle",
         "ADP Arms Woodland",
-        "cds_legacy_armor_heavy_core_01_01_01",
-        "cds_legacy_armor_heavy_legs_01_01_01",
-        "cds_legacy_armor_heavy_helmet_01_01_01",
-        "cds_armor_heavy_arms_01_01_01",
-        "cds_armor_heavy_legs_01_01_01",
-        "cds_armor_heavy_core_01_01_01",
-        "cds_armor_heavy_helmet_01_01_01",
+        "ADP Core",
+        "ADP Legs Woodland",
+        "Balor HCH Helmet",
+        "ADP-mk4 Arms Woodland",
+        "ADP-mk4 Legs Woodland",
+        "ADP-mk4 Core Woodland",
+        "ADP-mk4 Helmet Woodland",
         "FS-9 Magazine (75 cap)",
         "BR-2 Shotgun Magazine (12 cap)",
         "Gallant Rifle Battery (45 cap)"
@@ -1515,13 +1509,13 @@
         "BR-2 Shotgun",
         "Gallant Rifle",
         "ADP Arms Woodland",
-        "cds_legacy_armor_heavy_core_01_01_01",
-        "cds_legacy_armor_heavy_legs_01_01_01",
-        "cds_legacy_armor_heavy_helmet_01_01_01",
-        "cds_armor_heavy_arms_01_01_01",
-        "cds_armor_heavy_legs_01_01_01",
-        "cds_armor_heavy_core_01_01_01",
-        "cds_armor_heavy_helmet_01_01_01",
+        "ADP Core",
+        "ADP Legs Woodland",
+        "Balor HCH Helmet",
+        "ADP-mk4 Arms Woodland",
+        "ADP-mk4 Legs Woodland",
+        "ADP-mk4 Core Woodland",
+        "ADP-mk4 Helmet Woodland",
         "FS-9 Magazine (75 cap)",
         "BR-2 Shotgun Magazine (12 cap)",
         "Gallant Rifle Battery (45 cap)"
@@ -1541,13 +1535,13 @@
         "BR-2 Shotgun",
         "Gallant Rifle",
         "ADP Arms Woodland",
-        "cds_legacy_armor_heavy_core_01_01_01",
-        "cds_legacy_armor_heavy_legs_01_01_01",
-        "cds_legacy_armor_heavy_helmet_01_01_01",
-        "cds_armor_heavy_arms_01_01_01",
-        "cds_armor_heavy_legs_01_01_01",
-        "cds_armor_heavy_core_01_01_01",
-        "cds_armor_heavy_helmet_01_01_01",
+        "ADP Core",
+        "ADP Legs Woodland",
+        "Balor HCH Helmet",
+        "ADP-mk4 Arms Woodland",
+        "ADP-mk4 Legs Woodland",
+        "ADP-mk4 Core Woodland",
+        "ADP-mk4 Helmet Woodland",
         "FS-9 Magazine (75 cap)",
         "BR-2 Shotgun Magazine (12 cap)",
         "Gallant Rifle Battery (45 cap)"
@@ -1605,13 +1599,13 @@
         "BR-2 Shotgun",
         "Gallant Rifle",
         "ADP Arms Woodland",
-        "cds_legacy_armor_heavy_core_01_01_01",
-        "cds_legacy_armor_heavy_legs_01_01_01",
-        "cds_legacy_armor_heavy_helmet_01_01_01",
-        "cds_armor_heavy_arms_01_01_01",
-        "cds_armor_heavy_legs_01_01_01",
-        "cds_armor_heavy_core_01_01_01",
-        "cds_armor_heavy_helmet_01_01_01",
+        "ADP Core",
+        "ADP Legs Woodland",
+        "Balor HCH Helmet",
+        "ADP-mk4 Arms Woodland",
+        "ADP-mk4 Legs Woodland",
+        "ADP-mk4 Core Woodland",
+        "ADP-mk4 Helmet Woodland",
         "FS-9 Magazine (75 cap)",
         "BR-2 Shotgun Magazine (12 cap)",
         "Gallant Rifle Battery (45 cap)"
@@ -1645,13 +1639,13 @@
         "BR-2 Shotgun",
         "Gallant Rifle",
         "ADP Arms Woodland",
-        "cds_legacy_armor_heavy_core_01_01_01",
-        "cds_legacy_armor_heavy_legs_01_01_01",
-        "cds_legacy_armor_heavy_helmet_01_01_01",
-        "cds_armor_heavy_arms_01_01_01",
-        "cds_armor_heavy_legs_01_01_01",
-        "cds_armor_heavy_core_01_01_01",
-        "cds_armor_heavy_helmet_01_01_01",
+        "ADP Core",
+        "ADP Legs Woodland",
+        "Balor HCH Helmet",
+        "ADP-mk4 Arms Woodland",
+        "ADP-mk4 Legs Woodland",
+        "ADP-mk4 Core Woodland",
+        "ADP-mk4 Helmet Woodland",
         "FS-9 Magazine (75 cap)",
         "BR-2 Shotgun Magazine (12 cap)",
         "Gallant Rifle Battery (45 cap)"
@@ -1671,13 +1665,13 @@
         "BR-2 Shotgun",
         "Gallant Rifle",
         "ADP Arms Woodland",
-        "cds_legacy_armor_heavy_core_01_01_01",
-        "cds_legacy_armor_heavy_legs_01_01_01",
-        "cds_legacy_armor_heavy_helmet_01_01_01",
-        "cds_armor_heavy_arms_01_01_01",
-        "cds_armor_heavy_legs_01_01_01",
-        "cds_armor_heavy_core_01_01_01",
-        "cds_armor_heavy_helmet_01_01_01",
+        "ADP Core",
+        "ADP Legs Woodland",
+        "Balor HCH Helmet",
+        "ADP-mk4 Arms Woodland",
+        "ADP-mk4 Legs Woodland",
+        "ADP-mk4 Core Woodland",
+        "ADP-mk4 Helmet Woodland",
         "FS-9 Magazine (75 cap)",
         "BR-2 Shotgun Magazine (12 cap)",
         "Gallant Rifle Battery (45 cap)"
@@ -1711,13 +1705,13 @@
         "BR-2 Shotgun",
         "Gallant Rifle",
         "ADP Arms Woodland",
-        "cds_legacy_armor_heavy_core_01_01_01",
-        "cds_legacy_armor_heavy_legs_01_01_01",
-        "cds_legacy_armor_heavy_helmet_01_01_01",
-        "cds_armor_heavy_arms_01_01_01",
-        "cds_armor_heavy_legs_01_01_01",
-        "cds_armor_heavy_core_01_01_01",
-        "cds_armor_heavy_helmet_01_01_01",
+        "ADP Core",
+        "ADP Legs Woodland",
+        "Balor HCH Helmet",
+        "ADP-mk4 Arms Woodland",
+        "ADP-mk4 Legs Woodland",
+        "ADP-mk4 Core Woodland",
+        "ADP-mk4 Helmet Woodland",
         "FS-9 Magazine (75 cap)",
         "BR-2 Shotgun Magazine (12 cap)",
         "Gallant Rifle Battery (45 cap)"
@@ -1737,13 +1731,13 @@
         "BR-2 Shotgun",
         "Gallant Rifle",
         "ADP Arms Woodland",
-        "cds_legacy_armor_heavy_core_01_01_01",
-        "cds_legacy_armor_heavy_legs_01_01_01",
-        "cds_legacy_armor_heavy_helmet_01_01_01",
-        "cds_armor_heavy_arms_01_01_01",
-        "cds_armor_heavy_legs_01_01_01",
-        "cds_armor_heavy_core_01_01_01",
-        "cds_armor_heavy_helmet_01_01_01",
+        "ADP Core",
+        "ADP Legs Woodland",
+        "Balor HCH Helmet",
+        "ADP-mk4 Arms Woodland",
+        "ADP-mk4 Legs Woodland",
+        "ADP-mk4 Core Woodland",
+        "ADP-mk4 Helmet Woodland",
         "FS-9 Magazine (75 cap)",
         "BR-2 Shotgun Magazine (12 cap)",
         "Gallant Rifle Battery (45 cap)"
@@ -1763,13 +1757,13 @@
         "BR-2 Shotgun",
         "Gallant Rifle",
         "ADP Arms Woodland",
-        "cds_legacy_armor_heavy_core_01_01_01",
-        "cds_legacy_armor_heavy_legs_01_01_01",
-        "cds_legacy_armor_heavy_helmet_01_01_01",
-        "cds_armor_heavy_arms_01_01_01",
-        "cds_armor_heavy_legs_01_01_01",
-        "cds_armor_heavy_core_01_01_01",
-        "cds_armor_heavy_helmet_01_01_01",
+        "ADP Core",
+        "ADP Legs Woodland",
+        "Balor HCH Helmet",
+        "ADP-mk4 Arms Woodland",
+        "ADP-mk4 Legs Woodland",
+        "ADP-mk4 Core Woodland",
+        "ADP-mk4 Helmet Woodland",
         "FS-9 Magazine (75 cap)",
         "BR-2 Shotgun Magazine (12 cap)",
         "Gallant Rifle Battery (45 cap)"
@@ -4411,7 +4405,7 @@
         "AD5B Ballistic Gatling",
         "AD6B Ballistic Gatling",
         "Mi/1/A V801-11",
-        "radr_grnp_s02_vb80112"
+        "V801-12"
       ],
       [
         "Ci/0/B Cryo-Star SL",
@@ -4539,7 +4533,7 @@
         "AD5B Ballistic Gatling",
         "AD6B Ballistic Gatling",
         "Mi/1/A V801-11",
-        "radr_grnp_s02_vb80112"
+        "V801-12"
       ],
       [
         "Ci/0/B Cryo-Star SL",
@@ -4667,7 +4661,7 @@
         "AD5B Ballistic Gatling",
         "AD6B Ballistic Gatling",
         "Mi/1/A V801-11",
-        "radr_grnp_s02_vb80112"
+        "V801-12"
       ],
       [
         "Ci/0/B Cryo-Star SL",
@@ -7785,7 +7779,7 @@
         "Palatino Core Moonfall",
         "Palatino Legs Moonfall",
         "Palatino Helmet Moonfall",
-        "behr_rifle_ballistic_02_mag_civilian"
+        "P8-AR Rifle Magazine (15 Cap)"
       ],
       [
         "Prism \"Deep Sea\" Laser Shotgun",
@@ -8364,8 +8358,8 @@
         "Arclight \"Desert Shadow\" Pistol",
         "Pembroke Exploration Suit",
         "Pembroke Helmet",
-        "clda_env_armor_heavy_suit_01_01_01",
-        "clda_env_armor_heavy_helmet_01_01_01"
+        "Novikov Exploration Suit",
+        "Novikov Helmet"
       ]
     ]
   },
@@ -8382,8 +8376,8 @@
         "Arclight \"Desert Shadow\" Pistol",
         "Pembroke Exploration Suit",
         "Pembroke Helmet",
-        "clda_env_armor_heavy_suit_01_01_01",
-        "clda_env_armor_heavy_helmet_01_01_01",
+        "Novikov Exploration Suit",
+        "Novikov Helmet",
         "Arclight Pistol Battery (30 cap)"
       ]
     ]
@@ -8401,8 +8395,8 @@
         "Arclight \"Desert Shadow\" Pistol",
         "Pembroke Exploration Suit",
         "Pembroke Helmet",
-        "clda_env_armor_heavy_suit_01_01_01",
-        "clda_env_armor_heavy_helmet_01_01_01",
+        "Novikov Exploration Suit",
+        "Novikov Helmet",
         "Arclight Pistol Battery (30 cap)"
       ]
     ]
@@ -8420,8 +8414,8 @@
         "Arclight \"Desert Shadow\" Pistol",
         "Pembroke Exploration Suit",
         "Pembroke Helmet",
-        "clda_env_armor_heavy_suit_01_01_01",
-        "clda_env_armor_heavy_helmet_01_01_01",
+        "Novikov Exploration Suit",
+        "Novikov Helmet",
         "Arclight Pistol Battery (30 cap)"
       ]
     ]
@@ -8439,8 +8433,8 @@
         "Arclight \"Desert Shadow\" Pistol",
         "Pembroke Exploration Suit",
         "Pembroke Helmet",
-        "clda_env_armor_heavy_suit_01_01_01",
-        "clda_env_armor_heavy_helmet_01_01_01",
+        "Novikov Exploration Suit",
+        "Novikov Helmet",
         "Arclight Pistol Battery (30 cap)"
       ]
     ]
@@ -8458,8 +8452,8 @@
         "Arclight \"Desert Shadow\" Pistol",
         "Pembroke Exploration Suit",
         "Pembroke Helmet",
-        "clda_env_armor_heavy_suit_01_01_01",
-        "clda_env_armor_heavy_helmet_01_01_01",
+        "Novikov Exploration Suit",
+        "Novikov Helmet",
         "Arclight Pistol Battery (30 cap)"
       ]
     ]
@@ -8590,9 +8584,9 @@
         "Arclight Pistol Battery (30 cap)"
       ],
       [
-        "mining_laser_grin_arbor_s0",
+        "Arbor MHV Mining Laser",
         "mining_laser_shin_hofstede_s0",
-        "mining_laser_shin_klein_s0",
+        "Lawson Mining Laser",
         "mining_laser_thcn_helix_s0",
         "In/0/C Surveyor-Go",
         "In/1/C Surveyor-Lite",
@@ -8619,16 +8613,15 @@
         "Arclight Pistol Battery (30 cap)"
       ],
       [
-        "mining_laser_drak_golem_s1",
-        "mining_laser_shin_hofstede_s1",
-        "mining_laser_shin_klein_s1",
-        "mining_laser_thcn_helix_s1",
-        "mining_laser_thcn_impact_s1",
-        "mining_laser_grin_arbor_s1",
-        "mining_laser_grin_lancet_s1",
+        "Pitman Mining Laser",
+        "Hofstede-S1 Mining Laser",
+        "Klein-S1 Mining Laser",
+        "Helix I Mining Laser",
+        "Impact I Mining Laser",
+        "Arbor MH1 Mining Laser",
+        "Lancet MH1 Mining Laser",
         "In/0/B BroadSpec-Go",
-        "radr_chco_s02_broadspec_lite",
-        "radr_chco_s03_broudspec",
+        "BroadSpec",
         "In/4/B BroadSpec-Max"
       ]
     ]
@@ -8651,16 +8644,15 @@
         "Arclight Pistol Battery (30 cap)"
       ],
       [
-        "mining_laser_drak_golem_s1",
-        "mining_laser_shin_hofstede_s1",
-        "mining_laser_shin_klein_s1",
-        "mining_laser_thcn_helix_s1",
-        "mining_laser_thcn_impact_s1",
-        "mining_laser_grin_arbor_s1",
-        "mining_laser_grin_lancet_s1",
+        "Pitman Mining Laser",
+        "Hofstede-S1 Mining Laser",
+        "Klein-S1 Mining Laser",
+        "Helix I Mining Laser",
+        "Impact I Mining Laser",
+        "Arbor MH1 Mining Laser",
+        "Lancet MH1 Mining Laser",
         "In/0/B BroadSpec-Go",
-        "radr_chco_s02_broadspec_lite",
-        "radr_chco_s03_broudspec",
+        "BroadSpec",
         "In/4/B BroadSpec-Max"
       ]
     ]
@@ -8683,20 +8675,20 @@
         "Arclight Pistol Battery (30 cap)"
       ],
       [
-        "mining_laser_grin_arbor_s2",
-        "mining_laser_grin_lancet_s2",
-        "mining_laser_shin_hofstede_s2",
-        "mining_laser_shin_klein_s2",
-        "mining_laser_thcn_helix_s2",
-        "mining_laser_thcn_impact_s2",
+        "Arbor MH2 Mining Laser",
+        "Lancet MH2 Mining Laser",
+        "Hofstede-S2 Mining Laser",
+        "Klein-S2 Mining Laser",
+        "Helix II Mining Laser",
+        "Impact II Mining Laser",
         "In/0/A FullSpec-Go",
         "In/2/A FullSpec",
         "In/3/A FullSpec-Max"
       ],
       [
-        "mining_laser_grin_arbor_s0",
+        "Arbor MHV Mining Laser",
         "mining_laser_shin_hofstede_s0",
-        "mining_laser_shin_klein_s0",
+        "Lawson Mining Laser",
         "mining_laser_thcn_helix_s0",
         "In/0/C Surveyor-Go",
         "In/1/C Surveyor-Lite",
@@ -8704,16 +8696,15 @@
         "In/3/C Surveyor-Max"
       ],
       [
-        "mining_laser_drak_golem_s1",
-        "mining_laser_shin_hofstede_s1",
-        "mining_laser_shin_klein_s1",
-        "mining_laser_thcn_helix_s1",
-        "mining_laser_thcn_impact_s1",
-        "mining_laser_grin_arbor_s1",
-        "mining_laser_grin_lancet_s1",
+        "Pitman Mining Laser",
+        "Hofstede-S1 Mining Laser",
+        "Klein-S1 Mining Laser",
+        "Helix I Mining Laser",
+        "Impact I Mining Laser",
+        "Arbor MH1 Mining Laser",
+        "Lancet MH1 Mining Laser",
         "In/0/B BroadSpec-Go",
-        "radr_chco_s02_broadspec_lite",
-        "radr_chco_s03_broudspec",
+        "BroadSpec",
         "In/4/B BroadSpec-Max"
       ]
     ]
@@ -8736,9 +8727,9 @@
         "Arclight Pistol Battery (30 cap)"
       ],
       [
-        "mining_laser_grin_arbor_s0",
+        "Arbor MHV Mining Laser",
         "mining_laser_shin_hofstede_s0",
-        "mining_laser_shin_klein_s0",
+        "Lawson Mining Laser",
         "mining_laser_thcn_helix_s0",
         "In/0/C Surveyor-Go",
         "In/1/C Surveyor-Lite",
@@ -8765,20 +8756,20 @@
         "Arclight Pistol Battery (30 cap)"
       ],
       [
-        "mining_laser_grin_arbor_s2",
-        "mining_laser_grin_lancet_s2",
-        "mining_laser_shin_hofstede_s2",
-        "mining_laser_shin_klein_s2",
-        "mining_laser_thcn_helix_s2",
-        "mining_laser_thcn_impact_s2",
+        "Arbor MH2 Mining Laser",
+        "Lancet MH2 Mining Laser",
+        "Hofstede-S2 Mining Laser",
+        "Klein-S2 Mining Laser",
+        "Helix II Mining Laser",
+        "Impact II Mining Laser",
         "In/0/A FullSpec-Go",
         "In/2/A FullSpec",
         "In/3/A FullSpec-Max"
       ],
       [
-        "mining_laser_grin_arbor_s0",
+        "Arbor MHV Mining Laser",
         "mining_laser_shin_hofstede_s0",
-        "mining_laser_shin_klein_s0",
+        "Lawson Mining Laser",
         "mining_laser_thcn_helix_s0",
         "In/0/C Surveyor-Go",
         "In/1/C Surveyor-Lite",
@@ -8786,16 +8777,15 @@
         "In/3/C Surveyor-Max"
       ],
       [
-        "mining_laser_drak_golem_s1",
-        "mining_laser_shin_hofstede_s1",
-        "mining_laser_shin_klein_s1",
-        "mining_laser_thcn_helix_s1",
-        "mining_laser_thcn_impact_s1",
-        "mining_laser_grin_arbor_s1",
-        "mining_laser_grin_lancet_s1",
+        "Pitman Mining Laser",
+        "Hofstede-S1 Mining Laser",
+        "Klein-S1 Mining Laser",
+        "Helix I Mining Laser",
+        "Impact I Mining Laser",
+        "Arbor MH1 Mining Laser",
+        "Lancet MH1 Mining Laser",
         "In/0/B BroadSpec-Go",
-        "radr_chco_s02_broadspec_lite",
-        "radr_chco_s03_broudspec",
+        "BroadSpec",
         "In/4/B BroadSpec-Max"
       ]
     ]
@@ -8818,20 +8808,20 @@
         "Arclight Pistol Battery (30 cap)"
       ],
       [
-        "mining_laser_grin_arbor_s2",
-        "mining_laser_grin_lancet_s2",
-        "mining_laser_shin_hofstede_s2",
-        "mining_laser_shin_klein_s2",
-        "mining_laser_thcn_helix_s2",
-        "mining_laser_thcn_impact_s2",
+        "Arbor MH2 Mining Laser",
+        "Lancet MH2 Mining Laser",
+        "Hofstede-S2 Mining Laser",
+        "Klein-S2 Mining Laser",
+        "Helix II Mining Laser",
+        "Impact II Mining Laser",
         "In/0/A FullSpec-Go",
         "In/2/A FullSpec",
         "In/3/A FullSpec-Max"
       ],
       [
-        "mining_laser_grin_arbor_s0",
+        "Arbor MHV Mining Laser",
         "mining_laser_shin_hofstede_s0",
-        "mining_laser_shin_klein_s0",
+        "Lawson Mining Laser",
         "mining_laser_thcn_helix_s0",
         "In/0/C Surveyor-Go",
         "In/1/C Surveyor-Lite",
@@ -8839,16 +8829,15 @@
         "In/3/C Surveyor-Max"
       ],
       [
-        "mining_laser_drak_golem_s1",
-        "mining_laser_shin_hofstede_s1",
-        "mining_laser_shin_klein_s1",
-        "mining_laser_thcn_helix_s1",
-        "mining_laser_thcn_impact_s1",
-        "mining_laser_grin_arbor_s1",
-        "mining_laser_grin_lancet_s1",
+        "Pitman Mining Laser",
+        "Hofstede-S1 Mining Laser",
+        "Klein-S1 Mining Laser",
+        "Helix I Mining Laser",
+        "Impact I Mining Laser",
+        "Arbor MH1 Mining Laser",
+        "Lancet MH1 Mining Laser",
         "In/0/B BroadSpec-Go",
-        "radr_chco_s02_broadspec_lite",
-        "radr_chco_s03_broudspec",
+        "BroadSpec",
         "In/4/B BroadSpec-Max"
       ]
     ]
@@ -8871,9 +8860,9 @@
         "Arclight Pistol Battery (30 cap)"
       ],
       [
-        "mining_laser_grin_arbor_s0",
+        "Arbor MHV Mining Laser",
         "mining_laser_shin_hofstede_s0",
-        "mining_laser_shin_klein_s0",
+        "Lawson Mining Laser",
         "mining_laser_thcn_helix_s0",
         "In/0/C Surveyor-Go",
         "In/1/C Surveyor-Lite",
@@ -8900,16 +8889,15 @@
         "Arclight Pistol Battery (30 cap)"
       ],
       [
-        "mining_laser_drak_golem_s1",
-        "mining_laser_shin_hofstede_s1",
-        "mining_laser_shin_klein_s1",
-        "mining_laser_thcn_helix_s1",
-        "mining_laser_thcn_impact_s1",
-        "mining_laser_grin_arbor_s1",
-        "mining_laser_grin_lancet_s1",
+        "Pitman Mining Laser",
+        "Hofstede-S1 Mining Laser",
+        "Klein-S1 Mining Laser",
+        "Helix I Mining Laser",
+        "Impact I Mining Laser",
+        "Arbor MH1 Mining Laser",
+        "Lancet MH1 Mining Laser",
         "In/0/B BroadSpec-Go",
-        "radr_chco_s02_broadspec_lite",
-        "radr_chco_s03_broudspec",
+        "BroadSpec",
         "In/4/B BroadSpec-Max"
       ]
     ]
@@ -8932,16 +8920,15 @@
         "Arclight Pistol Battery (30 cap)"
       ],
       [
-        "mining_laser_drak_golem_s1",
-        "mining_laser_shin_hofstede_s1",
-        "mining_laser_shin_klein_s1",
-        "mining_laser_thcn_helix_s1",
-        "mining_laser_thcn_impact_s1",
-        "mining_laser_grin_arbor_s1",
-        "mining_laser_grin_lancet_s1",
+        "Pitman Mining Laser",
+        "Hofstede-S1 Mining Laser",
+        "Klein-S1 Mining Laser",
+        "Helix I Mining Laser",
+        "Impact I Mining Laser",
+        "Arbor MH1 Mining Laser",
+        "Lancet MH1 Mining Laser",
         "In/0/B BroadSpec-Go",
-        "radr_chco_s02_broadspec_lite",
-        "radr_chco_s03_broudspec",
+        "BroadSpec",
         "In/4/B BroadSpec-Max"
       ]
     ]
@@ -8964,16 +8951,15 @@
         "Arclight Pistol Battery (30 cap)"
       ],
       [
-        "mining_laser_drak_golem_s1",
-        "mining_laser_shin_hofstede_s1",
-        "mining_laser_shin_klein_s1",
-        "mining_laser_thcn_helix_s1",
-        "mining_laser_thcn_impact_s1",
-        "mining_laser_grin_arbor_s1",
-        "mining_laser_grin_lancet_s1",
+        "Pitman Mining Laser",
+        "Hofstede-S1 Mining Laser",
+        "Klein-S1 Mining Laser",
+        "Helix I Mining Laser",
+        "Impact I Mining Laser",
+        "Arbor MH1 Mining Laser",
+        "Lancet MH1 Mining Laser",
         "In/0/B BroadSpec-Go",
-        "radr_chco_s02_broadspec_lite",
-        "radr_chco_s03_broudspec",
+        "BroadSpec",
         "In/4/B BroadSpec-Max"
       ]
     ]
@@ -8996,20 +8982,20 @@
         "Arclight Pistol Battery (30 cap)"
       ],
       [
-        "mining_laser_grin_arbor_s2",
-        "mining_laser_grin_lancet_s2",
-        "mining_laser_shin_hofstede_s2",
-        "mining_laser_shin_klein_s2",
-        "mining_laser_thcn_helix_s2",
-        "mining_laser_thcn_impact_s2",
+        "Arbor MH2 Mining Laser",
+        "Lancet MH2 Mining Laser",
+        "Hofstede-S2 Mining Laser",
+        "Klein-S2 Mining Laser",
+        "Helix II Mining Laser",
+        "Impact II Mining Laser",
         "In/0/A FullSpec-Go",
         "In/2/A FullSpec",
         "In/3/A FullSpec-Max"
       ],
       [
-        "mining_laser_grin_arbor_s0",
+        "Arbor MHV Mining Laser",
         "mining_laser_shin_hofstede_s0",
-        "mining_laser_shin_klein_s0",
+        "Lawson Mining Laser",
         "mining_laser_thcn_helix_s0",
         "In/0/C Surveyor-Go",
         "In/1/C Surveyor-Lite",
@@ -9017,16 +9003,15 @@
         "In/3/C Surveyor-Max"
       ],
       [
-        "mining_laser_drak_golem_s1",
-        "mining_laser_shin_hofstede_s1",
-        "mining_laser_shin_klein_s1",
-        "mining_laser_thcn_helix_s1",
-        "mining_laser_thcn_impact_s1",
-        "mining_laser_grin_arbor_s1",
-        "mining_laser_grin_lancet_s1",
+        "Pitman Mining Laser",
+        "Hofstede-S1 Mining Laser",
+        "Klein-S1 Mining Laser",
+        "Helix I Mining Laser",
+        "Impact I Mining Laser",
+        "Arbor MH1 Mining Laser",
+        "Lancet MH1 Mining Laser",
         "In/0/B BroadSpec-Go",
-        "radr_chco_s02_broadspec_lite",
-        "radr_chco_s03_broudspec",
+        "BroadSpec",
         "In/4/B BroadSpec-Max"
       ]
     ]
@@ -9049,20 +9034,20 @@
         "Arclight Pistol Battery (30 cap)"
       ],
       [
-        "mining_laser_grin_arbor_s2",
-        "mining_laser_grin_lancet_s2",
-        "mining_laser_shin_hofstede_s2",
-        "mining_laser_shin_klein_s2",
-        "mining_laser_thcn_helix_s2",
-        "mining_laser_thcn_impact_s2",
+        "Arbor MH2 Mining Laser",
+        "Lancet MH2 Mining Laser",
+        "Hofstede-S2 Mining Laser",
+        "Klein-S2 Mining Laser",
+        "Helix II Mining Laser",
+        "Impact II Mining Laser",
         "In/0/A FullSpec-Go",
         "In/2/A FullSpec",
         "In/3/A FullSpec-Max"
       ],
       [
-        "mining_laser_grin_arbor_s0",
+        "Arbor MHV Mining Laser",
         "mining_laser_shin_hofstede_s0",
-        "mining_laser_shin_klein_s0",
+        "Lawson Mining Laser",
         "mining_laser_thcn_helix_s0",
         "In/0/C Surveyor-Go",
         "In/1/C Surveyor-Lite",
@@ -9070,16 +9055,15 @@
         "In/3/C Surveyor-Max"
       ],
       [
-        "mining_laser_drak_golem_s1",
-        "mining_laser_shin_hofstede_s1",
-        "mining_laser_shin_klein_s1",
-        "mining_laser_thcn_helix_s1",
-        "mining_laser_thcn_impact_s1",
-        "mining_laser_grin_arbor_s1",
-        "mining_laser_grin_lancet_s1",
+        "Pitman Mining Laser",
+        "Hofstede-S1 Mining Laser",
+        "Klein-S1 Mining Laser",
+        "Helix I Mining Laser",
+        "Impact I Mining Laser",
+        "Arbor MH1 Mining Laser",
+        "Lancet MH1 Mining Laser",
         "In/0/B BroadSpec-Go",
-        "radr_chco_s02_broadspec_lite",
-        "radr_chco_s03_broudspec",
+        "BroadSpec",
         "In/4/B BroadSpec-Max"
       ]
     ]
@@ -9102,9 +9086,9 @@
         "Arclight Pistol Battery (30 cap)"
       ],
       [
-        "mining_laser_grin_arbor_s0",
+        "Arbor MHV Mining Laser",
         "mining_laser_shin_hofstede_s0",
-        "mining_laser_shin_klein_s0",
+        "Lawson Mining Laser",
         "mining_laser_thcn_helix_s0",
         "In/0/C Surveyor-Go",
         "In/1/C Surveyor-Lite",
@@ -9131,16 +9115,15 @@
         "Arclight Pistol Battery (30 cap)"
       ],
       [
-        "mining_laser_drak_golem_s1",
-        "mining_laser_shin_hofstede_s1",
-        "mining_laser_shin_klein_s1",
-        "mining_laser_thcn_helix_s1",
-        "mining_laser_thcn_impact_s1",
-        "mining_laser_grin_arbor_s1",
-        "mining_laser_grin_lancet_s1",
+        "Pitman Mining Laser",
+        "Hofstede-S1 Mining Laser",
+        "Klein-S1 Mining Laser",
+        "Helix I Mining Laser",
+        "Impact I Mining Laser",
+        "Arbor MH1 Mining Laser",
+        "Lancet MH1 Mining Laser",
         "In/0/B BroadSpec-Go",
-        "radr_chco_s02_broadspec_lite",
-        "radr_chco_s03_broudspec",
+        "BroadSpec",
         "In/4/B BroadSpec-Max"
       ]
     ]
@@ -9163,20 +9146,20 @@
         "Arclight Pistol Battery (30 cap)"
       ],
       [
-        "mining_laser_grin_arbor_s2",
-        "mining_laser_grin_lancet_s2",
-        "mining_laser_shin_hofstede_s2",
-        "mining_laser_shin_klein_s2",
-        "mining_laser_thcn_helix_s2",
-        "mining_laser_thcn_impact_s2",
+        "Arbor MH2 Mining Laser",
+        "Lancet MH2 Mining Laser",
+        "Hofstede-S2 Mining Laser",
+        "Klein-S2 Mining Laser",
+        "Helix II Mining Laser",
+        "Impact II Mining Laser",
         "In/0/A FullSpec-Go",
         "In/2/A FullSpec",
         "In/3/A FullSpec-Max"
       ],
       [
-        "mining_laser_grin_arbor_s0",
+        "Arbor MHV Mining Laser",
         "mining_laser_shin_hofstede_s0",
-        "mining_laser_shin_klein_s0",
+        "Lawson Mining Laser",
         "mining_laser_thcn_helix_s0",
         "In/0/C Surveyor-Go",
         "In/1/C Surveyor-Lite",
@@ -9184,16 +9167,15 @@
         "In/3/C Surveyor-Max"
       ],
       [
-        "mining_laser_drak_golem_s1",
-        "mining_laser_shin_hofstede_s1",
-        "mining_laser_shin_klein_s1",
-        "mining_laser_thcn_helix_s1",
-        "mining_laser_thcn_impact_s1",
-        "mining_laser_grin_arbor_s1",
-        "mining_laser_grin_lancet_s1",
+        "Pitman Mining Laser",
+        "Hofstede-S1 Mining Laser",
+        "Klein-S1 Mining Laser",
+        "Helix I Mining Laser",
+        "Impact I Mining Laser",
+        "Arbor MH1 Mining Laser",
+        "Lancet MH1 Mining Laser",
         "In/0/B BroadSpec-Go",
-        "radr_chco_s02_broadspec_lite",
-        "radr_chco_s03_broudspec",
+        "BroadSpec",
         "In/4/B BroadSpec-Max"
       ],
       [
@@ -9224,16 +9206,15 @@
         "Arclight Pistol Battery (30 cap)"
       ],
       [
-        "mining_laser_drak_golem_s1",
-        "mining_laser_shin_hofstede_s1",
-        "mining_laser_shin_klein_s1",
-        "mining_laser_thcn_helix_s1",
-        "mining_laser_thcn_impact_s1",
-        "mining_laser_grin_arbor_s1",
-        "mining_laser_grin_lancet_s1",
+        "Pitman Mining Laser",
+        "Hofstede-S1 Mining Laser",
+        "Klein-S1 Mining Laser",
+        "Helix I Mining Laser",
+        "Impact I Mining Laser",
+        "Arbor MH1 Mining Laser",
+        "Lancet MH1 Mining Laser",
         "In/0/B BroadSpec-Go",
-        "radr_chco_s02_broadspec_lite",
-        "radr_chco_s03_broudspec",
+        "BroadSpec",
         "In/4/B BroadSpec-Max"
       ]
     ]
@@ -9256,16 +9237,15 @@
         "Arclight Pistol Battery (30 cap)"
       ],
       [
-        "mining_laser_drak_golem_s1",
-        "mining_laser_shin_hofstede_s1",
-        "mining_laser_shin_klein_s1",
-        "mining_laser_thcn_helix_s1",
-        "mining_laser_thcn_impact_s1",
-        "mining_laser_grin_arbor_s1",
-        "mining_laser_grin_lancet_s1",
+        "Pitman Mining Laser",
+        "Hofstede-S1 Mining Laser",
+        "Klein-S1 Mining Laser",
+        "Helix I Mining Laser",
+        "Impact I Mining Laser",
+        "Arbor MH1 Mining Laser",
+        "Lancet MH1 Mining Laser",
         "In/0/B BroadSpec-Go",
-        "radr_chco_s02_broadspec_lite",
-        "radr_chco_s03_broudspec",
+        "BroadSpec",
         "In/4/B BroadSpec-Max"
       ]
     ]
@@ -9288,20 +9268,20 @@
         "Arclight Pistol Battery (30 cap)"
       ],
       [
-        "mining_laser_grin_arbor_s2",
-        "mining_laser_grin_lancet_s2",
-        "mining_laser_shin_hofstede_s2",
-        "mining_laser_shin_klein_s2",
-        "mining_laser_thcn_helix_s2",
-        "mining_laser_thcn_impact_s2",
+        "Arbor MH2 Mining Laser",
+        "Lancet MH2 Mining Laser",
+        "Hofstede-S2 Mining Laser",
+        "Klein-S2 Mining Laser",
+        "Helix II Mining Laser",
+        "Impact II Mining Laser",
         "In/0/A FullSpec-Go",
         "In/2/A FullSpec",
         "In/3/A FullSpec-Max"
       ],
       [
-        "mining_laser_grin_arbor_s0",
+        "Arbor MHV Mining Laser",
         "mining_laser_shin_hofstede_s0",
-        "mining_laser_shin_klein_s0",
+        "Lawson Mining Laser",
         "mining_laser_thcn_helix_s0",
         "In/0/C Surveyor-Go",
         "In/1/C Surveyor-Lite",
@@ -9309,16 +9289,15 @@
         "In/3/C Surveyor-Max"
       ],
       [
-        "mining_laser_drak_golem_s1",
-        "mining_laser_shin_hofstede_s1",
-        "mining_laser_shin_klein_s1",
-        "mining_laser_thcn_helix_s1",
-        "mining_laser_thcn_impact_s1",
-        "mining_laser_grin_arbor_s1",
-        "mining_laser_grin_lancet_s1",
+        "Pitman Mining Laser",
+        "Hofstede-S1 Mining Laser",
+        "Klein-S1 Mining Laser",
+        "Helix I Mining Laser",
+        "Impact I Mining Laser",
+        "Arbor MH1 Mining Laser",
+        "Lancet MH1 Mining Laser",
         "In/0/B BroadSpec-Go",
-        "radr_chco_s02_broadspec_lite",
-        "radr_chco_s03_broudspec",
+        "BroadSpec",
         "In/4/B BroadSpec-Max"
       ],
       [
@@ -9349,9 +9328,9 @@
         "Arclight Pistol Battery (30 cap)"
       ],
       [
-        "mining_laser_grin_arbor_s0",
+        "Arbor MHV Mining Laser",
         "mining_laser_shin_hofstede_s0",
-        "mining_laser_shin_klein_s0",
+        "Lawson Mining Laser",
         "mining_laser_thcn_helix_s0",
         "In/0/C Surveyor-Go",
         "In/1/C Surveyor-Lite",
@@ -9378,20 +9357,20 @@
         "Arclight Pistol Battery (30 cap)"
       ],
       [
-        "mining_laser_grin_arbor_s2",
-        "mining_laser_grin_lancet_s2",
-        "mining_laser_shin_hofstede_s2",
-        "mining_laser_shin_klein_s2",
-        "mining_laser_thcn_helix_s2",
-        "mining_laser_thcn_impact_s2",
+        "Arbor MH2 Mining Laser",
+        "Lancet MH2 Mining Laser",
+        "Hofstede-S2 Mining Laser",
+        "Klein-S2 Mining Laser",
+        "Helix II Mining Laser",
+        "Impact II Mining Laser",
         "In/0/A FullSpec-Go",
         "In/2/A FullSpec",
         "In/3/A FullSpec-Max"
       ],
       [
-        "mining_laser_grin_arbor_s0",
+        "Arbor MHV Mining Laser",
         "mining_laser_shin_hofstede_s0",
-        "mining_laser_shin_klein_s0",
+        "Lawson Mining Laser",
         "mining_laser_thcn_helix_s0",
         "In/0/C Surveyor-Go",
         "In/1/C Surveyor-Lite",
@@ -9399,16 +9378,15 @@
         "In/3/C Surveyor-Max"
       ],
       [
-        "mining_laser_drak_golem_s1",
-        "mining_laser_shin_hofstede_s1",
-        "mining_laser_shin_klein_s1",
-        "mining_laser_thcn_helix_s1",
-        "mining_laser_thcn_impact_s1",
-        "mining_laser_grin_arbor_s1",
-        "mining_laser_grin_lancet_s1",
+        "Pitman Mining Laser",
+        "Hofstede-S1 Mining Laser",
+        "Klein-S1 Mining Laser",
+        "Helix I Mining Laser",
+        "Impact I Mining Laser",
+        "Arbor MH1 Mining Laser",
+        "Lancet MH1 Mining Laser",
         "In/0/B BroadSpec-Go",
-        "radr_chco_s02_broadspec_lite",
-        "radr_chco_s03_broudspec",
+        "BroadSpec",
         "In/4/B BroadSpec-Max"
       ]
     ]
@@ -9431,20 +9409,20 @@
         "Arclight Pistol Battery (30 cap)"
       ],
       [
-        "mining_laser_grin_arbor_s2",
-        "mining_laser_grin_lancet_s2",
-        "mining_laser_shin_hofstede_s2",
-        "mining_laser_shin_klein_s2",
-        "mining_laser_thcn_helix_s2",
-        "mining_laser_thcn_impact_s2",
+        "Arbor MH2 Mining Laser",
+        "Lancet MH2 Mining Laser",
+        "Hofstede-S2 Mining Laser",
+        "Klein-S2 Mining Laser",
+        "Helix II Mining Laser",
+        "Impact II Mining Laser",
         "In/0/A FullSpec-Go",
         "In/2/A FullSpec",
         "In/3/A FullSpec-Max"
       ],
       [
-        "mining_laser_grin_arbor_s0",
+        "Arbor MHV Mining Laser",
         "mining_laser_shin_hofstede_s0",
-        "mining_laser_shin_klein_s0",
+        "Lawson Mining Laser",
         "mining_laser_thcn_helix_s0",
         "In/0/C Surveyor-Go",
         "In/1/C Surveyor-Lite",
@@ -9452,16 +9430,15 @@
         "In/3/C Surveyor-Max"
       ],
       [
-        "mining_laser_drak_golem_s1",
-        "mining_laser_shin_hofstede_s1",
-        "mining_laser_shin_klein_s1",
-        "mining_laser_thcn_helix_s1",
-        "mining_laser_thcn_impact_s1",
-        "mining_laser_grin_arbor_s1",
-        "mining_laser_grin_lancet_s1",
+        "Pitman Mining Laser",
+        "Hofstede-S1 Mining Laser",
+        "Klein-S1 Mining Laser",
+        "Helix I Mining Laser",
+        "Impact I Mining Laser",
+        "Arbor MH1 Mining Laser",
+        "Lancet MH1 Mining Laser",
         "In/0/B BroadSpec-Go",
-        "radr_chco_s02_broadspec_lite",
-        "radr_chco_s03_broudspec",
+        "BroadSpec",
         "In/4/B BroadSpec-Max"
       ],
       [
@@ -9492,20 +9469,20 @@
         "Arclight Pistol Battery (30 cap)"
       ],
       [
-        "mining_laser_grin_arbor_s2",
-        "mining_laser_grin_lancet_s2",
-        "mining_laser_shin_hofstede_s2",
-        "mining_laser_shin_klein_s2",
-        "mining_laser_thcn_helix_s2",
-        "mining_laser_thcn_impact_s2",
+        "Arbor MH2 Mining Laser",
+        "Lancet MH2 Mining Laser",
+        "Hofstede-S2 Mining Laser",
+        "Klein-S2 Mining Laser",
+        "Helix II Mining Laser",
+        "Impact II Mining Laser",
         "In/0/A FullSpec-Go",
         "In/2/A FullSpec",
         "In/3/A FullSpec-Max"
       ],
       [
-        "mining_laser_grin_arbor_s0",
+        "Arbor MHV Mining Laser",
         "mining_laser_shin_hofstede_s0",
-        "mining_laser_shin_klein_s0",
+        "Lawson Mining Laser",
         "mining_laser_thcn_helix_s0",
         "In/0/C Surveyor-Go",
         "In/1/C Surveyor-Lite",
@@ -9513,16 +9490,15 @@
         "In/3/C Surveyor-Max"
       ],
       [
-        "mining_laser_drak_golem_s1",
-        "mining_laser_shin_hofstede_s1",
-        "mining_laser_shin_klein_s1",
-        "mining_laser_thcn_helix_s1",
-        "mining_laser_thcn_impact_s1",
-        "mining_laser_grin_arbor_s1",
-        "mining_laser_grin_lancet_s1",
+        "Pitman Mining Laser",
+        "Hofstede-S1 Mining Laser",
+        "Klein-S1 Mining Laser",
+        "Helix I Mining Laser",
+        "Impact I Mining Laser",
+        "Arbor MH1 Mining Laser",
+        "Lancet MH1 Mining Laser",
         "In/0/B BroadSpec-Go",
-        "radr_chco_s02_broadspec_lite",
-        "radr_chco_s03_broudspec",
+        "BroadSpec",
         "In/4/B BroadSpec-Max"
       ]
     ]
@@ -9545,20 +9521,20 @@
         "Arclight Pistol Battery (30 cap)"
       ],
       [
-        "mining_laser_grin_arbor_s2",
-        "mining_laser_grin_lancet_s2",
-        "mining_laser_shin_hofstede_s2",
-        "mining_laser_shin_klein_s2",
-        "mining_laser_thcn_helix_s2",
-        "mining_laser_thcn_impact_s2",
+        "Arbor MH2 Mining Laser",
+        "Lancet MH2 Mining Laser",
+        "Hofstede-S2 Mining Laser",
+        "Klein-S2 Mining Laser",
+        "Helix II Mining Laser",
+        "Impact II Mining Laser",
         "In/0/A FullSpec-Go",
         "In/2/A FullSpec",
         "In/3/A FullSpec-Max"
       ],
       [
-        "mining_laser_grin_arbor_s0",
+        "Arbor MHV Mining Laser",
         "mining_laser_shin_hofstede_s0",
-        "mining_laser_shin_klein_s0",
+        "Lawson Mining Laser",
         "mining_laser_thcn_helix_s0",
         "In/0/C Surveyor-Go",
         "In/1/C Surveyor-Lite",
@@ -9566,16 +9542,15 @@
         "In/3/C Surveyor-Max"
       ],
       [
-        "mining_laser_drak_golem_s1",
-        "mining_laser_shin_hofstede_s1",
-        "mining_laser_shin_klein_s1",
-        "mining_laser_thcn_helix_s1",
-        "mining_laser_thcn_impact_s1",
-        "mining_laser_grin_arbor_s1",
-        "mining_laser_grin_lancet_s1",
+        "Pitman Mining Laser",
+        "Hofstede-S1 Mining Laser",
+        "Klein-S1 Mining Laser",
+        "Helix I Mining Laser",
+        "Impact I Mining Laser",
+        "Arbor MH1 Mining Laser",
+        "Lancet MH1 Mining Laser",
         "In/0/B BroadSpec-Go",
-        "radr_chco_s02_broadspec_lite",
-        "radr_chco_s03_broudspec",
+        "BroadSpec",
         "In/4/B BroadSpec-Max"
       ],
       [
@@ -9856,14 +9831,14 @@
     "rep": 200,
     "bpGroups": [
       [
-        "fuel_nozzle_grin_nozzlefast",
-        "fuel_nozzle_grin_nozzlesecure",
-        "fuel_nozzle_grin_nozzleveryfast",
-        "fuel_nozzle_grin_nozzleverysecure",
-        "fuel_nozzle_misc_nozzlestandard",
-        "fuel_nozzle_shin_nozzleexpensivefast",
-        "fuel_nozzle_shin_nozzleexpensivesecure",
-        "fuel_nozzle_shin_nozzlemostexpensive"
+        "Norfield",
+        "Marlin",
+        "Lindstrom",
+        "Harkin",
+        "RN-7s",
+        "Bendix",
+        "Torrez",
+        "Ezra"
       ]
     ]
   },
@@ -9876,14 +9851,14 @@
     "rep": 200,
     "bpGroups": [
       [
-        "fuel_nozzle_grin_nozzlefast",
-        "fuel_nozzle_grin_nozzlesecure",
-        "fuel_nozzle_grin_nozzleveryfast",
-        "fuel_nozzle_grin_nozzleverysecure",
-        "fuel_nozzle_misc_nozzlestandard",
-        "fuel_nozzle_shin_nozzleexpensivefast",
-        "fuel_nozzle_shin_nozzleexpensivesecure",
-        "fuel_nozzle_shin_nozzlemostexpensive"
+        "Norfield",
+        "Marlin",
+        "Lindstrom",
+        "Harkin",
+        "RN-7s",
+        "Bendix",
+        "Torrez",
+        "Ezra"
       ]
     ]
   },
@@ -9896,14 +9871,14 @@
     "rep": 150,
     "bpGroups": [
       [
-        "fuel_nozzle_grin_nozzlefast",
-        "fuel_nozzle_grin_nozzlesecure",
-        "fuel_nozzle_grin_nozzleveryfast",
-        "fuel_nozzle_grin_nozzleverysecure",
-        "fuel_nozzle_misc_nozzlestandard",
-        "fuel_nozzle_shin_nozzleexpensivefast",
-        "fuel_nozzle_shin_nozzleexpensivesecure",
-        "fuel_nozzle_shin_nozzlemostexpensive"
+        "Norfield",
+        "Marlin",
+        "Lindstrom",
+        "Harkin",
+        "RN-7s",
+        "Bendix",
+        "Torrez",
+        "Ezra"
       ]
     ]
   },
@@ -9916,14 +9891,14 @@
     "rep": 150,
     "bpGroups": [
       [
-        "fuel_nozzle_grin_nozzlefast",
-        "fuel_nozzle_grin_nozzlesecure",
-        "fuel_nozzle_grin_nozzleveryfast",
-        "fuel_nozzle_grin_nozzleverysecure",
-        "fuel_nozzle_misc_nozzlestandard",
-        "fuel_nozzle_shin_nozzleexpensivefast",
-        "fuel_nozzle_shin_nozzleexpensivesecure",
-        "fuel_nozzle_shin_nozzlemostexpensive"
+        "Norfield",
+        "Marlin",
+        "Lindstrom",
+        "Harkin",
+        "RN-7s",
+        "Bendix",
+        "Torrez",
+        "Ezra"
       ]
     ]
   },
@@ -9950,10 +9925,10 @@
       [
         "Killshot Rifle",
         "Deadrig Shotgun",
-        "srvl_armor_heavy_arms_01_01_01",
-        "srvl_armor_heavy_core_01_01_01",
-        "srvl_armor_heavy_legs_01_01_01",
-        "srvl_armor_heavy_helmet_01_01_01",
+        "Overlord Arms Supernova",
+        "Overlord Core Supernova",
+        "Overlord Legs Supernova",
+        "Overlord Helmet Supernova",
         "Piecemeal Armor Arms",
         "Piecemeal Armor Core",
         "Piecemeal Armor Legs",
@@ -10082,10 +10057,10 @@
       [
         "Killshot Rifle",
         "Deadrig Shotgun",
-        "srvl_armor_heavy_arms_01_01_01",
-        "srvl_armor_heavy_core_01_01_01",
-        "srvl_armor_heavy_legs_01_01_01",
-        "srvl_armor_heavy_helmet_01_01_01",
+        "Overlord Arms Supernova",
+        "Overlord Core Supernova",
+        "Overlord Legs Supernova",
+        "Overlord Helmet Supernova",
         "Piecemeal Armor Arms",
         "Piecemeal Armor Core",
         "Piecemeal Armor Legs",

@@ -68,6 +68,10 @@ async function loadIni(file) {
 }
 
 // ── Cargar nombres de blueprints: bp-file → entityClass name ─────────────────
+// También precarga entityLocName: entityClass → clave de localización del entity record
+// para items cuya clave no sigue el patrón item_name_*
+
+const entityLocNames = {};  // entityClass_lower → ini key (sin @)
 
 function loadBlueprintNames() {
   const map = {};
@@ -76,7 +80,18 @@ function loadBlueprintNames() {
     if (!d) continue;
     const entityRef = d._RecordValue_?.blueprint?.processSpecificData?.entityClass;
     if (!entityRef) continue;
-    map[path.basename(f, '.json').toLowerCase()] = refToName(entityRef);
+    const entityName = refToName(entityRef);
+    if (!entityName) continue;
+    map[path.basename(f, '.json').toLowerCase()] = entityName;
+    // Resolver ruta del entity record relativa al blueprint
+    const relPath = entityRef.replace(/^file:\/\/\.\//, '');
+    const entityFile = path.resolve(path.dirname(f), relPath);
+    const ed = readJson(entityFile);
+    if (!ed) continue;
+    const locName = collectField(ed._RecordValue_, 'Localization')[0]?.Name;
+    if (locName && typeof locName === 'string' && locName.startsWith('@') && !locName.includes('LOC_')) {
+      entityLocNames[entityName.toLowerCase()] = locName.replace(/^@/, '');
+    }
   }
   return map;
 }
@@ -270,12 +285,17 @@ function buildNameMap(ini) {
 // ── Resolver nombre de item ───────────────────────────────────────────────────
 // Prioridad: componentsMap (nombre con prefijo Mi/Ci/…) > nameMap (global.ini) > entityClass
 
-function resolveItemName(entityClass, nameMap, componentsMap) {
+function resolveItemName(entityClass, nameMap, componentsMap, ini) {
   const ecl = entityClass.toLowerCase();
   const noSCItem = ecl.endsWith('_scitem') ? ecl.slice(0, -7) : ecl;
-  return componentsMap[ecl] || componentsMap[noSCItem]
-      || nameMap[ecl]       || nameMap[noSCItem]
-      || entityClass;
+  // Prioridad: componentsMap > nameMap (item_name_*) > entityLocNames (Localization.Name del entity) > entityClass
+  if (componentsMap[ecl]) return componentsMap[ecl];
+  if (componentsMap[noSCItem]) return componentsMap[noSCItem];
+  if (nameMap[ecl]) return nameMap[ecl];
+  if (nameMap[noSCItem]) return nameMap[noSCItem];
+  const locKey = entityLocNames[ecl] || entityLocNames[noSCItem];
+  if (locKey && ini) return ini[locKey] || entityClass;
+  return entityClass;
 }
 
 // ── Cargar misiones desde MissionBrokerEntry ──────────────────────────────────
@@ -331,7 +351,7 @@ function loadMissionsIntoMap(missions, { byTitle, byDesc }, bpPools, repAmounts,
     const seen = new Set();
     const bpGroups = poolNames
       .map(p => (bpPools[p] || [])
-        .map(e => resolveItemName(e, nameMap, componentsMap))
+        .map(e => resolveItemName(e, nameMap, componentsMap, ini))
         .filter(name => { if (seen.has(name)) return false; seen.add(name); return true; })
       )
       .filter(g => g.length > 0);
@@ -374,7 +394,7 @@ function addContractOnlyMissions(missionsMap, { byTitle, byDesc }, bpPools, cont
     const seen = new Set();
     const bpGroups = [...poolSet]
       .map(p => (bpPools[p] || [])
-        .map(e => resolveItemName(e, nameMap, componentsMap))
+        .map(e => resolveItemName(e, nameMap, componentsMap, ini))
         .filter(name => { if (seen.has(name)) return false; seen.add(name); return true; })
       )
       .filter(g => g.length > 0);
