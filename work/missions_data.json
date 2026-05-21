@@ -145,28 +145,6 @@
     ]
   },
   {
-    "titleKey": "bhg_bounty_title_Rockcracker_001",
-    "titleText": "Verified Bounty: ~mission(TargetName) at QV Breaker Station",
-    "descKey": "",
-    "descText": "",
-    "uec": 0,
-    "rep": 0,
-    "bpGroups": [
-      [
-        "R97 Shotgun",
-        "Monde Arms",
-        "Monde Core",
-        "Monde Legs",
-        "Monde Helmet",
-        "Monde Arms Hiro",
-        "Monde Core Hiro",
-        "Monde Legs Hiro",
-        "Monde Helmet Hiro",
-        "R97 Shotgun Magazine (18 cap)"
-      ]
-    ]
-  },
-  {
     "titleKey": "BHG_Certification_Criminal_Title",
     "titleText": "Suspect Apprehension Certification ",
     "descKey": "BHG_Certification_Criminal_Desc",
@@ -1877,19 +1855,7 @@
     "descText": "~mission(Contractor|HaulCargo_AtoB)",
     "uec": 248250,
     "rep": 2000,
-    "bpGroups": [
-      [
-        "Mi/1/A VK-00",
-        "Mi/1/B Siren",
-        "Mi/2/A XL-1",
-        "Mi/2/B Yeager",
-        "Mi/3/B Balandin",
-        "Mi/3/A TS-2",
-        "In/1/A Palisade",
-        "In/2/A Rampart",
-        "In/3/A Parapet"
-      ]
-    ]
+    "bpGroups": []
   },
   {
     "titleKey": "Covalex_HaulCargo_MultiToSingle_title",
@@ -1907,19 +1873,7 @@
     "descText": "~mission(Contractor|HaulCargo_SingleToMulti)",
     "uec": 395500,
     "rep": 8000,
-    "bpGroups": [
-      [
-        "Mi/1/A VK-00",
-        "Mi/1/B Siren",
-        "Mi/2/A XL-1",
-        "Mi/2/B Yeager",
-        "Mi/3/B Balandin",
-        "Mi/3/A TS-2",
-        "In/1/A Palisade",
-        "In/2/A Rampart",
-        "In/3/A Parapet"
-      ]
-    ]
+    "bpGroups": []
   },
   {
     "titleKey": "Covalex_internaldelivery_dc_title_001",
@@ -6890,44 +6844,6 @@
     ]
   },
   {
-    "titleKey": "LingFamily_HaulCargo_AToB_Intro_title",
-    "titleText": "Cargo Hauling Opportunity with Ling Hauling",
-    "descKey": "LingFamily_HaulCargo_AToB_Intro_desc",
-    "descText": "Hi,  \n \nThis is Petra Ling, and I’m proud to offer you a new and exciting opportunity to partner with Ling Family Hauling. When my parents started this company, their goal was to provide fast and reliable courier deliveries around the greater Crusader area. It quickly became a success, and as our reputation grew, so did our operations.  \n \nNow, under my stewardship, Ling Family Hauling is taking the next big step – cargo hauling. Demand for this new service is growing faster than I expected, and that’s great news for both of us.   \n \nIf you’ve ever wanted to be a hauler, then I can make your dreams come true. Best way to learn something is by doing it, and I’ve got a haul of <EM4>~mission(Item)</EM4> that needs to go from <EM4>~mission(Location|Address)</EM4> to <EM4>~mission(Destination|Address)</EM4>.  \n\nNo prior experience is necessary, but here’s a few things to keep in mind. All pick-ups and deliveries must be done at a freight elevator or autoloaded. You will need a ship that can hold <EM4>~mission(MissionMaxSCUSize) cargo containers</EM4>, and a <EM4>handheld tractor beam</EM4> to move them around. \n \nUpon successful completion of this delivery, you will be promoted to a ‘trusted contractor’ status and more hauls will become available to you.     \n\n \nSincerely,  \nPetra Ling  \nManaging Director of Cargo Operations \nLing Family Hauling \n\n \n\n \n\n \n\nLing Family Hauling knows it’s a dangerous and unpredictable universe and has established several protocols to protect both you and our client’s cargo. To ensure you aren’t punished for circumstances outside of your control, total payment will be prorated to the percentage of cargo successfully delivered. A delivery timer will be set for each haul. Any cargo that remains undelivered upon its expiration will be flagged as stolen and treated as such. All pick-ups and deliveries must be autoloaded or done at a freight elevator.",
-    "uec": 0,
-    "rep": 0,
-    "bpGroups": [
-      [
-        "St/1/A Spectre",
-        "St/1/B Zephyr",
-        "St/2/B Bolt",
-        "St/2/A Spicule",
-        "In/1/B Guardian",
-        "In/2/B Citadel",
-        "In/3/B Barbican"
-      ]
-    ]
-  },
-  {
-    "titleKey": "LingFamily_HaulCargo_AToB_title",
-    "titleText": "Ling Family ~mission(ReputationRank) Cargo Haul - ~mission(CargoGradeToken) Scale",
-    "descKey": "",
-    "descText": "",
-    "uec": 0,
-    "rep": 0,
-    "bpGroups": [
-      [
-        "St/1/A Spectre",
-        "St/1/B Zephyr",
-        "St/2/B Bolt",
-        "St/2/A Spicule",
-        "In/1/B Guardian",
-        "In/2/B Citadel",
-        "In/3/B Barbican"
-      ]
-    ]
-  },
-  {
     "titleKey": "LingFamily_HaulCargo_MultiToSingle_title",
     "titleText": "Ling Family ~mission(ReputationRank) Cargo Haul - ~mission(CargoGradeToken) Scale",
     "descKey": "",
@@ -10020,6 +9936,18 @@
     "rep": 1000,
     "bpGroups": [
       [
+        "Pulverizer LMG",
+        "Tripledown Pistol ",
+        "Citadel Arms Base",
+        "Citadel Legs Base",
+        "Citadel Core Base",
+        "Fortifier Helmet Base",
+        "Carnifex Armor Core",
+        "Carnifex Armor Legs",
+        "Pulverizer LMG Magazine (120 Cap)",
+        "Tripledown Pistol Magazine (12 Cap)"
+      ],
+      [
         "Killshot Rifle",
         "Deadrig Shotgun",
         "srvl_armor_heavy_arms_01_01_01",
@@ -10032,18 +9960,6 @@
         "Badami Helmet",
         "Killshot Rifle Magazine (45 Cap)",
         "Deadrig Shotgun Magazine (8 cap)"
-      ],
-      [
-        "Pulverizer LMG",
-        "Tripledown Pistol ",
-        "Citadel Arms Base",
-        "Citadel Legs Base",
-        "Citadel Core Base",
-        "Fortifier Helmet Base",
-        "Carnifex Armor Core",
-        "Carnifex Armor Legs",
-        "Pulverizer LMG Magazine (120 Cap)",
-        "Tripledown Pistol Magazine (12 Cap)"
       ]
     ]
   },
@@ -10151,28 +10067,6 @@
         "Monde Core Crimson Camo",
         "Monde Legs Crimson Camo",
         "Monde Helmet Crimson Camo",
-        "R97 Shotgun Magazine (18 cap)"
-      ]
-    ]
-  },
-  {
-    "titleKey": "Vaughn_EliminateSpecific_FPS_Rockcracker_title_001",
-    "titleText": "A Well Deserved Break",
-    "descKey": "",
-    "descText": "",
-    "uec": 0,
-    "rep": 0,
-    "bpGroups": [
-      [
-        "R97 Shotgun",
-        "Monde Arms",
-        "Monde Core",
-        "Monde Legs",
-        "Monde Helmet",
-        "Monde Arms Hiro",
-        "Monde Core Hiro",
-        "Monde Legs Hiro",
-        "Monde Helmet Hiro",
         "R97 Shotgun Magazine (18 cap)"
       ]
     ]

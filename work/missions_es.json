@@ -165,35 +165,11 @@
     ]
   },
   {
-    "titleKey": "bhg_bounty_title_Rockcracker_001",
-    "titleEs": "Recompensa verificada: ~mission(TargetName) en la estación QV Breaker <EM4>[BP]</EM4>",
-    "titleEn": "Verified Bounty: ~mission(TargetName) at QV Breaker Station",
-    "descKey": "",
-    "descEs": "<EM4>Objetos Fabricables:</EM4>\n- R97 Shotgun\n- Monde Arms\n- Monde Core\n- Monde Legs\n- Monde Helmet\n- Monde Arms Hiro\n- Monde Core Hiro\n- Monde Legs Hiro\n- Monde Helmet Hiro\n- R97 Shotgun Magazine (18 cap)",
-    "descEn": "",
-    "uec": 0,
-    "rep": 0,
-    "bpGroups": [
-      [
-        "R97 Shotgun",
-        "Monde Arms",
-        "Monde Core",
-        "Monde Legs",
-        "Monde Helmet",
-        "Monde Arms Hiro",
-        "Monde Core Hiro",
-        "Monde Legs Hiro",
-        "Monde Helmet Hiro",
-        "R97 Shotgun Magazine (18 cap)"
-      ]
-    ]
-  },
-  {
     "titleKey": "BHG_Certification_Criminal_Title",
     "titleEs": "Certificación de Detención de Sospechosos",
     "titleEn": "Suspect Apprehension Certification ",
     "descKey": "BHG_Certification_Criminal_Desc",
-    "descEs": "<EM4>Reputación Otorgada:</EM4> 50",
+    "descEs": "<EM4>Reputación Otorgada:</EM4> 50\n\n<EM4>Reputación Otorgada:</EM4> 50",
     "descEn": "",
     "uec": 0,
     "rep": 50,
@@ -204,7 +180,7 @@
     "titleEs": "Certificación de Permiso de Iniciación para Rastreadores",
     "titleEn": "Tracker Beginner's Permit Certification",
     "descKey": "BHG_Certification_Easy_Desc",
-    "descEs": "<EM4>Reputación Otorgada:</EM4> 50",
+    "descEs": "<EM4>Reputación Otorgada:</EM4> 50\n\n<EM4>Reputación Otorgada:</EM4> 50",
     "descEn": "",
     "uec": 5000,
     "rep": 50,
@@ -215,7 +191,7 @@
     "titleEs": "Certificación de recuperación de fugitivos",
     "titleEn": "Fugitive Recovery Certification",
     "descKey": "BHG_Certification_EscapedConvict_Desc",
-    "descEs": "<EM4>Reputación Otorgada:</EM4> 50",
+    "descEs": "<EM4>Reputación Otorgada:</EM4> 50\n\n<EM4>Reputación Otorgada:</EM4> 50",
     "descEn": "",
     "uec": 0,
     "rep": 50,
@@ -226,7 +202,7 @@
     "titleEs": "Certificación de Licencia de Rastreador Oficial",
     "titleEn": "Journeyman Tracker License Certification",
     "descKey": "BHG_Certification_Hard_Desc",
-    "descEs": "<EM4>Reputación Otorgada:</EM4> 50",
+    "descEs": "<EM4>Reputación Otorgada:</EM4> 50\n\n<EM4>Reputación Otorgada:</EM4> 50",
     "descEn": "",
     "uec": 0,
     "rep": 50,
@@ -237,7 +213,7 @@
     "titleEs": "Certificación de licencia de rastreador",
     "titleEn": "Tracker License Certification",
     "descKey": "BHG_Certification_Medium_Desc",
-    "descEs": "<EM4>Reputación Otorgada:</EM4> 50",
+    "descEs": "<EM4>Reputación Otorgada:</EM4> 50\n\n<EM4>Reputación Otorgada:</EM4> 50",
     "descEn": "",
     "uec": 7500,
     "rep": 50,
@@ -248,7 +224,7 @@
     "titleEs": "Certificación de Licencia de Rastreador Maestro",
     "titleEn": "Master Tracker License Certification",
     "descKey": "BHG_Certification_Super_Desc",
-    "descEs": "<EM4>Reputación Otorgada:</EM4> 50",
+    "descEs": "<EM4>Reputación Otorgada:</EM4> 50\n\n<EM4>Reputación Otorgada:</EM4> 50",
     "descEn": "",
     "uec": 25000,
     "rep": 50,
@@ -259,7 +235,7 @@
     "titleEs": "Certificación de Permiso de Capacitación en Rastreo",
     "titleEn": "Tracker Training Permit Certification",
     "descKey": "BHG_Certification_VeryEasy_Desc",
-    "descEs": "<EM4>Reputación Otorgada:</EM4> 50",
+    "descEs": "<EM4>Reputación Otorgada:</EM4> 50\n\n<EM4>Reputación Otorgada:</EM4> 50",
     "descEn": "",
     "uec": 4000,
     "rep": 50,
@@ -270,7 +246,7 @@
     "titleEs": "Certificación de licencia de rastreador avanzado",
     "titleEn": "Advanced Tracker License Certification",
     "descKey": "BHG_Certification_VeryHard_Desc",
-    "descEs": "<EM4>Reputación Otorgada:</EM4> 50",
+    "descEs": "<EM4>Reputación Otorgada:</EM4> 50\n\n<EM4>Reputación Otorgada:</EM4> 50",
     "descEn": "",
     "uec": 175000,
     "rep": 50,
@@ -2108,26 +2084,14 @@
   },
   {
     "titleKey": "Covalex_HaulCargo_AToB_title",
-    "titleEs": "~mission(ReputationRank) Rank - Direct ~mission(CargoGradeToken) Cargo Haul <EM4>[BP]</EM4>",
+    "titleEs": "~mission(ReputationRank) Rank - Direct ~mission(CargoGradeToken) Cargo Haul",
     "titleEn": "~mission(ReputationRank) Rank - Direct ~mission(CargoGradeToken) Cargo Haul",
     "descKey": "HaulCargo_AtoB_desc",
-    "descEs": "~mission(Contractor|HaulCargo_AtoB)\n\n<EM4>Objetos Fabricables:</EM4>\n- Mi/1/A VK-00\n- Mi/1/B Siren\n- Mi/2/A XL-1\n- Mi/2/B Yeager\n- Mi/3/B Balandin\n- Mi/3/A TS-2\n- In/1/A Palisade\n- In/2/A Rampart\n- In/3/A Parapet\n\n<EM4>Reputación Otorgada:</EM4> 2000",
+    "descEs": "~mission(Contractor|HaulCargo_AtoB)\n\n<EM4>Reputación Otorgada:</EM4> 2000",
     "descEn": "~mission(Contractor|HaulCargo_AtoB)",
     "uec": 248250,
     "rep": 2000,
-    "bpGroups": [
-      [
-        "Mi/1/A VK-00",
-        "Mi/1/B Siren",
-        "Mi/2/A XL-1",
-        "Mi/2/B Yeager",
-        "Mi/3/B Balandin",
-        "Mi/3/A TS-2",
-        "In/1/A Palisade",
-        "In/2/A Rampart",
-        "In/3/A Parapet"
-      ]
-    ]
+    "bpGroups": []
   },
   {
     "titleKey": "Covalex_HaulCargo_MultiToSingle_title",
@@ -2142,26 +2106,14 @@
   },
   {
     "titleKey": "Covalex_HaulCargo_SingleToMulti_title",
-    "titleEs": "~mission(ReputationRank) Rank - ~mission(CargoGradeToken) Cargo Haul  <EM4>[BP]</EM4>",
+    "titleEs": "~mission(ReputationRank) Rank - ~mission(CargoGradeToken) Cargo Haul",
     "titleEn": "~mission(ReputationRank) Rank - ~mission(CargoGradeToken) Cargo Haul ",
     "descKey": "HaulCargo_SingleToMulti_desc",
-    "descEs": "~mission(Contractor|HaulCargo_SingleToMulti)\n\n<EM4>Objetos Fabricables:</EM4>\n- Mi/1/A VK-00\n- Mi/1/B Siren\n- Mi/2/A XL-1\n- Mi/2/B Yeager\n- Mi/3/B Balandin\n- Mi/3/A TS-2\n- In/1/A Palisade\n- In/2/A Rampart\n- In/3/A Parapet\n\n<EM4>Reputación Otorgada:</EM4> 8000",
+    "descEs": "~mission(Contractor|HaulCargo_SingleToMulti)\n\n<EM4>Reputación Otorgada:</EM4> 8000",
     "descEn": "~mission(Contractor|HaulCargo_SingleToMulti)",
     "uec": 395500,
     "rep": 8000,
-    "bpGroups": [
-      [
-        "Mi/1/A VK-00",
-        "Mi/1/B Siren",
-        "Mi/2/A XL-1",
-        "Mi/2/B Yeager",
-        "Mi/3/B Balandin",
-        "Mi/3/A TS-2",
-        "In/1/A Palisade",
-        "In/2/A Rampart",
-        "In/3/A Parapet"
-      ]
-    ]
+    "bpGroups": []
   },
   {
     "titleKey": "Covalex_internaldelivery_dc_title_001",
@@ -7670,48 +7622,6 @@
     ]
   },
   {
-    "titleKey": "LingFamily_HaulCargo_AToB_Intro_title",
-    "titleEs": "Oportunidad de transporte de carga con Ling Hauling <EM4>[BP]</EM4>",
-    "titleEn": "Cargo Hauling Opportunity with Ling Hauling",
-    "descKey": "LingFamily_HaulCargo_AToB_Intro_desc",
-    "descEs": "Hola, soy Petra Ling y me enorgullece ofrecerles una nueva y emocionante oportunidad para asociarse con Ling Family Hauling. Cuando mis padres fundaron esta empresa, su objetivo era brindar entregas de mensajería rápidas y confiables en el área metropolitana de Crusader. Rápidamente se convirtió en un éxito, y a medida que nuestra reputación crecía, también lo hacían nuestras operaciones. Ahora, bajo mi dirección, Ling Family Hauling está dando el siguiente gran paso: el transporte de carga. La demanda de este nuevo servicio está creciendo más rápido de lo que esperaba, y eso es una gran noticia para ambos. Si alguna vez has querido ser transportista, puedo hacer tus sueños realidad. La mejor manera de aprender algo es haciéndolo, y tengo un envío de <EM4>~mission(Item)</EM4> que necesita ir de <EM4>~mission(Location|Address)</EM4> a <EM4>~mission(Destination|Address)</EM4>. No se requiere experiencia previa, pero aquí hay algunas cosas que debes tener en cuenta. Todas las recogidas y entregas deben hacerse en un montacargas o cargarse automáticamente. Necesitará un barco que pueda contener <EM4>~mission(MissionMaxSCUSize) contenedores de carga</EM4>, y un <EM4>rayo tractor portátil</EM4> para moverlos. Al completar con éxito esta entrega, ascenderá a la categoría de \"contratista de confianza\" y tendrá acceso a más transportes. Atentamente, Petra Ling Directora General de Operaciones de Carga Ling Family Hauling Ling Family Hauling sabe que es un universo peligroso e impredecible y ha establecido varios protocolos para proteger tanto a usted como la carga de nuestro cliente. Para garantizar que no sea penalizado por circunstancias ajenas a su control, el pago total se prorrateará según el porcentaje de carga entregada con éxito. Se establecerá un temporizador de entrega para cada transporte. Cualquier carga que permanezca sin entregar al expirar el plazo se marcará como robada y se tratará como tal. Todas las recogidas y entregas deben cargarse automáticamente o hacerse en un montacargas.\n\n<EM4>Objetos Fabricables:</EM4>\n- St/1/A Spectre\n- St/1/B Zephyr\n- St/2/B Bolt\n- St/2/A Spicule\n- In/1/B Guardian\n- In/2/B Citadel\n- In/3/B Barbican",
-    "descEn": "Hi,  \n \nThis is Petra Ling, and I’m proud to offer you a new and exciting opportunity to partner with Ling Family Hauling. When my parents started this company, their goal was to provide fast and reliable courier deliveries around the greater Crusader area. It quickly became a success, and as our reputation grew, so did our operations.  \n \nNow, under my stewardship, Ling Family Hauling is taking the next big step – cargo hauling. Demand for this new service is growing faster than I expected, and that’s great news for both of us.   \n \nIf you’ve ever wanted to be a hauler, then I can make your dreams come true. Best way to learn something is by doing it, and I’ve got a haul of <EM4>~mission(Item)</EM4> that needs to go from <EM4>~mission(Location|Address)</EM4> to <EM4>~mission(Destination|Address)</EM4>.  \n\nNo prior experience is necessary, but here’s a few things to keep in mind. All pick-ups and deliveries must be done at a freight elevator or autoloaded. You will need a ship that can hold <EM4>~mission(MissionMaxSCUSize) cargo containers</EM4>, and a <EM4>handheld tractor beam</EM4> to move them around. \n \nUpon successful completion of this delivery, you will be promoted to a ‘trusted contractor’ status and more hauls will become available to you.     \n\n \nSincerely,  \nPetra Ling  \nManaging Director of Cargo Operations \nLing Family Hauling \n\n \n\n \n\n \n\nLing Family Hauling knows it’s a dangerous and unpredictable universe and has established several protocols to protect both you and our client’s cargo. To ensure you aren’t punished for circumstances outside of your control, total payment will be prorated to the percentage of cargo successfully delivered. A delivery timer will be set for each haul. Any cargo that remains undelivered upon its expiration will be flagged as stolen and treated as such. All pick-ups and deliveries must be autoloaded or done at a freight elevator.",
-    "uec": 0,
-    "rep": 0,
-    "bpGroups": [
-      [
-        "St/1/A Spectre",
-        "St/1/B Zephyr",
-        "St/2/B Bolt",
-        "St/2/A Spicule",
-        "In/1/B Guardian",
-        "In/2/B Citadel",
-        "In/3/B Barbican"
-      ]
-    ]
-  },
-  {
-    "titleKey": "LingFamily_HaulCargo_AToB_title",
-    "titleEs": "Familia Ling ~mission(ReputationRank) Transporte de carga - ~escala de misión(CargoGradeToken) <EM4>[BP]</EM4>",
-    "titleEn": "Ling Family ~mission(ReputationRank) Cargo Haul - ~mission(CargoGradeToken) Scale",
-    "descKey": "",
-    "descEs": "<EM4>Objetos Fabricables:</EM4>\n- St/1/A Spectre\n- St/1/B Zephyr\n- St/2/B Bolt\n- St/2/A Spicule\n- In/1/B Guardian\n- In/2/B Citadel\n- In/3/B Barbican",
-    "descEn": "",
-    "uec": 0,
-    "rep": 0,
-    "bpGroups": [
-      [
-        "St/1/A Spectre",
-        "St/1/B Zephyr",
-        "St/2/B Bolt",
-        "St/2/A Spicule",
-        "In/1/B Guardian",
-        "In/2/B Citadel",
-        "In/3/B Barbican"
-      ]
-    ]
-  },
-  {
     "titleKey": "LingFamily_HaulCargo_MultiToSingle_title",
     "titleEs": "Familia Ling ~mission(ReputationRank) Transporte de carga - ~escala de misión(CargoGradeToken) <EM4>[BP]</EM4>",
     "titleEn": "Ling Family ~mission(ReputationRank) Cargo Haul - ~mission(CargoGradeToken) Scale",
@@ -8375,7 +8285,7 @@
     "titleEs": "~mission(TargetName) Whereabouts Unknown",
     "titleEn": "~mission(TargetName) Whereabouts Unknown",
     "descKey": "MTPS_searchbody_danger_dc_desc_001",
-    "descEs": "ABOUT THE JOB\nmicroTech Protection Services is seeking a qualified contractor to assist in the search for ~mission(TargetName) who was last seen near the ~mission(Location) at ~mission(Location|Address) but who's current whereabouts are unknown. \n\nOur preliminary investigation has led us to suspect foul play may be behind their disappearance. As such, heightened caution is advised as there may be hostile actors involved.\n\nRESPONSIBILITIES\n• Provide own transportation to ~mission(Location|address).\n• Confirm the location of ~mission(TargetName) and if they are still alive.\n\nMINIMUM QUALIFICATIONS\n• 2 years security experience.\n• Available for immediate deployment.\n\nPREFERRED QUALIFICATIONS\n• Experience with conducting missing person investigations.\n• Ability to handle high pressure situations.\n",
+    "descEs": "ABOUT THE JOB\nmicroTech Protection Services is seeking a qualified contractor to assist in the search for ~mission(TargetName) who was last seen near the ~mission(Location) at ~mission(Location|Address) but who's current whereabouts are unknown. \n\nOur preliminary investigation has led us to suspect foul play may be behind their disappearance. As such, heightened caution is advised as there may be hostile actors involved.\n\nRESPONSIBILITIES\n• Provide own transportation to ~mission(Location|address).\n• Confirm the location of ~mission(TargetName) and if they are still alive.\n\nMINIMUM QUALIFICATIONS\n• 2 years security experience.\n• Available for immediate deployment.\n\nPREFERRED QUALIFICATIONS\n• Experience with conducting missing person investigations.\n• Ability to handle high pressure situations.",
     "descEn": "ABOUT THE JOB\nmicroTech Protection Services is seeking a qualified contractor to assist in the search for ~mission(TargetName) who was last seen near the ~mission(Location) at ~mission(Location|Address) but who's current whereabouts are unknown. \n\nOur preliminary investigation has led us to suspect foul play may be behind their disappearance. As such, heightened caution is advised as there may be hostile actors involved.\n\nRESPONSIBILITIES\n• Provide own transportation to ~mission(Location|address).\n• Confirm the location of ~mission(TargetName) and if they are still alive.\n\nMINIMUM QUALIFICATIONS\n• 2 years security experience.\n• Available for immediate deployment.\n\nPREFERRED QUALIFICATIONS\n• Experience with conducting missing person investigations.\n• Ability to handle high pressure situations.\n",
     "uec": 34000,
     "rep": 0,
@@ -8386,7 +8296,7 @@
     "titleEs": "~mission(TargetName) Reported Missing",
     "titleEn": "~mission(TargetName) Reported Missing",
     "descKey": "MTPS_searchbody_dc_desc_001",
-    "descEs": "ABOUT THE JOB\nAfter receiving a report that ~mission(TargetName) has been missing, microTech Protection Services is seeking a qualified contractor to begin an onsite search of ~mission(Location|Address) to learn their current whereabouts. The missing individual was last seen entering the ~mission(Location) so it's recommended to begin the search there.\n\nRESPONSIBILITIES\n• Provide own transportation to ~mission(Location|address).\n• Confirm the location of ~mission(TargetName) and if they are still alive.\n\nMINIMUM QUALIFICATIONS\n• 2 years security experience.\n• Available for immediate deployment.\n\nPREFERRED QUALIFICATIONS\n• Experience with conducting missing person investigations.\n",
+    "descEs": "ABOUT THE JOB\nAfter receiving a report that ~mission(TargetName) has been missing, microTech Protection Services is seeking a qualified contractor to begin an onsite search of ~mission(Location|Address) to learn their current whereabouts. The missing individual was last seen entering the ~mission(Location) so it's recommended to begin the search there.\n\nRESPONSIBILITIES\n• Provide own transportation to ~mission(Location|address).\n• Confirm the location of ~mission(TargetName) and if they are still alive.\n\nMINIMUM QUALIFICATIONS\n• 2 years security experience.\n• Available for immediate deployment.\n\nPREFERRED QUALIFICATIONS\n• Experience with conducting missing person investigations.",
     "descEn": "ABOUT THE JOB\nAfter receiving a report that ~mission(TargetName) has been missing, microTech Protection Services is seeking a qualified contractor to begin an onsite search of ~mission(Location|Address) to learn their current whereabouts. The missing individual was last seen entering the ~mission(Location) so it's recommended to begin the search there.\n\nRESPONSIBILITIES\n• Provide own transportation to ~mission(Location|address).\n• Confirm the location of ~mission(TargetName) and if they are still alive.\n\nMINIMUM QUALIFICATIONS\n• 2 years security experience.\n• Available for immediate deployment.\n\nPREFERRED QUALIFICATIONS\n• Experience with conducting missing person investigations.\n",
     "uec": 6000,
     "rep": 0,
@@ -8763,7 +8673,7 @@
     "titleEs": "Iniciativa Overdrive: Emboscada contra Xenoamenazas - Se necesita apoyo",
     "titleEn": "Overdrive Initative: Xenothreat Ambush - Support Needed",
     "descKey": "p_protectandresupply_PreXeno_desc",
-    "descEs": "<EM4>Reputación Otorgada:</EM4> 1000",
+    "descEs": "<EM4>Reputación Otorgada:</EM4> 1000\n\n<EM4>Reputación Otorgada:</EM4> 1000",
     "descEn": "",
     "uec": 25000,
     "rep": 1000,
@@ -10948,7 +10858,7 @@
     "titleEs": "~mission(TargetName)’s Time Has Come",
     "titleEn": "~mission(TargetName)’s Time Has Come",
     "descKey": "Tarpits_eliminateboss_dc_desc_001",
-    "descEs": "We’ve had our sights set on taking out ~mission(TargetName) for a while now, but we’ve never been able to find the right moment. Enough waiting. You’re going to create the right moment for us.\n\nHead to ~mission(Location|Address) and take out a bunch of lowlifes running around the ~mission(Location). Kill enough of those losers, and ~mission(TargetName|Last) will have no choice but to come face you themselves. That’s when you take ‘em out and earn yourself a nice fat payday. \n",
+    "descEs": "We’ve had our sights set on taking out ~mission(TargetName) for a while now, but we’ve never been able to find the right moment. Enough waiting. You’re going to create the right moment for us.\n\nHead to ~mission(Location|Address) and take out a bunch of lowlifes running around the ~mission(Location). Kill enough of those losers, and ~mission(TargetName|Last) will have no choice but to come face you themselves. That’s when you take ‘em out and earn yourself a nice fat payday.",
     "descEn": "We’ve had our sights set on taking out ~mission(TargetName) for a while now, but we’ve never been able to find the right moment. Enough waiting. You’re going to create the right moment for us.\n\nHead to ~mission(Location|Address) and take out a bunch of lowlifes running around the ~mission(Location). Kill enough of those losers, and ~mission(TargetName|Last) will have no choice but to come face you themselves. That’s when you take ‘em out and earn yourself a nice fat payday. \n",
     "uec": 41000,
     "rep": 0,
@@ -11238,11 +11148,23 @@
     "titleEs": "Todas las cosas llegan a su fin. <EM4>[BP]</EM4>",
     "titleEn": "All Things Come To An End",
     "descKey": "vaughn_assassination_FPS_UGF_illegal_boss_desc_001",
-    "descEs": "No sé si conoces ~mission(Location|Address), pero ~mission(TargetName) es quien manda allí. Necesito eliminarlos. Me temo que es más fácil decirlo que hacerlo. Son conocidos por su renuencia a ocuparse personalmente de los asuntos, prefiriendo que sus subordinados se encarguen del trabajo sucio. Dicho esto, si eliminas a suficientes subordinados, no les quedará más remedio que enfrentarse a ti directamente. Atentamente, Vaughn\n\n<EM4>Múltiples grupos de planos</EM4>\n<EM4>Grupo 1</EM4>\n- Killshot Rifle\n- Deadrig Shotgun\n- srvl_armor_heavy_arms_01_01_01\n- srvl_armor_heavy_core_01_01_01\n- srvl_armor_heavy_legs_01_01_01\n- srvl_armor_heavy_helmet_01_01_01\n- Piecemeal Armor Arms\n- Piecemeal Armor Core\n- Piecemeal Armor Legs\n- Badami Helmet\n- Killshot Rifle Magazine (45 Cap)\n- Deadrig Shotgun Magazine (8 cap)\n\n<EM4>Grupo 2</EM4>\n- Pulverizer LMG\n- Tripledown Pistol \n- Citadel Arms Base\n- Citadel Legs Base\n- Citadel Core Base\n- Fortifier Helmet Base\n- Carnifex Armor Core\n- Carnifex Armor Legs\n- Pulverizer LMG Magazine (120 Cap)\n- Tripledown Pistol Magazine (12 Cap)\n\n<EM4>Reputación Otorgada:</EM4> 1000",
+    "descEs": "No sé si conoces ~mission(Location|Address), pero ~mission(TargetName) es quien manda allí. Necesito eliminarlos. Me temo que es más fácil decirlo que hacerlo. Son conocidos por su renuencia a ocuparse personalmente de los asuntos, prefiriendo que sus subordinados se encarguen del trabajo sucio. Dicho esto, si eliminas a suficientes subordinados, no les quedará más remedio que enfrentarse a ti directamente. Atentamente, Vaughn\n\n<EM4>Múltiples grupos de planos</EM4>\n<EM4>Grupo 1</EM4>\n- Pulverizer LMG\n- Tripledown Pistol \n- Citadel Arms Base\n- Citadel Legs Base\n- Citadel Core Base\n- Fortifier Helmet Base\n- Carnifex Armor Core\n- Carnifex Armor Legs\n- Pulverizer LMG Magazine (120 Cap)\n- Tripledown Pistol Magazine (12 Cap)\n\n<EM4>Grupo 2</EM4>\n- Killshot Rifle\n- Deadrig Shotgun\n- srvl_armor_heavy_arms_01_01_01\n- srvl_armor_heavy_core_01_01_01\n- srvl_armor_heavy_legs_01_01_01\n- srvl_armor_heavy_helmet_01_01_01\n- Piecemeal Armor Arms\n- Piecemeal Armor Core\n- Piecemeal Armor Legs\n- Badami Helmet\n- Killshot Rifle Magazine (45 Cap)\n- Deadrig Shotgun Magazine (8 cap)\n\n<EM4>Reputación Otorgada:</EM4> 1000",
     "descEn": "I am not sure if you’re acquainted with ~mission(Location|Address), but ~mission(TargetName) is the one who calls the shots there. I need them eliminated.\n\nThat is easier said then done, I'm afraid. They are notoriously reluctant to see to matters personally, preferring their underlings to handle the dirty work. That said, eliminate enough of the underlings and they will have no choice but to deal with you themselves.\n\nEarnestly,\nVaughn\n",
     "uec": 37500,
     "rep": 1000,
     "bpGroups": [
+      [
+        "Pulverizer LMG",
+        "Tripledown Pistol ",
+        "Citadel Arms Base",
+        "Citadel Legs Base",
+        "Citadel Core Base",
+        "Fortifier Helmet Base",
+        "Carnifex Armor Core",
+        "Carnifex Armor Legs",
+        "Pulverizer LMG Magazine (120 Cap)",
+        "Tripledown Pistol Magazine (12 Cap)"
+      ],
       [
         "Killshot Rifle",
         "Deadrig Shotgun",
@@ -11256,18 +11178,6 @@
         "Badami Helmet",
         "Killshot Rifle Magazine (45 Cap)",
         "Deadrig Shotgun Magazine (8 cap)"
-      ],
-      [
-        "Pulverizer LMG",
-        "Tripledown Pistol ",
-        "Citadel Arms Base",
-        "Citadel Legs Base",
-        "Citadel Core Base",
-        "Fortifier Helmet Base",
-        "Carnifex Armor Core",
-        "Carnifex Armor Legs",
-        "Pulverizer LMG Magazine (120 Cap)",
-        "Tripledown Pistol Magazine (12 Cap)"
       ]
     ]
   },
@@ -11393,30 +11303,6 @@
         "Monde Core Crimson Camo",
         "Monde Legs Crimson Camo",
         "Monde Helmet Crimson Camo",
-        "R97 Shotgun Magazine (18 cap)"
-      ]
-    ]
-  },
-  {
-    "titleKey": "Vaughn_EliminateSpecific_FPS_Rockcracker_title_001",
-    "titleEs": "Un merecido descanso <EM4>[BP]</EM4>",
-    "titleEn": "A Well Deserved Break",
-    "descKey": "",
-    "descEs": "<EM4>Objetos Fabricables:</EM4>\n- R97 Shotgun\n- Monde Arms\n- Monde Core\n- Monde Legs\n- Monde Helmet\n- Monde Arms Hiro\n- Monde Core Hiro\n- Monde Legs Hiro\n- Monde Helmet Hiro\n- R97 Shotgun Magazine (18 cap)",
-    "descEn": "",
-    "uec": 0,
-    "rep": 0,
-    "bpGroups": [
-      [
-        "R97 Shotgun",
-        "Monde Arms",
-        "Monde Core",
-        "Monde Legs",
-        "Monde Helmet",
-        "Monde Arms Hiro",
-        "Monde Core Hiro",
-        "Monde Legs Hiro",
-        "Monde Helmet Hiro",
         "R97 Shotgun Magazine (18 cap)"
       ]
     ]

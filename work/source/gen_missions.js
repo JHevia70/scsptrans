@@ -101,12 +101,11 @@ function loadBlueprintPools(bpNameMap) {
 // ── Construir mapa titleKey → [poolFileName, ...] desde ContractGenerator ─────
 // Recorre generators[].contracts[] para asociar pools solo al sub-contrato al que pertenecen
 
-function extractTitleKeyFromOverrides(paramOverrides) {
-  if (!paramOverrides) return null;
-  const arr = paramOverrides.stringParamOverrides;
+function extractKeyFromOverrides(paramOverrides, param) {
+  const arr = paramOverrides?.stringParamOverrides;
   if (!Array.isArray(arr)) return null;
   for (const item of arr) {
-    if (item?.param !== 'Title') continue;
+    if (item?.param !== param) continue;
     const v = item?.value;
     if (typeof v === 'string' && v.startsWith('@') && !v.includes('LOC_UNINITIALIZED'))
       return v.replace(/^@/, '');
@@ -114,34 +113,62 @@ function extractTitleKeyFromOverrides(paramOverrides) {
   return null;
 }
 
+// Devuelve { byTitle, byDesc }
+// byTitle: titleKey → Set<poolName>  (todos los pools del título, cuando la desc coincide con la inferida)
+// byDesc:  descKey  → Set<poolName>  (pools específicos de una desc cuando el título se reutiliza con descs distintas)
 function buildTitleToBpPools() {
-  const map = {};
+  const byTitle = {};
+  const byDesc  = {};
+
+  // Primera pasada: contar cuántos descKeys distintos usa cada titleKey
+  const titleDescCount = {};
   for (const f of walk(CONTRACT_DIR)) {
     const d = readJson(f);
     if (!d) continue;
     const generators = d._RecordValue_?.generators;
     if (!Array.isArray(generators)) continue;
-
     for (const gen of generators) {
-      const contracts = gen.contracts;
-      if (!Array.isArray(contracts)) continue;
-
-      for (const contract of contracts) {
-        // Título del sub-contrato
-        const titleKey = extractTitleKeyFromOverrides(contract.paramOverrides);
+      for (const contract of (gen.contracts || [])) {
+        const titleKey = extractKeyFromOverrides(contract.paramOverrides, 'Title');
         if (!titleKey) continue;
-
-        // Pools que pertenecen a este sub-contrato (en su propio sub-árbol)
         const poolRefs = collectField(contract, 'blueprintPool');
-        const poolNames = [...new Set(poolRefs.map(r => refToName(r)).filter(Boolean))];
-        if (!poolNames.length) continue;
-
-        if (!map[titleKey]) map[titleKey] = new Set();
-        for (const p of poolNames) map[titleKey].add(p);
+        if (!poolRefs.length) continue;
+        const descKey = extractKeyFromOverrides(contract.paramOverrides, 'Description');
+        if (!titleDescCount[titleKey]) titleDescCount[titleKey] = new Set();
+        if (descKey) titleDescCount[titleKey].add(descKey);
       }
     }
   }
-  return map;
+
+  // Segunda pasada: asignar pools según si el título tiene una sola desc o múltiples
+  for (const f of walk(CONTRACT_DIR)) {
+    const d = readJson(f);
+    if (!d) continue;
+    const generators = d._RecordValue_?.generators;
+    if (!Array.isArray(generators)) continue;
+    for (const gen of generators) {
+      for (const contract of (gen.contracts || [])) {
+        const titleKey = extractKeyFromOverrides(contract.paramOverrides, 'Title');
+        if (!titleKey) continue;
+        const poolRefs = collectField(contract, 'blueprintPool');
+        const poolNames = [...new Set(poolRefs.map(r => refToName(r)).filter(Boolean))];
+        if (!poolNames.length) continue;
+        const descKey = extractKeyFromOverrides(contract.paramOverrides, 'Description');
+        const multipleDescs = (titleDescCount[titleKey]?.size || 0) > 1;
+
+        if (multipleDescs && descKey) {
+          // Título reutilizado con descs distintas → pools van a byDesc
+          if (!byDesc[descKey]) byDesc[descKey] = new Set();
+          for (const p of poolNames) byDesc[descKey].add(p);
+        } else {
+          // Un solo título+desc → pools van a byTitle
+          if (!byTitle[titleKey]) byTitle[titleKey] = new Set();
+          for (const p of poolNames) byTitle[titleKey].add(p);
+        }
+      }
+    }
+  }
+  return { byTitle, byDesc };
 }
 
 // ── Cargar mapa filename → reputationAmount ───────────────────────────────────
@@ -248,7 +275,7 @@ function inferDescKey(titleKey, ini) {
   return null;
 }
 
-function loadMissionsIntoMap(missions, titleToBpPools, bpPools, repAmounts, ini, nameMap, componentsMap) {
+function loadMissionsIntoMap(missions, { byTitle, byDesc }, bpPools, repAmounts, ini, nameMap, componentsMap) {
   for (const f of walk(BROKER_DIR)) {
     const d = readJson(f);
     if (!d) continue;
@@ -258,7 +285,6 @@ function loadMissionsIntoMap(missions, titleToBpPools, bpPools, repAmounts, ini,
     const titleKey = v.title ? v.title.replace(/^@/, '') : null;
     const descKeyRaw = v.description ? v.description.replace(/^@/, '') : null;
     let descKey = (descKeyRaw && descKeyRaw !== titleKey) ? descKeyRaw : null;
-    // Si no tiene descKey explícita, intentar inferirla desde el titleKey
     if (!descKey) descKey = inferDescKey(titleKey, ini);
     if (!titleKey || titleKey === 'LOC_UNINITIALIZED') continue;
 
@@ -269,11 +295,10 @@ function loadMissionsIntoMap(missions, titleToBpPools, bpPools, repAmounts, ini,
     const uec = v.missionReward?.reward || 0;
     const rep = extractRep(v, repAmounts);
 
-    // BPs: buscar en el mapa titleKey → pools, preservar grupos por pool
-    const poolNames = [...(titleToBpPools[titleKey] || new Set())];
-    if (descKey && titleToBpPools[descKey]) {
-      for (const p of titleToBpPools[descKey]) if (!poolNames.includes(p)) poolNames.push(p);
-    }
+    // Pools: priorizar byDesc (específico por descripción), luego byTitle (genérico)
+    const poolSet = (descKey && byDesc[descKey]) ? byDesc[descKey]
+                  : (byTitle[titleKey] || new Set());
+    const poolNames = [...poolSet];
     // bpGroups: array de grupos, cada grupo es un pool distinto (sin items duplicados entre grupos)
     const seen = new Set();
     const bpGroups = poolNames
@@ -303,9 +328,18 @@ function loadMissionsIntoMap(missions, titleToBpPools, bpPools, repAmounts, ini,
 // Hay misiones cuyo título solo aparece en stringParamOverrides de contratos y
 // no en ningún broker entry. Las añadimos si tienen BPs y texto en global.ini.
 
-function addContractOnlyMissions(missionsMap, titleToBpPools, bpPools, ini, nameMap, componentsMap) {
+function addContractOnlyMissions(missionsMap, { byTitle, byDesc }, bpPools, ini, nameMap, componentsMap) {
   let added = 0;
-  for (const [titleKey, poolSet] of Object.entries(titleToBpPools)) {
+  // Combinar byTitle y byDesc; para byDesc usar la clave de descripción como descKey
+  const allEntries = [
+    ...Object.entries(byTitle).map(([k, s]) => ({ titleKey: k, descKey: inferDescKey(k, ini) || '', poolSet: s })),
+    ...Object.entries(byDesc).map(([dk, s]) => ({ titleKey: null, descKey: dk, poolSet: s })),
+  ];
+  for (const { titleKey: tk, descKey: dk, poolSet } of allEntries) {
+    // Necesitamos el titleKey real — para byDesc, buscarlo en global.ini no es directo,
+    // solo añadir si ya existe la misión en el map (broker entry la registró)
+    if (dk && !tk) continue; // byDesc sin titleKey — el broker entry ya lo manejó
+    const titleKey = tk;
     if (missionsMap.has(titleKey)) continue;
     const titleText = ini[titleKey] || '';
     if (!titleText) continue;
@@ -342,7 +376,7 @@ async function main() {
 
   console.log('Construyendo mapa título → pools...');
   const titleToBpPools = buildTitleToBpPools();
-  console.log('  títulos con BPs:', Object.keys(titleToBpPools).length);
+  console.log('  títulos con BPs:', Object.keys(titleToBpPools.byTitle).length, '(título) +', Object.keys(titleToBpPools.byDesc).length, '(desc)');
 
   console.log('Cargando valores de reputación...');
   const repAmounts = loadReputationAmounts();
