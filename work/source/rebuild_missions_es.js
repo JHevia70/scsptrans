@@ -35,7 +35,7 @@ function restoreMissionVars(esText, enText) {
 function formatBpGroups(bpGroups) {
   if (!bpGroups || !bpGroups.length) return '';
   if (bpGroups.length === 1) {
-    return '<EM4>Objetos Fabricables:</EM4>\n' + bpGroups[0].map(b => '- ' + b).join('\n');
+    return '<EM4>Blueprints obtenibles:</EM4>\n' + bpGroups[0].map(b => '- ' + b).join('\n');
   }
   return '<EM4>Múltiples grupos de planos</EM4>\n' + bpGroups.map((g, i) =>
     '<EM4>Grupo ' + (i + 1) + '</EM4>\n' + g.map(b => '- ' + b).join('\n')
