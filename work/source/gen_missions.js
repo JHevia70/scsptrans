@@ -226,6 +226,28 @@ function resolveItemName(entityClass, nameMap, componentsMap) {
 
 // ── Cargar misiones desde MissionBrokerEntry ──────────────────────────────────
 
+// Intenta derivar la clave de descripción desde la clave de título buscando en el ini
+function inferDescKey(titleKey, ini) {
+  const variants = [
+    titleKey.replace(/_[Tt]itle_/g,  '_Desc_'),
+    titleKey.replace(/_[Tt]itle_/g,  '_desc_'),
+    titleKey.replace(/_[Nn]ame_/g,   '_Desc_'),
+    titleKey.replace(/_[Nn]ame_/g,   '_desc_'),
+    titleKey.replace(/_[Tt]itle$/,   '_Desc'),
+    titleKey.replace(/_[Tt]itle$/,   '_desc'),
+    titleKey.replace(/_[Tt]itle$/,   '_Description'),
+    titleKey.replace(/_[Tt]itle$/,   '_description'),
+    titleKey.replace(/_[Nn]ame$/,    '_Desc'),
+    titleKey.replace(/_[Nn]ame$/,    '_desc'),
+  ];
+  for (const v of variants) {
+    if (v !== titleKey && ini[v] !== undefined) return v;
+    // algunas claves tienen sufijo ,P (plural) en global.ini
+    if (v !== titleKey && ini[v + ',P'] !== undefined) return v + ',P';
+  }
+  return null;
+}
+
 function loadMissionsIntoMap(missions, titleToBpPools, bpPools, repAmounts, ini, nameMap, componentsMap) {
   for (const f of walk(BROKER_DIR)) {
     const d = readJson(f);
@@ -235,7 +257,9 @@ function loadMissionsIntoMap(missions, titleToBpPools, bpPools, repAmounts, ini,
 
     const titleKey = v.title ? v.title.replace(/^@/, '') : null;
     const descKeyRaw = v.description ? v.description.replace(/^@/, '') : null;
-    const descKey = (descKeyRaw && descKeyRaw !== titleKey) ? descKeyRaw : null;
+    let descKey = (descKeyRaw && descKeyRaw !== titleKey) ? descKeyRaw : null;
+    // Si no tiene descKey explícita, intentar inferirla desde el titleKey
+    if (!descKey) descKey = inferDescKey(titleKey, ini);
     if (!titleKey || titleKey === 'LOC_UNINITIALIZED') continue;
 
     const titleText = ini[titleKey] || '';
@@ -293,8 +317,7 @@ function addContractOnlyMissions(missionsMap, titleToBpPools, bpPools, ini, name
       )
       .filter(g => g.length > 0);
     if (!bpGroups.length) continue;
-    const descKeyRaw = titleKey.replace(/_Title_/, '_Desc_');
-    const descKey = descKeyRaw !== titleKey ? descKeyRaw : '';
+    const descKey = inferDescKey(titleKey, ini) || '';
     const descText = descKey ? (ini[descKey] || '') : '';
     missionsMap.set(titleKey, { titleKey, titleText, descKey, descText, uec: 0, rep: 0, bpGroups });
     added++;
