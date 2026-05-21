@@ -61,7 +61,8 @@ async function loadIni(file) {
   for await (const line of rl) {
     const eq = line.indexOf('=');
     if (eq === -1) continue;
-    map[line.substring(0, eq).trim()] = line.substring(eq + 1);
+    // Convertir secuencias \n del global.ini a saltos de línea reales
+    map[line.substring(0, eq).trim()] = line.substring(eq + 1).replace(/\\n/g, '\n');
   }
   return map;
 }
@@ -98,40 +99,48 @@ function loadBlueprintPools(bpNameMap) {
 }
 
 // ── Construir mapa titleKey → [poolFileName, ...] desde ContractGenerator ─────
+// Recorre generators[].contracts[] para asociar pools solo al sub-contrato al que pertenecen
+
+function extractTitleKeyFromOverrides(paramOverrides) {
+  if (!paramOverrides) return null;
+  const arr = paramOverrides.stringParamOverrides;
+  if (!Array.isArray(arr)) return null;
+  for (const item of arr) {
+    if (item?.param !== 'Title') continue;
+    const v = item?.value;
+    if (typeof v === 'string' && v.startsWith('@') && !v.includes('LOC_UNINITIALIZED'))
+      return v.replace(/^@/, '');
+  }
+  return null;
+}
 
 function buildTitleToBpPools() {
-  // titleKey (sin @) → Set de pool file names
   const map = {};
-
   for (const f of walk(CONTRACT_DIR)) {
     const d = readJson(f);
     if (!d) continue;
+    const generators = d._RecordValue_?.generators;
+    if (!Array.isArray(generators)) continue;
 
-    // Recoger todos los blueprintPool refs del documento
-    const poolRefs = collectField(d, 'blueprintPool');
-    if (!poolRefs.length) continue;
-    const poolNames = [...new Set(poolRefs.map(r => refToName(r)).filter(Boolean))];
+    for (const gen of generators) {
+      const contracts = gen.contracts;
+      if (!Array.isArray(contracts)) continue;
 
-    // Recoger solo los stringParamOverrides con param="Title" para obtener claves de título
-    const stringOverrides = collectField(d, 'stringParamOverrides');
-    const titleKeys = new Set();
-    for (const arr of stringOverrides) {
-      if (!Array.isArray(arr)) continue;
-      for (const item of arr) {
-        if (item?.param !== 'Title') continue;
-        const v = item?.value;
-        if (typeof v === 'string' && v.startsWith('@') && !v.includes('LOC_UNINITIALIZED')) {
-          titleKeys.add(v.replace(/^@/, ''));
-        }
+      for (const contract of contracts) {
+        // Título del sub-contrato
+        const titleKey = extractTitleKeyFromOverrides(contract.paramOverrides);
+        if (!titleKey) continue;
+
+        // Pools que pertenecen a este sub-contrato (en su propio sub-árbol)
+        const poolRefs = collectField(contract, 'blueprintPool');
+        const poolNames = [...new Set(poolRefs.map(r => refToName(r)).filter(Boolean))];
+        if (!poolNames.length) continue;
+
+        if (!map[titleKey]) map[titleKey] = new Set();
+        for (const p of poolNames) map[titleKey].add(p);
       }
     }
-
-    for (const titleKey of titleKeys) {
-      if (!map[titleKey]) map[titleKey] = new Set();
-      for (const p of poolNames) map[titleKey].add(p);
-    }
   }
-
   return map;
 }
 

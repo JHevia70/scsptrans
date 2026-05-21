@@ -46,6 +46,9 @@ const missionsData = JSON.parse(fs.readFileSync(DATA_JSON, 'utf8'));
 const currentEs    = JSON.parse(fs.readFileSync(ES_JSON, 'utf8'));
 const corrections  = loadCorrections(CORR_INI);
 
+// global.ini almacena \n como texto literal "\\n" — convertir a saltos reales
+function iniUnescape(s) { return s ? s.replace(/\\n/g, '\n') : s; }
+
 // Mapa key → traducción actual
 const translMap = {};
 for (const m of currentEs) {
@@ -61,11 +64,14 @@ let withBps = 0, withRep = 0;
 const result = [];
 
 for (const m of missionsData) {
-  let titleEs = corrections[m.titleKey] || translMap[m.titleKey] || m.titleText;
-  let descEs  = corrections[m.descKey]  || translMap[m.descKey]  || m.descText;
+  const titleTextEn = iniUnescape(m.titleText);
+  const descTextEn  = iniUnescape(m.descText);
 
-  titleEs = restoreMissionVars(titleEs, m.titleText);
-  descEs  = restoreMissionVars(descEs,  m.descText);
+  let titleEs = corrections[m.titleKey] || translMap[m.titleKey] || titleTextEn;
+  let descEs  = corrections[m.descKey]  || translMap[m.descKey]  || descTextEn;
+
+  titleEs = restoreMissionVars(titleEs, titleTextEn);
+  descEs  = restoreMissionVars(descEs,  descTextEn);
 
   const hasBps = m.bpGroups && m.bpGroups.length > 0;
   if (hasBps) {
@@ -82,10 +88,10 @@ for (const m of missionsData) {
   result.push({
     titleKey: m.titleKey,
     titleEs,
-    titleEn:  m.titleText,
+    titleEn:  titleTextEn,
     descKey:  m.descKey,
     descEs,
-    descEn:   m.descText,
+    descEn:   descTextEn,
     uec:      m.uec,
     rep:      m.rep || 0,
     bpGroups: m.bpGroups
