@@ -236,20 +236,29 @@ function loadMissionsIntoMap(missions, titleToBpPools, bpPools, repAmounts, ini,
     const uec = v.missionReward?.reward || 0;
     const rep = extractRep(v, repAmounts);
 
-    // BPs: buscar en el mapa titleKey → pools
-    const poolNames = titleToBpPools[titleKey] || new Set();
+    // BPs: buscar en el mapa titleKey → pools, preservar grupos por pool
+    const poolNames = [...(titleToBpPools[titleKey] || new Set())];
     if (descKey && titleToBpPools[descKey]) {
-      for (const p of titleToBpPools[descKey]) poolNames.add(p);
+      for (const p of titleToBpPools[descKey]) if (!poolNames.includes(p)) poolNames.push(p);
     }
-    const bps = [...new Set(
-      [...poolNames].flatMap(p => (bpPools[p] || []).map(e => resolveItemName(e, nameMap, componentsMap)))
-    )];
+    // bpGroups: array de grupos, cada grupo es un pool distinto (sin items duplicados entre grupos)
+    const seen = new Set();
+    const bpGroups = poolNames
+      .map(p => (bpPools[p] || [])
+        .map(e => resolveItemName(e, nameMap, componentsMap))
+        .filter(name => { if (seen.has(name)) return false; seen.add(name); return true; })
+      )
+      .filter(g => g.length > 0);
 
     if (!missions.has(titleKey)) {
-      missions.set(titleKey, { titleKey, titleText, descKey: descKey || '', descText, uec, rep, bps });
+      missions.set(titleKey, { titleKey, titleText, descKey: descKey || '', descText, uec, rep, bpGroups });
     } else {
       const ex = missions.get(titleKey);
-      for (const bp of bps) if (!ex.bps.includes(bp)) ex.bps.push(bp);
+      // Merge groups: add new groups if not already present
+      for (const g of bpGroups) {
+        const key0 = g[0];
+        if (!ex.bpGroups.some(eg => eg[0] === key0)) ex.bpGroups.push(g);
+      }
       if (uec > ex.uec) ex.uec = uec;
       if (rep > ex.rep) ex.rep = rep;
     }
@@ -267,15 +276,18 @@ function addContractOnlyMissions(missionsMap, titleToBpPools, bpPools, ini, name
     if (missionsMap.has(titleKey)) continue;
     const titleText = ini[titleKey] || '';
     if (!titleText) continue;
-    const bps = [...new Set(
-      [...poolSet].flatMap(p => (bpPools[p] || []).map(e => resolveItemName(e, nameMap, componentsMap)))
-    )];
-    if (!bps.length) continue;
-    // Buscar clave de descripción: mismo prefijo pero con _Desc_ (vacío si coincide con titleKey)
+    const seen = new Set();
+    const bpGroups = [...poolSet]
+      .map(p => (bpPools[p] || [])
+        .map(e => resolveItemName(e, nameMap, componentsMap))
+        .filter(name => { if (seen.has(name)) return false; seen.add(name); return true; })
+      )
+      .filter(g => g.length > 0);
+    if (!bpGroups.length) continue;
     const descKeyRaw = titleKey.replace(/_Title_/, '_Desc_');
     const descKey = descKeyRaw !== titleKey ? descKeyRaw : '';
     const descText = descKey ? (ini[descKey] || '') : '';
-    missionsMap.set(titleKey, { titleKey, titleText, descKey, descText, uec: 0, rep: 0, bps });
+    missionsMap.set(titleKey, { titleKey, titleText, descKey, descText, uec: 0, rep: 0, bpGroups });
     added++;
   }
   return added;
@@ -316,7 +328,7 @@ async function main() {
   const missions = [...missionsMap.values()].sort((a, b) => a.titleKey.localeCompare(b.titleKey));
   console.log('  misiones únicas:', missions.length);
 
-  const withBps = missions.filter(m => m.bps.length > 0).length;
+  const withBps = missions.filter(m => m.bpGroups && m.bpGroups.length > 0).length;
   const withUec = missions.filter(m => m.uec > 0).length;
   const withRep = missions.filter(m => m.rep > 0).length;
   console.log(`  con BPs: ${withBps}, con aUEC: ${withUec}, con reputación: ${withRep}`);
@@ -340,8 +352,8 @@ async function main() {
 
   // Muestra algunos con BPs
   console.log('\nEjemplos con BPs:');
-  missions.filter(m => m.bps.length > 0).slice(0, 5).forEach(m => {
-    console.log(' ', m.titleKey, '→', m.bps.join(', '));
+  missions.filter(m => m.bpGroups && m.bpGroups.length > 0).slice(0, 5).forEach(m => {
+    console.log(' ', m.titleKey, '→', m.bpGroups.map((g, i) => `[${i+1}] ${g.join(', ')}`).join(' | '));
   });
 }
 
