@@ -1192,6 +1192,16 @@
       }
       logTo('log-missions-rebuild', 'Traducciones reconstruidas: ' + Object.keys(translMap).length + ' claves.');
 
+      // Restaura variables ~mission(...) que Google Translate traduce erróneamente
+      const missionVarRe = /~[a-zA-Záéíóúñ]+\([^)]*\)/g;
+      function restoreMissionVars(esText, enText) {
+        if (!enText || !esText) return esText;
+        const enVars = [...enText.matchAll(missionVarRe)].map(m => m[0]);
+        if (!enVars.length) return esText;
+        let i = 0;
+        return esText.replace(missionVarRe, () => enVars[i] !== undefined ? enVars[i++] : '');
+      }
+
       // Construir resultado final
       const result = [];
       for (const m of missionsData) {
@@ -1199,6 +1209,8 @@
         let descEs  = translMap[m.descKey]  || m.descText;
         if (m.titleKey in mCorrections) titleEs = mCorrections[m.titleKey];
         if (m.descKey  in mCorrections) descEs  = mCorrections[m.descKey];
+        titleEs = restoreMissionVars(titleEs, m.titleText);
+        descEs  = restoreMissionVars(descEs,  m.descText);
         if (m.bps && m.bps.length > 0) titleEs = titleEs + ' <EM4>[BP]</EM4>';
         if (m.bps && m.bps.length > 0) descEs = (descEs ? descEs + '\n\n' : '') + '<EM4>Objetos Fabricables:</EM4>\n' + m.bps.map(b => '• ' + b).join('\n');
         if (m.rep && m.rep > 0) descEs = (descEs ? descEs + '\n\n' : '') + '<EM4>Reputación Otorgada:</EM4> ' + m.rep;
