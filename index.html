@@ -455,10 +455,17 @@
     }
 
     async function readXlsxValues(buf) {
-      const wb   = XLSX.read(buf, { type: 'array' });
-      const ws   = wb.Sheets[wb.SheetNames[0]];
-      const rows = XLSX.utils.sheet_to_json(ws, { header: 1 });
-      return rows.slice(1).map(r => (r[0] !== undefined && r[0] !== null) ? String(r[0]).trim() : '');
+      const wb = XLSX.read(buf, { type: 'array', cellText: false, cellDates: false });
+      const ws = wb.Sheets[wb.SheetNames[0]];
+      const ref = ws['!ref'];
+      if (!ref) return [];
+      const range = XLSX.utils.decode_range(ref);
+      const result = [];
+      for (let r = range.s.r + 1; r <= range.e.r; r++) {
+        const cell = ws[XLSX.utils.encode_cell({ r, c: 0 })];
+        result.push(cell ? String(cell.v ?? '').trim() : '');
+      }
+      return result;
     }
 
     // ── GitHub API helpers ────────────────────────────────────────────────────
@@ -1033,13 +1040,21 @@
       // Una fila por campo: título, luego descripción, intercalados
       // Guardar el orden de keys en missions_keys.json para reconstruir
       const keysOrder = [];  // [{titleKey, descKey}]
-      const wsData = [['texto']];
+      const wsRows = [['texto']];
       for (const r of missionsTsvRows) {
         keysOrder.push({ titleKey: r.titleKey, descKey: r.descKey });
-        wsData.push([r.titleEn]);   // título
-        wsData.push([r.descEn]);    // descripción
+        wsRows.push([r.titleEn]);
+        wsRows.push([r.descEn]);
       }
-      const ws = XLSX.utils.aoa_to_sheet(wsData);
+      const ws = XLSX.utils.aoa_to_sheet(wsRows);
+      // Forzar tipo string en todas las celdas para preservar \n
+      const wsRef = ws['!ref'] ? XLSX.utils.decode_range(ws['!ref']) : null;
+      if (wsRef) {
+        for (let r = wsRef.s.r; r <= wsRef.e.r; r++) {
+          const addr = XLSX.utils.encode_cell({ r, c: 0 });
+          if (ws[addr]) ws[addr].t = 's';
+        }
+      }
       ws['!cols'] = [{ wch: 150 }];
       const wb = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, 'Misiones');
