@@ -10,7 +10,21 @@
       "Bash(git checkout *)",
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(node work/source/rebuild_missions_es.js)",
+      "Bash(node *)",
+      "Bash(powershell -Command ' *)",
+      "PowerShell(git *)",
+      "PowerShell(Select-String *)",
+      "PowerShell(Select-String -Path \"H:\\\\Projects\\\\SC Trans\\\\work\\\\source\\\\compare_mrkraken.tsv\" -Pattern \"\\\\[!\\\\]\" | ForEach-Object { $_.Line })",
+      "PowerShell(Get-ChildItem \"H:\\\\Projects\\\\SC Trans\" -Recurse -Name | Where-Object { $_ -match \"\\\\.bak$\" })",
+      "PowerShell(Select-String -Path \"G:\\\\Roberts Space Industries\\\\StarCitizen\\\\StarCitizen\\\\HOTFIX\\\\Data\\\\Localization\\\\spanish_\\(spain\\)\\\\global.back\" -Pattern \"\\\\[!\\\\]\" | Select-Object -First 50 | ForEach-Object { $_.Line })",
+      "PowerShell(Select-String -Path \"G:\\\\Roberts Space Industries\\\\StarCitizen\\\\StarCitizen\\\\HOTFIX\\\\Data\\\\Localization\\\\spanish_\\(spain\\)\\\\global.back\" -Pattern \"\\\\[!\\\\]\" | ForEach-Object { $_.Line })",
+      "PowerShell(head *)",
+      "PowerShell(ls \"H:\\\\Projects\\\\SC Trans\\\\work\\\\from_google\\\\\")",
+      "PowerShell(ls \"H:\\\\Projects\\\\SC Trans\\\\work\\\\to_google\\\\\")",
+      "PowerShell(Select-String -Path \"H:\\\\Projects\\\\SC Trans\\\\work\\\\source\\\\global.ini\" -Pattern \"FreightElevator\" | ForEach-Object { $_.Line })",
+      "PowerShell(Select-String -Path \"H:\\\\Projects\\\\SC Trans\\\\work\\\\source\\\\global.ini\" -Pattern \"FreightElevator_ClaimMode,P\" | ForEach-Object { $_.Line })"
     ]
   }
 }

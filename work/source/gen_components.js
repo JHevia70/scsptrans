@@ -217,6 +217,18 @@ async function main() {
     const baseSuffix = nameMap[entityUpper] ? entity : entityNoSCItem;
     const iniKey = entry.underscore ? `item_Name_${baseSuffix}` : `item_Name${baseSuffix}`;
     entries.push(`${iniKey}=${prefix} ${entry.value}`);
+
+    // Some entities appear in global.ini under both NAME and NAME_SCItem keys.
+    // Emit the sibling key if it exists in nameMap and wasn't already emitted above.
+    const siblingEntity = entity.endsWith('_SCItem') ? entityNoSCItem : entity + '_SCItem';
+    const siblingUpper  = siblingEntity.toUpperCase();
+    const siblingEntry  = nameMap[siblingUpper];
+    if (siblingEntry) {
+      const siblingKey = siblingEntry.underscore
+        ? `item_Name_${siblingEntity}`
+        : `item_Name${siblingEntity}`;
+      if (siblingKey !== iniKey) entries.push(`${siblingKey}=${prefix} ${siblingEntry.value}`);
+    }
   }
 
   // Sort entries
