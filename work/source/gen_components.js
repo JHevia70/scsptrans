@@ -89,11 +89,11 @@ async function readGlobalIni(file) {
     if (kLower.startsWith('item_name_')) {
       // 'item_name_' = 10 chars, key format has underscore separator
       const suffix = k.substring(10).toUpperCase();
-      nameMap[suffix] = { value: v, underscore: true };
+      nameMap[suffix] = { value: v, underscore: true, keyPrefix: k.substring(0, 10) };
     } else if (kLower.startsWith('item_name')) {
       // 'item_name' = 9 chars, key format has no underscore separator
       const suffix = k.substring(9).toUpperCase();
-      nameMap[suffix] = { value: v, underscore: false };
+      nameMap[suffix] = { value: v, underscore: false, keyPrefix: k.substring(0, 9) };
     }
   }
   return nameMap;
@@ -211,11 +211,10 @@ async function main() {
       continue;
     }
 
-    // Reconstruct the exact ini key preserving the underscore separator used in global.ini
-    // entry.underscore=true → item_Name_XXX, false → item_NameXXX
+    // Reconstruct the exact ini key using the original prefix capitalization from global.ini
     const prefix = `${mfrClass}/${resolvedSize}/${gradeLetter}`;
     const baseSuffix = nameMap[entityUpper] ? entity : entityNoSCItem;
-    const iniKey = entry.underscore ? `item_Name_${baseSuffix}` : `item_Name${baseSuffix}`;
+    const iniKey = `${entry.keyPrefix}${baseSuffix}`;
     entries.push(`${iniKey}=${prefix} ${entry.value}`);
 
     // Some entities appear in global.ini under both NAME and NAME_SCItem keys.
@@ -224,9 +223,7 @@ async function main() {
     const siblingUpper  = siblingEntity.toUpperCase();
     const siblingEntry  = nameMap[siblingUpper];
     if (siblingEntry) {
-      const siblingKey = siblingEntry.underscore
-        ? `item_Name_${siblingEntity}`
-        : `item_Name${siblingEntity}`;
+      const siblingKey = `${siblingEntry.keyPrefix}${siblingEntity}`;
       if (siblingKey !== iniKey) entries.push(`${siblingKey}=${prefix} ${siblingEntry.value}`);
     }
   }
