@@ -103,10 +103,3 @@ Puedes ejecutar esto en PowerShell antes de iniciar Star Citizen para ver el est
 
     Get-Process | Sort-Object CPU -Descending | Select-Object -First 20 Name, CPU, @{N='RAM_MB';E={[math]::Round($_.WorkingSet/1MB,1)}} | Format-Table -AutoSize
 
-
-HISTORIAL DE CAMBIOS EN ESTE SISTEMA
---------------------------------------
-Procesos ya eliminados o deshabilitados permanentemente:
-- Armoury Crate (ASUS) + NoiseCancelingEngine — DESINSTALADOS
-- Creative Cloud (Adobe) — deshabilitado del inicio de Windows
-- audiodg / RtkAudioUniversalService (Realtek) — eliminado/reducido
