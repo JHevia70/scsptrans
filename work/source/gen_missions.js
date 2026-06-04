@@ -217,10 +217,17 @@ function extractRep(v, repAmounts) {
   return repAmounts[rewardFile] ?? 0;
 }
 
-// Construye titleKey → max(rep) desde ContractResult_LegacyReputation en los generadores
-// Toma el máximo cuando un título aparece con distintos valores (distintas dificultades)
+// Construye mapas titleKey y descKey → {min, max} desde ContractResult_LegacyReputation en los generadores
+// Indexa por descKey cuando está disponible, y también por titleKey como fallback
 function loadContractRepMap(repAmounts) {
-  const map = {};
+  const byTitle = {};  // titleKey → {min, max}
+  const byDesc  = {};  // descKey  → {min, max}
+
+  function updateRange(map, key, amount) {
+    if (!map[key]) map[key] = { min: amount, max: amount };
+    else { map[key].min = Math.min(map[key].min, amount); map[key].max = Math.max(map[key].max, amount); }
+  }
+
   for (const f of walk(CONTRACT_DIR)) {
     const d = readJson(f);
     if (!d) continue;
@@ -230,18 +237,22 @@ function loadContractRepMap(repAmounts) {
       for (const contract of (gen.contracts || [])) {
         const titleKey = extractKeyFromOverrides(contract.paramOverrides, 'Title');
         if (!titleKey) continue;
+        const descKey = extractKeyFromOverrides(contract.paramOverrides, 'Description');
         const results = contract.contractResults?.contractResults || [];
         for (const r of results) {
           if (r._Type_ !== 'ContractResult_LegacyReputation') continue;
           const rewardFile = refToName(r.contractResultReputationAmounts?.reward);
           const amount = rewardFile ? (repAmounts[rewardFile] ?? 0) : 0;
-          if (amount > 0 && amount > (map[titleKey] || 0)) map[titleKey] = amount;
+          if (amount > 0) {
+            if (descKey) updateRange(byDesc, descKey, amount);
+            else          updateRange(byTitle, titleKey, amount);
+          }
           break;
         }
       }
     }
   }
-  return map;
+  return { byTitle, byDesc };
 }
 
 // ── Cargar components_generated.ini: sufijo_lower → nombre con prefijo ────────
@@ -322,6 +333,12 @@ function inferDescKey(titleKey, ini) {
   return null;
 }
 
+function mergeRepRange(existing, incoming) {
+  if (!incoming) return;
+  existing.repMin = existing.repMin ? Math.min(existing.repMin, incoming.min) : incoming.min;
+  existing.repMax = existing.repMax ? Math.max(existing.repMax, incoming.max) : incoming.max;
+}
+
 function loadMissionsIntoMap(missions, { byTitle, byDesc }, bpPools, repAmounts, contractRepMap, ini, nameMap, componentsMap) {
   for (const f of walk(BROKER_DIR)) {
     const d = readJson(f);
@@ -341,7 +358,10 @@ function loadMissionsIntoMap(missions, { byTitle, byDesc }, bpPools, repAmounts,
     const descText = descKey ? (ini[descKey] || '') : '';
     const uec = v.missionReward?.reward || 0;
     const brokerRep = extractRep(v, repAmounts);
-    const rep = brokerRep || (contractRepMap[titleKey] ?? 0);
+    // Preferir rango de contractRepMap (indexado por descKey > titleKey), fallback a broker single value
+    const contractRange = (descKey && contractRepMap.byDesc[descKey])
+                        || contractRepMap.byTitle[titleKey]
+                        || (brokerRep > 0 ? { min: brokerRep, max: brokerRep } : null);
 
     // Pools: priorizar byDesc (específico por descripción), luego byTitle (genérico)
     const poolSet = (descKey && byDesc[descKey]) ? byDesc[descKey]
@@ -357,7 +377,9 @@ function loadMissionsIntoMap(missions, { byTitle, byDesc }, bpPools, repAmounts,
       .filter(g => g.length > 0);
 
     if (!missions.has(titleKey)) {
-      missions.set(titleKey, { titleKey, titleText, descKey: descKey || '', descText, uec, rep, bpGroups });
+      const m = { titleKey, titleText, descKey: descKey || '', descText, uec, repMin: 0, repMax: 0, bpGroups };
+      mergeRepRange(m, contractRange);
+      missions.set(titleKey, m);
     } else {
       const ex = missions.get(titleKey);
       // Merge groups: add new groups if not already present
@@ -366,7 +388,7 @@ function loadMissionsIntoMap(missions, { byTitle, byDesc }, bpPools, repAmounts,
         if (!ex.bpGroups.some(eg => eg[0] === key0)) ex.bpGroups.push(g);
       }
       if (uec > ex.uec) ex.uec = uec;
-      if (rep > ex.rep) ex.rep = rep;
+      mergeRepRange(ex, contractRange);
     }
   }
 
@@ -399,8 +421,10 @@ function addContractOnlyMissions(missionsMap, { byTitle, byDesc }, bpPools, cont
     if (!bpGroups.length) continue;
     const descKey = inferDescKey(tk, ini) || '';
     const descText = descKey ? (ini[descKey] || '') : '';
-    const rep = contractRepMap[tk] ?? 0;
-    missionsMap.set(tk, { titleKey: tk, titleText, descKey, descText, uec: 0, rep, bpGroups });
+    const contractRange = (descKey && contractRepMap.byDesc[descKey]) || contractRepMap.byTitle[tk] || null;
+    const m = { titleKey: tk, titleText, descKey, descText, uec: 0, repMin: 0, repMax: 0, bpGroups };
+    mergeRepRange(m, contractRange);
+    missionsMap.set(tk, m);
     added++;
   }
 
@@ -418,8 +442,10 @@ function addContractOnlyMissions(missionsMap, { byTitle, byDesc }, bpPools, cont
         if (!titleText) continue;
         const descKey = extractKeyFromOverrides(contract.paramOverrides, 'Description') || inferDescKey(titleKey, ini) || '';
         const descText = descKey ? (ini[descKey] || '') : '';
-        const rep = contractRepMap[titleKey] ?? 0;
-        missionsMap.set(titleKey, { titleKey, titleText, descKey, descText, uec: 0, rep, bpGroups: [] });
+        const contractRange = (descKey && contractRepMap.byDesc[descKey]) || contractRepMap.byTitle[titleKey] || null;
+        const m = { titleKey, titleText, descKey, descText, uec: 0, repMin: 0, repMax: 0, bpGroups: [] };
+        mergeRepRange(m, contractRange);
+        missionsMap.set(titleKey, m);
         added++;
       }
     }
@@ -451,7 +477,7 @@ async function main() {
   const repAmounts = loadReputationAmounts();
   console.log('  reward files:', Object.keys(repAmounts).length);
   const contractRepMap = loadContractRepMap(repAmounts);
-  console.log('  títulos con rep (contratos):', Object.keys(contractRepMap).length);
+  console.log('  entradas rep por desc:', Object.keys(contractRepMap.byDesc).length, '| por título:', Object.keys(contractRepMap.byTitle).length);
 
   const nameMap      = buildNameMap(ini);
   const componentsMap = loadComponentsMap();
@@ -463,7 +489,10 @@ async function main() {
   const contractAdded = addContractOnlyMissions(missionsMap, titleToBpPools, bpPools, contractRepMap, ini, nameMap, componentsMap);
   // Rellenar rep=0 de broker entries con contractRepMap
   for (const m of missionsMap.values()) {
-    if (!m.rep && contractRepMap[m.titleKey]) m.rep = contractRepMap[m.titleKey];
+    if (!m.repMin && !m.repMax) {
+      const contractRange = (m.descKey && contractRepMap.byDesc[m.descKey]) || contractRepMap.byTitle[m.titleKey];
+      mergeRepRange(m, contractRange || null);
+    }
   }
   console.log(`  misiones de broker: ${missionsMap.size - contractAdded}, añadidas de contratos: ${contractAdded}`);
   const missions = [...missionsMap.values()].sort((a, b) => a.titleKey.localeCompare(b.titleKey));
@@ -471,8 +500,9 @@ async function main() {
 
   const withBps = missions.filter(m => m.bpGroups && m.bpGroups.length > 0).length;
   const withUec = missions.filter(m => m.uec > 0).length;
-  const withRep = missions.filter(m => m.rep > 0).length;
-  console.log(`  con BPs: ${withBps}, con aUEC: ${withUec}, con reputación: ${withRep}`);
+  const withRep = missions.filter(m => m.repMax > 0).length;
+  const withRange = missions.filter(m => m.repMin > 0 && m.repMin !== m.repMax).length;
+  console.log(`  con BPs: ${withBps}, con aUEC: ${withUec}, con reputación: ${withRep} (${withRange} con rango min/max)`);
 
   // JSON con datos completos
   fs.writeFileSync(OUT_JSON, JSON.stringify(missions, null, 2), 'utf8');

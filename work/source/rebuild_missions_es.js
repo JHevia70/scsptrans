@@ -55,7 +55,7 @@ for (const m of currentEs) {
   // Strip old [BP] marker and old BP/Rep blocks from titleEs
   let titleEs = (m.titleEs || '').replace(/\s*<EM4>\[BP\]<\/EM4>$/, '').trim();
   // Strip old descEs BP/Rep blocks (everything from \n\n<EM4>Objetos or <EM4>Múltiples or <EM4>Reputación)
-  let descEs = (m.descEs || '').replace(/\n\n<EM4>(Objetos Fabricables:|Múltiples grupos|Reputación Otorgada:)[\s\S]*$/, '').trim();
+  let descEs = (m.descEs || '').replace(/\n\n<EM4>(Objetos Fabricables:|Múltiples grupos|Reputación Otorgada[^:]*:)[\s\S]*$/, '').trim();
   if (m.titleKey) translMap[m.titleKey] = titleEs;
   if (m.descKey)  translMap[m.descKey]  = descEs;
 }
@@ -78,8 +78,13 @@ for (const m of missionsData) {
     titleEs = titleEs + ' <EM4>[BP]</EM4>';
     withBps++;
   }
-  if (m.rep && m.rep > 0) {
-    descEs = (descEs ? descEs + '\n\n' : '') + '<EM4>Reputación Otorgada:</EM4> ' + m.rep;
+  const repMax = m.repMax || m.rep || 0;
+  const repMin = m.repMin || repMax;
+  if (repMax > 0) {
+    const repText = (repMin > 0 && repMin !== repMax)
+      ? '<EM4>Reputación otorgada (por dificultad):</EM4> ' + repMin.toLocaleString('es-ES') + ' / ' + repMax.toLocaleString('es-ES')
+      : '<EM4>Reputación otorgada:</EM4> ' + repMax.toLocaleString('es-ES');
+    descEs = (descEs ? descEs + '\n\n' : '') + repText;
     withRep++;
   }
   if (hasBps) {
@@ -95,7 +100,8 @@ for (const m of missionsData) {
     descEs,
     descEn:   descTextEn,
     uec:      m.uec,
-    rep:      m.rep || 0,
+    repMin:   repMin,
+    repMax:   repMax,
     bpGroups: m.bpGroups
   });
 }
