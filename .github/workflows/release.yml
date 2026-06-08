@@ -26,9 +26,12 @@ jobs:
           if [ -n "$INPUT_VER" ]; then
             SC_VER="$INPUT_VER"
           else
-            SC_VER=$(curl -s "https://robertsspaceindustries.com/api/roadmap/v1/boards/1" \
-              -H "User-Agent: Mozilla/5.0" \
-              | grep -oP 'Live Version:\s*\K[\d.]+' | head -1)
+            SC_VER=$(grep -oP 'Frontend_PU_Version,P=\K[\d.]+' work/correcciones.ini | head -1)
+            if [ -z "$SC_VER" ]; then
+              SC_VER=$(curl -s "https://robertsspaceindustries.com/api/roadmap/v1/boards/1" \
+                -H "User-Agent: Mozilla/5.0" \
+                | grep -oP 'Live Version:\s*\K[\d.]+' | head -1)
+            fi
             if [ -z "$SC_VER" ]; then SC_VER="live"; fi
           fi
           BUILD="${{ github.run_number }}"
