@@ -275,7 +275,7 @@
       master:    BASE_RAW + 'work/source/global.ini',
     };
     const SOURCE_VERSIONS = {
-      master:    '4.8.1',
+      master:    '4.8.2',
     };
     const SOURCE_URL       = SOURCE_URLS.master;
     const CORRECTIONS_URL  = BASE_RAW + 'work/correcciones.ini';
@@ -376,7 +376,9 @@
       if (key && key.toLowerCase().startsWith('mission_ship')) return false;
       if (key && key.toLowerCase().startsWith('ui_controlhint_')) return false;
       if (key && key.toLowerCase().startsWith('item_name_')) return false;
-      if (key && (key.toLowerCase().startsWith('item_namejdrv_') || key.toLowerCase().startsWith('item_namejump_'))) return false;
+      // item_Name sin guión bajo: solo traducir misiles (MISL/GMISL); todo lo demás son nombres de items en inglés
+      if (key && key.toLowerCase().startsWith('item_name') && !key.toLowerCase().startsWith('item_name_')
+          && !key.toLowerCase().startsWith('item_namemisl_') && !key.toLowerCase().startsWith('item_namegmisl_')) return false;
       if (key && key.toLowerCase().startsWith('ui_hacking_node_id')) return false;
       if (key && key.toLowerCase().startsWith('pu_edl2_fo_assignments')) return false;
       if (key && key.toLowerCase().startsWith('items_commodities_') && !key.toLowerCase().endsWith('_desc') && !key.toLowerCase().endsWith('_desc,p')) return false;
