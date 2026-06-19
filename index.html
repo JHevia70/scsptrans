@@ -684,10 +684,14 @@
       const iniEscape = s => s.replace(/\r\n/g, '\\n').replace(/\n/g, '\\n');
 
       // Construir mapa clave → valor ES para lookup rápido
+      // Para titleKey: si varias entradas comparten título, priorizar la que tenga [BP]
       const mMap = {};
       for (const m of missions) {
-        if (m.titleKey && m.titleEs) mMap[m.titleKey] = iniEscape(m.titleEs);
-        if (m.descKey  && m.descEs)  mMap[m.descKey]  = iniEscape(m.descEs);
+        if (m.titleKey && m.titleEs) {
+          const prev = mMap[m.titleKey];
+          if (!prev || m.titleEs.includes('[BP]')) mMap[m.titleKey] = iniEscape(m.titleEs);
+        }
+        if (m.descKey && m.descEs) mMap[m.descKey] = iniEscape(m.descEs);
       }
 
       let count = 0;
