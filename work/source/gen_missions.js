@@ -376,13 +376,15 @@ function loadMissionsIntoMap(missions, { byTitle, byDesc }, bpPools, repAmounts,
       )
       .filter(g => g.length > 0);
 
-    if (!missions.has(titleKey)) {
+    // Clave compuesta: cada combinación (titleKey, descKey) es una entrada independiente
+    // para que applyMissions cubra todas las descripciones de un mismo título
+    const mapKey = titleKey + '|' + (descKey || '');
+    if (!missions.has(mapKey)) {
       const m = { titleKey, titleText, descKey: descKey || '', descText, uec, repMin: 0, repMax: 0, bpGroups };
       mergeRepRange(m, contractRange);
-      missions.set(titleKey, m);
+      missions.set(mapKey, m);
     } else {
-      const ex = missions.get(titleKey);
-      // Merge groups: add new groups if not already present
+      const ex = missions.get(mapKey);
       for (const g of bpGroups) {
         const key0 = g[0];
         if (!ex.bpGroups.some(eg => eg[0] === key0)) ex.bpGroups.push(g);
@@ -406,9 +408,15 @@ function addContractOnlyMissions(missionsMap, { byTitle, byDesc }, bpPools, cont
     ...Object.entries(byTitle).map(([k, s]) => ({ titleKey: k, poolSet: s })),
     ...Object.entries(byDesc).map(([dk, s]) => ({ titleKey: null, poolSet: s })),
   ];
+  // hasTitleKey: comprueba si ya existe alguna entrada con ese titleKey (clave compuesta)
+  const hasTitleKey = (tk) => {
+    for (const k of missionsMap.keys()) if (k === tk || k.startsWith(tk + '|')) return true;
+    return false;
+  };
+
   for (const { titleKey: tk, poolSet } of allEntries) {
     if (!tk) continue; // byDesc sin titleKey — el broker entry ya lo manejó
-    if (missionsMap.has(tk)) continue;
+    if (hasTitleKey(tk)) continue;
     const titleText = ini[tk] || '';
     if (!titleText) continue;
     const seen = new Set();
@@ -424,7 +432,7 @@ function addContractOnlyMissions(missionsMap, { byTitle, byDesc }, bpPools, cont
     const contractRange = (descKey && contractRepMap.byDesc[descKey]) || contractRepMap.byTitle[tk] || null;
     const m = { titleKey: tk, titleText, descKey, descText, uec: 0, repMin: 0, repMax: 0, bpGroups };
     mergeRepRange(m, contractRange);
-    missionsMap.set(tk, m);
+    missionsMap.set(tk + '|' + descKey, m);
     added++;
   }
 
@@ -437,7 +445,7 @@ function addContractOnlyMissions(missionsMap, { byTitle, byDesc }, bpPools, cont
     for (const gen of generators) {
       for (const contract of (gen.contracts || [])) {
         const titleKey = extractKeyFromOverrides(contract.paramOverrides, 'Title');
-        if (!titleKey || missionsMap.has(titleKey)) continue;
+        if (!titleKey || hasTitleKey(titleKey)) continue;
         const titleText = ini[titleKey] || '';
         if (!titleText) continue;
         const descKey = extractKeyFromOverrides(contract.paramOverrides, 'Description') || inferDescKey(titleKey, ini) || '';
@@ -445,7 +453,7 @@ function addContractOnlyMissions(missionsMap, { byTitle, byDesc }, bpPools, cont
         const contractRange = (descKey && contractRepMap.byDesc[descKey]) || contractRepMap.byTitle[titleKey] || null;
         const m = { titleKey, titleText, descKey, descText, uec: 0, repMin: 0, repMax: 0, bpGroups: [] };
         mergeRepRange(m, contractRange);
-        missionsMap.set(titleKey, m);
+        missionsMap.set(titleKey + '|' + descKey, m);
         added++;
       }
     }
