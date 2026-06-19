@@ -54,8 +54,8 @@ const translMap = {};
 for (const m of currentEs) {
   // Strip old [BP] marker and old BP/Rep blocks from titleEs
   let titleEs = (m.titleEs || '').replace(/\s*<EM4>\[BP\]<\/EM4>$/, '').trim();
-  // Strip old descEs BP/Rep blocks (everything from \n\n<EM4>Objetos or <EM4>Múltiples or <EM4>Reputación)
-  let descEs = (m.descEs || '').replace(/\n\n<EM4>(Objetos Fabricables:|Múltiples grupos|Reputación Otorgada[^:]*:)[\s\S]*$/, '').trim();
+  // Strip old descEs BP/Rep blocks — match any header tag we've ever emitted
+  let descEs = (m.descEs || '').replace(/\n\n<EM4>(Objetos Fabricables:|Múltiples grupos|Reputación [Oo]torgada[^:]*:|Blueprints obtenibles:)[\s\S]*$/, '').trim();
   if (m.titleKey) translMap[m.titleKey] = titleEs;
   if (m.descKey)  translMap[m.descKey]  = descEs;
 }
